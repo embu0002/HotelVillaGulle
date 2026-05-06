@@ -9,14 +9,14 @@ const buttonStyling = "inline-block border-2 cursor-pointer font-medium tracking
 // Variant-specifik styling
 const variantClasses = {
   primary: `
-    bg-[var(--color-primary-green-900)] border-[var(--color-primary-green-900)] text-white
-    hover:bg-[var(--color-green-950)] hover:border-[var(--color-green-950)]
+    rounded-[4px] bg-[var(--color-primary-green-900)] border-[var(--color-primary-green-900)] text-white 
+    hover:bg-[var(--color-green-950)] hover:border-[var(--color-green-950)] 
     active:bg-[var(--color-green-700)] active:border-[var(--color-green-700)]
     disabled:bg-[var(--color-neutral-300)] disabled:border-[var(--color-neutral-300)] disabled:text-white disabled:cursor-not-allowed
     transition-all duration-200
   `,
   secondary: `
-    bg-transparent border-[var(--color-primary-neutral-950)] text-[var(--color-primary-neutral-950)]
+    rounded-[4px] bg-transparent border-[var(--color-primary-neutral-950)] text-[var(--color-primary-neutral-950)]
     shadow-[0_8px_16px_0_rgba(0,0,0,0.18)]
     hover:shadow-[0_12px_24px_0_rgba(0,0,0,0.22)] hover:-translate-y-1
     active:shadow-[inset_2px_4px_6px_0_rgba(0,0,0,0.25)] active:translate-y-0
@@ -29,9 +29,9 @@ const variantClasses = {
 // Web: H-56px W-149px → py-[15px] px-[46px]  (56px = 15+15+border+text, 149px = 46+46+border)
 // Mobil: H-44px W-84px → håndteres via responsive klasser
 const sizeClasses = {
-  large: "h-14 w-[149px] px-[46px] text-lg    md:h-14 md:w-[149px]",
-  medium: "h-11 w-[84px]  px-5      text-base  md:h-14 md:w-[149px] md:px-[46px]",
-  small: "h-11 w-[84px]  px-4      text-sm",
+  large: "py-4 px-[46px] text-lg",
+  medium: "py-3 px-5      text-base  md:py-4 md:px-[46px]",
+  small: "py-2 px-4      text-sm",
 };
 ---
 
