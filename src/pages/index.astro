@@ -6,6 +6,39 @@ import thumbsup from "../assets/images/thumbsup.png";
 import Heading from "../components/Heading.astro";
 import Text from "../components/Text.astro";
 import Button from "../components/Button.astro";
+import DropdownSection from "../components/Dropdownsection.astro";
+const aktiviteter = [
+  {
+    title: "Haven & terrassen",
+    tagline: "Udendørs oplevelser",
+    body: "Nyd vores smukke have og terrasse med udsigt over naturens ro.",
+  },
+  {
+    title: "Orangeriet",
+    tagline: "Indendørs hygge",
+    body: "Vores orangeri byder på en unik atmosfære med planter og lys hele året rundt.",
+  },
+  {
+    title: "Bunkeren",
+    tagline: "Historisk oplevelse",
+    body: "Tag en tur ned i bunkeren og oplev historien på tæt hold.",
+  },
+  {
+    title: "Cykler",
+    tagline: "Aktiv udflugt",
+    body: "Lej en cykel og udforsk de smukke omgivelser på egen hånd.",
+  },
+  {
+    title: "Kano",
+    tagline: "Vandaktivitet",
+    body: "Padle ud på vandet i vores kanoer og nyd naturen fra en anden vinkel.",
+  },
+  {
+    title: "Petanque baner & Kryds og bolle",
+    tagline: "Spil og leg",
+    body: "Udfordre hinanden på petanquebanen eller tag en klassisk omgang kryds og bolle.",
+  },
+];
 ---
 
 <MainLayout title="Titel">
@@ -14,9 +47,17 @@ import Button from "../components/Button.astro";
     <Text teksttype="brødtekst">Så bliver Anders glad:-)</Text>
 
     <!-- Dine knapper -->
-    <div class="flex gap-4 mt-6">
+    <div>
       <Button variant="primary" size="medium">Book nu</Button>
       <Button variant="secondary" size="medium">Læs mere</Button>
+      <!-- Hero — stor primær -->
+      <Button variant="primary-large" size="hero">Book oplevelsen</Button>
+
+      <!-- Hero — stor sekundær -->
+      <Button variant="secondary-large" size="hero">Læs mere</Button>
+    </div>
+    <div>
+      <DropdownSection heading="Aktiviteter" image="/images/aktiviteter.jpg" imageAlt="Terrasse med borde og stole" items={aktiviteter} buttonText="Læs mere" buttonHref="/aktiviteter" />
     </div>
   </main>
 </MainLayout>

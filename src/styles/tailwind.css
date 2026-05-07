@@ -11,18 +11,26 @@
 }
 
 @font-face {
-  font-family: "Times new roman";
+  font-family: "EBGaramond";
   src: url("/fonts/EBGaramond-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Alex Brush";
+  src: url("/fonts/AlexBrush-Regular.ttf") format("truetype");
 }
 
 @theme {
-  /* Her tilføjes theme variable // tokens */
+  /* Farver */
   --color-green-700: #205b4b;
   --color-green-950: #0d211d;
 
   --color-neutral-300: #d4d4d8;
 
-  /*Farver */
+  --color-beige-200: #ded4b4;
+
+  --color-white: #ffffff;
+
+  /*Toksens Farver */
   --color-primary-green-900: #173a31;
   --color-primary-Background-50: #fffdf5;
   --color-Surface-neutral-50: #fafafa;
@@ -35,9 +43,11 @@
   --color-inverce-neutral-50: #fafafa;
 
   /*Typografi */
-  --font-display: "Times new roman", monospace;
   --font-sans: "Montserrat", sans-serif;
-  --font-serif: "EBGaramond", serif;
+  --font-display: "EBGaramond", Georgia, serif;
+  --font-alex-brush: "Alex Brush", cursive;
+
+  --text-body: 1.1875rem; /* 19px */
 }
 
 @layer base {

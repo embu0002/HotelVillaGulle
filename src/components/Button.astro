@@ -1,13 +1,10 @@
 ---
-// Button.astro
-
 const { variant = "primary", size = "medium", disabled = false } = Astro.props;
 
-// Styling gældende for alle knapper
 const buttonStyling = "inline-block border-2 cursor-pointer font-medium tracking-wide transition-all duration-300";
 
-// Variant-specifik styling
 const variantClasses = {
+  // ── Primære og sekundær knap ──────────────────────────────────────────
   primary: `
     rounded-[4px] bg-[var(--color-primary-green-900)] border-[var(--color-primary-green-900)] text-white 
     hover:bg-[var(--color-green-950)] hover:border-[var(--color-green-950)] 
@@ -23,15 +20,49 @@ const variantClasses = {
     disabled:shadow-[0_8px_16px_0_rgba(0,0,0,0.18)] disabled:opacity-50 disabled:cursor-not-allowed
     transition-all duration-200
   `,
+
+  // ── Hero knapper + Ghost knap──────────────────────────────────────────────────────
+
+  // Stor primær (hero + book nu siden)
+  "primary-large": `
+    rounded-[4px] bg-[var(--color-secondary-beige-100)] border-[var(--color-secondary-beige-100)] text-[var(--color-primary-green-900)]
+    hover:bg-[var(--color-beige-200)] hover:border-[var(--color-beige-200)]
+    active:bg-[var(--color-inverce-neutral-50)] active:border-[var(--color-inverce-neutral-50)]
+    disabled:bg-transparent disabled:border-[var(--color-primary-green-900)] disabled:text-[var(--color-primary-green-900)] disabled:cursor-not-allowed
+    transition-all duration-200
+  `,
+
+  // Stor sekundær (hero + book nu siden) — samme shadow som lille secondary
+  "secondary-large": `
+    rounded-[4px] bg-transparent border-white text-white
+    shadow-[0_8px_16px_0_rgba(0,0,0,0.18)]
+    hover:shadow-[0_12px_24px_0_rgba(0,0,0,0.22)] hover:-translate-y-1
+    active:shadow-[inset_2px_4px_6px_0_rgba(0,0,0,0.25)] active:translate-y-0 active:border-white
+    disabled:shadow-[0_8px_16px_0_rgba(0,0,0,0.18)] disabled:border-[var(--color-primary-green-900)] disabled:text-[var(--color-primary-green-900)] disabled:opacity-50 disabled:cursor-not-allowed
+    transition-all duration-200
+  `,
+
+  // Ghost knap (navigation — "Book nu")
+  ghost: `
+    rounded-[4px] bg-transparent border-white text-white
+    hover:bg-[var(--color-green-950)] hover:border-[var(--color-green-950)]
+    active:bg-[var(--color-primary-green-900)] active:border-[var(--color-primary-green-900)]
+    disabled:bg-transparent disabled:border-transparent disabled:cursor-not-allowed
+    transition-all duration-200
+  `,
 };
 
-// Størrelse-specifik styling — tilpasset Figma px-værdier
-// Web: H-56px W-149px → py-[15px] px-[46px]  (56px = 15+15+border+text, 149px = 46+46+border)
-// Mobil: H-44px W-84px → håndteres via responsive klasser
 const sizeClasses = {
+  // Eksisterende
   large: "py-4 px-[46px] text-lg",
-  medium: "py-3 px-5      text-base  md:py-4 md:px-[46px]",
-  small: "py-2 px-4      text-sm",
+  medium: "py-3 px-5 text-base md:py-4 md:px-[46px]",
+  small: "py-2 px-4 text-sm",
+
+  // Stor hero-knap: Mobil 137×32px → Web 345×62px
+  hero: "py-[8px] px-[30px] text-[0.9375rem] lg:py-[18px] lg:px-[100px] lg:text-[1.375rem] font-bold",
+
+  // Ghost nav-knap: Mobil 84×44px → Web 159×56px
+  nav: "py-[10px] px-[18px] text-[0.9375rem] lg:py-[15px] lg:px-[46px] lg:text-[1.375rem]",
 };
 ---
 

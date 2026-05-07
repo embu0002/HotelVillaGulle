@@ -1,0 +1,73 @@
+---
+import Button from "./Button.astro";
+import Heading from "./Heading.astro";
+import Text from "./Text.astro";
+
+const {
+  heading = "Aktiviteter",
+  image,
+  imageAlt = "",
+  items = [],
+  buttonText = "Læs mere",
+  buttonHref = "#",
+} = Astro.props;
+---
+
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center px-6 py-12 lg:px-16 lg:py-20">
+
+  <!-- Venstre: Accordion -->
+  <div class="flex flex-col justify-center">
+
+    <Heading htmlheading="h2" size="large" font="display">
+      {heading}
+    </Heading>
+
+    <div class="flex flex-col">
+      {items.map((item) => (
+        <details class="group border-b border-[var(--color-primary-neutral-950)] py-4">
+          <summary class="flex justify-between items-center cursor-pointer list-none">
+            <Heading htmlheading="h3" size="medium" font="display" stylingclasses="font-light">
+              {item.title}
+            </Heading>
+            <span class="transition-transform duration-300 group-open:rotate-180 text-xl">
+              &#8964;
+            </span>
+          </summary>
+
+          <!-- Indhold der vises ved åbning -->
+          <div class="mt-4 flex flex-col gap-2">
+            {item.tagline && (
+                <Heading htmlheading="h5" size="xsmall" font="display" stylingclasses="font-light">
+              {item.tagline}
+            </Heading>
+             
+            )}
+            {item.body && (
+              <Text teksttype="brødtekst" stylingclasses="font-light">
+                {item.body}
+              </Text>
+            )}
+          </div>
+        </details>
+      ))}
+    </div>
+
+    <div class="mt-10">
+      <a href={buttonHref}>
+        <Button variant="secondary" size="small">{buttonText}</Button>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Højre: Billede -->
+  <div class="w-full h-full">
+    <img
+      src={image}
+      alt={imageAlt}
+      class="w-full h-full object-cover"
+      loading="lazy"
+    />
+  </div>
+
+</section>
