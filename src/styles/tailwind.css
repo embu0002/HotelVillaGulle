@@ -47,7 +47,7 @@
   --font-display: "EBGaramond", Georgia, serif;
   --font-alex-brush: "Alex Brush", cursive;
 
-  --text-body: 1.1875rem; /* 19px */
+  --text-body: 1rem; /* 19px */
 }
 
 @layer base {
