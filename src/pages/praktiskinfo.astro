@@ -1,0 +1,57 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Link from "../components/Link.astro";
+import Heading from "../components/Heading.astro";
+import Text from "../components/Text.astro";
+import Button from "../components/Button.astro";
+import DropdownSection from "../components/Dropdownsection.astro";
+import HeroPages from "../components/HeroPages.astro";
+import AktiviteterCard from "../components/AktiviteterCard.astro";
+
+const aktiviteterdropdown = [
+  {
+    title: "Check-in og check-ud",
+    tagline: "",
+    body: "Check-in er muligt fra kl. 15:00, og check-out skal ske senest kl. 11:00 på afrejsedagen. Hvis du ankommer efter receptionens åbningstider, vil du modtage en SMS med nemme instruktioner til selvindtjekning.",
+  },
+  {
+    title: "Udeareal",
+    tagline: "",
+    body: "Træd ud på vores fantatiske terrasse og i vores hyggelige have og nyd frisk luft, grønne omgivelser og  kolde forfriskninger – det perfekte sted at trække vejret og lade op. Vi har skabt et afslappende udendørsrum, hvor du kan sætte tempoet ned og nyde øjeblikket i rolige, naturskønne rammer, mens vores personale sørger for, at du har alt, hvad du har brug for.",
+  },
+  {
+    title: "Mad og drikke",
+    tagline: "",
+    body: "Morgenmad er inkluderet i alle værelsespriser ved booking af overnatning. Den serveres mandag til fredag fra kl. 07.30–09.00 og lørdag til søndag fra kl. 08.00–10.00.",
+  },
+  {
+    title: "Internet",
+    tagline: "",
+    body: "Wi-fi er tilgængeligt overalt på hotellet og er uden beregning.",
+  },
+  {
+    title: "Gratis parkering",
+    tagline: "",
+    body: "På hotellets gårdplads er der mulighed for fri parkering, dog gælder først-til-mølle princippet. Hvis alle parkeringspladser er optaget, kan man enten parkere tæt på hotellet på havnen, hvor der er en stor offentlig parkeringsplads uden betaling. Derudover er der også mulighed for at parkere på Østervoldgade. Dog er det vigtigt at bemærke, at der er en tidsbegrænsning på 2 timer mellem kl. 09:00 og 18:00.",
+  },
+  {
+    title: "Rygning",
+    tagline: "",
+    body: "Rygning er forbudt indenfor men der kan ryges udenfor de steder der er opstillet askebæger. ",
+  },
+  {
+    title: "Sprog",
+    tagline: "",
+    body: "Dansk, Tysk, Engelsk og Norsk",
+  },
+];
+---
+
+<MainLayout title="Titel">
+  <HeroPages title="Praktisk info" leftImage="/public/vand.png" leftImageAlt="Petanque" rightImage="/public/Petanque2.svg" rightImageAlt="Villa Gulle tegning" content="På Hotel Villa Gulle ønsker vi at være med til at skabe aktiv, hyggelig og begivenhedsrig ferie for vores gæster. Derfor tilbyder vi et bredt udvalgt af faciliteter, som er inkluderet i prisen, så du kan få det maksimale ud af dine feriedage." subtitle="Villa Gulle" />
+  <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10">
+    <div>
+      <DropdownSection heading="Vi svarer på det vigtigste" image="/public/aktiviteter_drop.png" imageAlt="Terrasse med borde og stole" items={aktiviteterdropdown} showButton={false} />
+    </div>
+  </main>
+</MainLayout>

@@ -7,57 +7,96 @@ import Heading from "../components/Heading.astro";
 import Text from "../components/Text.astro";
 import Button from "../components/Button.astro";
 import DropdownSection from "../components/Dropdownsection.astro";
-const aktiviteter = [
+import HeroPages from "../components/HeroPages.astro";
+import AktiviteterCard from "../components/AktiviteterCard.astro";
+
+const aktivitetercard = [
   {
-    title: "Haven & terrassen",
-    tagline: "Udendørs oplevelser",
-    body: "Nyd vores smukke have og terrasse med udsigt over naturens ro.",
+    title: "Haven & terassen",
+    body: "Vi har med stor glæde skabt hyggelige, grønne og afslappende udendørsområder på vores hotel. Her tilbyder vi servering af kolde forfriskning skal kan nydes i afslappende i den friske luft.",
+    image: "/public/havenogterassen.png",
+    imageAlt: "Haven og terassen",
+    href: "/aktiviteter",
   },
   {
-    title: "Orangeriet",
-    tagline: "Indendørs hygge",
-    body: "Vores orangeri byder på en unik atmosfære med planter og lys hele året rundt.",
-  },
-  {
-    title: "Bunkeren",
-    tagline: "Historisk oplevelse",
-    body: "Tag en tur ned i bunkeren og oplev historien på tæt hold.",
-  },
-  {
-    title: "Cykler",
-    tagline: "Aktiv udflugt",
-    body: "Lej en cykel og udforsk de smukke omgivelser på egen hånd.",
+    title: "Beskyttelsesrum",
+    body: "Der er et beskyttelsesrum fra 2. verdenskrig på hotellets grund. Gå på opdagelse i mørket og udforsk hotellets bunker, hvor du kan få et fascinerende indblik i historien. ",
+    image: "/public/beskyttelsesrum.png",
+    imageAlt: "Beskyttelsesrum",
+    href: "/aktiviteter",
   },
   {
     title: "Kano",
-    tagline: "Vandaktivitet",
-    body: "Padle ud på vandet i vores kanoer og nyd naturen fra en anden vinkel.",
+    body: "Kunne du tænke dig at se Nyborg voldgrav fra et nyt perspektiv? Så prøv hotellets kano, der står til fri afbenyttelse for alle hotellets gæster.",
+    image: "/public/kano.png",
+    imageAlt: "Kano",
+    href: "/aktiviteter",
+  },
+  {
+    title: "Cykler",
+    body: "Nyd et cykeleventyr i Nyborg ved at låne en af vores cykler og oplev alt, hvad byen har at byde på – på en aktiv og sjov måde. Udforsk for eksempel de smukke badestrande, besøg Nyborg Fæstning eller tag en tur rundt til byens mange shoppingmuligheder.",
+    image: "/public/cykler.png",
+    imageAlt: "cykler",
+    href: "/aktiviteter",
+  },
+  {
+    title: "Petanque baner & spil",
+    body: "Hotellets petanque baner og vores udgave af spillet “Kryds og bolle” står altid klar og er til fri afbenyttelse. Alder og fysik spiller ingen roller, og netop derfor disse perfekte spil for hele familien.",
+    image: "/public/spil.png",
+    imageAlt: "spil",
+    href: "/aktiviteter",
+  },
+  {
+    title: "Orangeriet",
+    body: "Vores orangeri forlænger sæsonen og gør det muligt at nyde udeområdet i de koldere måneder. Det skaber en varm og behagelig atmosfære, perfekt til afslapning og sociale sammenkomster.",
+    image: "/public/orangeri.png",
+    imageAlt: "orangeriet",
+    href: "/aktiviteter",
+  },
+];
+
+const aktiviteterdropdown = [
+  {
+    title: "Haven & terrassen",
+    tagline: "Slap af i det grønne",
+    body: "Træd ud i vores hyggelige have og nyd frisk luft, grønne omgivelser og kolde forfriskninger – det perfekte sted at trække vejret og lade op. Vi har skabt et afslappende udendørsrum, hvor du kan sætte tempoet ned og nyde øjeblikket i rolige, naturskønne rammer, mens vores personale sørger for, at du har alt, hvad du har brug for.",
+  },
+  {
+    title: "Orangeriet",
+    tagline: "Udeliv hele året rundt",
+    body: "Hvorfor lade vejret bestemme? Vores orangeri forlænger sæsonen og skaber en varm, lys og indbydende ramme, selv når temperaturen falder. Det er  det perfekte sted at samles, slappe af og nyde den gode stemning –  uanset årstid.",
+  },
+  {
+    title: "Bunkeren",
+    tagline: "Historien venter under jorden",
+    body: "Tør du gå på opdagelse i mørket? På hotellets grund gemmer sig et ægte  beskyttelsesrum fra 2. verdenskrig. Tag med ned i bunkeren og få et  fascinerende og stemningsfuldt indblik i en af historiens mørkeste  perioder – en oplevelse helt ud over det sædvanlige.",
+  },
+  {
+    title: "Cykler",
+    tagline: "Udforsk Nyborg på to hjul",
+    body: "Hop på sadlen og oplev Nyborg i dit eget tempo! Lån en af hotellets cykler og pedal dig frem til byens smukke badestrande, den historiske Nyborg Fæstning eller de mange shoppingmuligheder – en aktiv og sjov  måde at opdage alt, hvad byen har at byde på.",
+  },
+  {
+    title: "Kano",
+    tagline: "Oplev voldgraven fra vandets overflade",
+    body: "Se Nyborg fra et helt nyt perspektiv og padle dig gennem den historiske voldgrav i en af hotellets kanoer. Kanoerne står til fri afbenyttelse for alle hotellets gæster – så det er bare med at tage vandtøjet på og give sig i kast med eventyret.",
   },
   {
     title: "Petanque baner & Kryds og bolle",
-    tagline: "Spil og leg",
-    body: "Udfordre hinanden på petanquebanen eller tag en klassisk omgang kryds og bolle.",
+    tagline: "Klassiske spil for hele familien",
+    body: "Uanset alder og fysik er der plads til alle på vores petanquebaner og ved vores kæmpe Kryds og Bolle-spil. Banerne står altid klar til fri  afbenyttelse, så tag familien med og få en hyggelig kamp i de grønne  omgivelser.",
   },
 ];
 ---
 
 <MainLayout title="Titel">
-  <main class="container mx-auto p-4">
-    <Heading htmlheading="h1">Lav noget flot!</Heading>
-    <Text teksttype="brødtekst">Så bliver Anders glad:-)</Text>
-
-    <!-- Dine knapper -->
+  <HeroPages title="Om Hotel Villa Gulle" leftImage="/public/om_hero.png" leftImageAlt="Villa Gulle facade" rightImage="/public/Sort_logo_2.svg" rightImageAlt="Villa Gulle tegning" content="Vi er mere end et sted at sove - vi er et sted, hvor gode minder skabes. Hotellet er drevet af et passioneret team, der hver dag sætter en ære i at byde dig velkommen. Her kan du læse lidt mere om, hvem vi er og hvad vi står for. " subtitle="Villa Gulle" />
+  <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10">
     <div>
-      <Button variant="primary" size="medium">Book nu</Button>
-      <Button variant="secondary" size="medium">Læs mere</Button>
-      <!-- Hero — stor primær -->
-      <Button variant="primary-large" size="hero">Book oplevelsen</Button>
-
-      <!-- Hero — stor sekundær -->
-      <Button variant="secondary-large" size="hero">Læs mere</Button>
+      <AktiviteterCard items={aktivitetercard} />
     </div>
     <div>
-      <DropdownSection heading="Aktiviteter" image="/images/aktiviteter.jpg" imageAlt="Terrasse med borde og stole" items={aktiviteter} buttonText="Læs mere" buttonHref="/aktiviteter" />
+      <DropdownSection heading="Aktiviteter" image="/public/aktiviteter_drop.png" imageAlt="Terrasse med borde og stole" items={aktiviteterdropdown} buttonText="Læs mere" buttonHref="/aktiviteter" />
     </div>
   </main>
 </MainLayout>

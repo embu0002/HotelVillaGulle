@@ -10,6 +10,7 @@ const {
   items = [],
   buttonText = "Læs mere",
   buttonHref = "#",
+  showButton = true,
 } = Astro.props;
 ---
 
@@ -29,9 +30,19 @@ const {
             <Heading htmlheading="h3" size="medium" font="display" stylingclasses="font-light">
               {item.title}
             </Heading>
-            <span class="transition-transform duration-300 group-open:rotate-180 text-xl">
-              &#8964;
-            </span>
+            <svg
+  class="transition-transform duration-300 group-open:rotate-180 shrink-0"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <polyline points="6 9 12 15 18 9" />
+</svg>
           </summary>
 
           <!-- Indhold der vises ved åbning -->
@@ -52,11 +63,13 @@ const {
       ))}
     </div>
 
-    <div class="mt-10">
-      <a href={buttonHref}>
-        <Button variant="secondary" size="small">{buttonText}</Button>
-      </a>
-    </div>
+   {showButton && (
+  <div class="mt-10">
+    <a href={buttonHref}>
+      <Button variant="secondary" size="small">{buttonText}</Button>
+    </a>
+  </div>
+)}
 
   </div>
 

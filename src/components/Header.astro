@@ -1,28 +1,91 @@
 ---
-const pathname = new URL(Astro.request.url).pathname;
-const currentPath = pathname.slice(1); // remove the first "/"
+// Header.astro
+import Button from "./Button.astro";
 ---
-<header x-data="{ showmenu: false }" class="" >
-    <div id="navbar" class="container mx-auto p-4 flex flex-row justify-between items-center">
-        <div id="logo" class="">
-            <a href="#" class="font-display text-4xl">Astro-Tailwind starter - udvidet udgave E25</a>
-        </div>
-        <nav id="desktopmenu" class="hidden lg:block">
-            <ul class="flex flex-row gap-4">
-                <li class=""><a href="/" class={currentPath === "" ? "italic font-bold" : "italic"}>Forside</a></li><!-- alternativt: lav et <a href="">Link</a>, hvis du ikke vil bruge Link.astro komponenten -->
-                <li class=""><a href="/komponentbibliotek/" class={currentPath === "komponentbibliotek/" ? "italic font-bold" : "italic"}>Komponentbibliotek</a></li>
-            </ul>
-        </nav>
-        <button id="burgermenu" class="lg:hidden" x-on:click="showmenu = ! showmenu"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-</svg>
-</button>
-    </div>
-    <nav id="mobilmenu" class="flex flex-col content-center" 
-    x-show="showmenu" x-transition x-on:click="showmenu = false" x-on:click.outside="showmenu = false">
-        <ul class="border-t-2 border-b-2 border-black">
-            <li class="text-center py-2"><a href="/" class={currentPath === "" ? "italic font-bold" : "italic"}>Forside</a></li>
-            <li class="text-center py-2"><a href="/komponentbibliotek/" class={currentPath === "komponentbibliotek/" ? "italic font-bold" : "italic"}>Komponentbibliotek</a></li>
-        </ul>
+
+<header class="w-full bg-[var(--color-primary-green-900)]">
+  <!-- DESKTOP -->
+  <div class="hidden lg:flex items-center justify-between px-10 py-6">
+    <!-- Nav links venstre -->
+    <nav class="flex items-center gap-10">
+      <a href="/omhotelvillagulle" class="text-white font-sans text-sm tracking-wide hover:opacity-70 transition-opacity"> Om Hotel Villa Gulle </a>
+      <a href="/aktiviteter" class="text-white font-sans text-sm tracking-wide hover:opacity-70 transition-opacity"> Aktiviteter </a>
+      <a href="/praktiskinfo" class="text-white font-sans text-sm tracking-wide hover:opacity-70 transition-opacity"> Praktisk info </a>
     </nav>
+
+    <!-- Logo i midten -->
+    <a href="/" class="absolute left-1/2 -translate-x-1/2">
+      <div class="flex flex-col items-center gap-1">
+        <img src="/public/Sort_logo_2.svg" alt="Hotel Villa Gulle logo" class="h-10 invert opacity-80" />
+        <span class="text-white font-sans text-xs tracking-[0.25em] uppercase opacity-80"> HOTEL VILLA GULLE </span>
+      </div>
+    </a>
+
+    <!-- Højre side: sprog + knap -->
+    <div class="flex items-center gap-6">
+      <span class="text-white font-sans text-sm opacity-70"> Da/En </span>
+      <a href="/book">
+        <Button variant="ghost" size="small">Book nu</Button>
+      </a>
+    </div>
+  </div>
+
+  <!-- MOBIL -->
+  <div class="lg:hidden flex items-center justify-between px-6 py-4">
+    <!-- Logo venstre -->
+    <a href="/" class="flex items-center gap-2">
+      <img src="/public/Sort_logo_2.svg" alt="Hotel Villa Gulle" class="h-8 invert opacity-80" />
+      <span class="text-white font-sans text-xs tracking-widest uppercase opacity-80"> Hotel Villa Gulle </span>
+    </a>
+
+    <!-- Højre: Book knap + hamburger -->
+    <div class="flex items-center gap-3">
+      <a href="/book">
+        <Button variant="ghost" size="small">Book nu</Button>
+      </a>
+      <!-- Hamburger -->
+      <button id="menu-toggle" aria-label="Åbn menu" class="flex flex-col justify-center items-center gap-[5px] p-2">
+        <span class="block w-6 h-[1.5px] bg-white transition-all duration-300" id="line1"></span>
+        <span class="block w-6 h-[1.5px] bg-white transition-all duration-300" id="line2"></span>
+        <span class="block w-6 h-[1.5px] bg-white transition-all duration-300" id="line3"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- MOBIL MENU OVERLAY -->
+  <div id="mobile-menu" class="lg:hidden hidden flex-col items-center justify-center gap-10 py-16 bg-[var(--color-primary-green-900)]">
+    <a href="/om" class="text-white font-display text-2xl font-light tracking-wide hover:opacity-70 transition-opacity"> Om Hotel Villa Gulle </a>
+    <a href="/aktiviteter" class="text-white font-display text-2xl font-light tracking-wide hover:opacity-70 transition-opacity"> Aktiviteter </a>
+    <a href="/praktisk-info" class="text-white font-display text-2xl font-light tracking-wide hover:opacity-70 transition-opacity"> Praktisk info </a>
+  </div>
 </header>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  const line1 = document.getElementById("line1");
+  const line2 = document.getElementById("line2");
+  const line3 = document.getElementById("line3");
+
+  let open = false;
+
+  toggle?.addEventListener("click", () => {
+    open = !open;
+
+    if (open) {
+      menu?.classList.remove("hidden");
+      menu?.classList.add("flex");
+      // Animér til kryds
+      line1?.classList.add("rotate-45", "translate-y-[6.5px]");
+      line2?.classList.add("opacity-0");
+      line3?.classList.add("-rotate-45", "-translate-y-[6.5px]");
+    } else {
+      menu?.classList.add("hidden");
+      menu?.classList.remove("flex");
+      // Tilbage til hamburger
+      line1?.classList.remove("rotate-45", "translate-y-[6.5px]");
+      line2?.classList.remove("opacity-0");
+      line3?.classList.remove("-rotate-45", "-translate-y-[6.5px]");
+    }
+  });
+</script>
