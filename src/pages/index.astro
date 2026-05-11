@@ -153,6 +153,28 @@ const reviews = [
     <div>
       <AktiviteterCard items={aktivitetercard} />
     </div>
+    <section class="p-10">
+      <h2 class="text-center">Hotellets omgivelser</h2>
+      <div class="grid md:grid-cols-2">
+        <div class="max-w-115 md:max-w-90">
+          <h3>Hvad tilbyder byen?</h3>
+          <p>Nyborg er en by fyldt med spændende oplevelser, og har mange gode udflugtsmuligheder inden for kort afstand. Som gæst på Hotel Villa Gulle har du en perfekt beliggende base til at kunne udforske Nyborg by og dens nærområde.</p>
+          <a href="https://www.visitnyborg.dk/nyborg/oplev-nyborg" target="_blank" rel="noopener noreferrer">
+            <Button variant="secondary" size="small"> Læs mere </Button>
+          </a>
+          <div class="max-w-115 md:max-w-90">
+            <h3>Hvad tilbyder Fyn?</h3>
+            <p>Fyn byder på en uforglemmelig blanding af kultur, natur og historie. Herregårde, maleriske landsbyer, frodig natur og fantastiske badestrande med rent og klart vand. Nyborg og Hotel Villa Gulle har den bedste infrastruktur til besøg rundt på øen.</p>
+            <a href="https://www.visitfyn.dk/explore/begivenheder-cid58/det-sker-cid59?sort=DATE" target="_blank" rel="noopener noreferrer">
+              <Button variant="secondary" size="small"> Læs mere </Button>
+            </a>
+          </div>
+        </div>
+        <div>
+          <img src="/public/kort_nyborg.png" alt="kort_nyborg" />
+        </div>
+      </div>
+    </section>
     <div>
       <DropdownSection heading="Aktiviteter" image="/public/aktiviteter_drop.png" imageAlt="Terrasse med borde og stole" items={aktiviteterdropdown} buttonText="Læs mere" buttonHref="/aktiviteter" />
     </div>
@@ -186,95 +208,95 @@ const reviews = [
       <div id="dots" class="flex gap-2 mt-4 justify-center"></div>
     </section>
   </main>
-</MainLayout>
 
-<style>
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+  <style>
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
 
-  .scrollbar-hide {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-</style>
+    .scrollbar-hide {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+  </style>
 
-<script>
-  const viewport = document.getElementById("viewport");
-  const track = document.getElementById("track");
-  const slides = track.children;
+  <script>
+    const viewport = document.getElementById("viewport");
+    const track = document.getElementById("track");
+    const slides = track.children;
 
-  const prevBtn = document.getElementById("prev");
-  const nextBtn = document.getElementById("next");
-  const dotsContainer = document.getElementById("dots");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+    const dotsContainer = document.getElementById("dots");
 
-  let index = 0;
+    let index = 0;
 
-  const getSlidesPerView = () => {
-    if (window.innerWidth >= 1024) return 3;
-    if (window.innerWidth >= 768) return 2;
-    return 1;
-  };
+    const getSlidesPerView = () => {
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 768) return 2;
+      return 1;
+    };
 
-  const maxIndex = () => slides.length - getSlidesPerView();
+    const maxIndex = () => slides.length - getSlidesPerView();
 
-  function update() {
-    const slideWidth = slides[0].offsetWidth;
-    viewport.scrollTo({
-      left: slideWidth * index,
-      behavior: "smooth",
-    });
-
-    updateDots();
-  }
-
-  function createDots() {
-    dotsContainer.innerHTML = "";
-
-    for (let i = 0; i <= maxIndex(); i++) {
-      const dot = document.createElement("button");
-      dot.className = "w-2.5 h-2.5 rounded-full transition-all";
-
-      dot.addEventListener("click", () => {
-        index = i;
-        update();
+    function update() {
+      const slideWidth = slides[0].offsetWidth;
+      viewport.scrollTo({
+        left: slideWidth * index,
+        behavior: "smooth",
       });
 
-      dotsContainer.appendChild(dot);
+      updateDots();
     }
 
-    updateDots();
-  }
+    function createDots() {
+      dotsContainer.innerHTML = "";
 
-  function updateDots() {
-    const dots = dotsContainer.children;
+      for (let i = 0; i <= maxIndex(); i++) {
+        const dot = document.createElement("button");
+        dot.className = "w-2.5 h-2.5 rounded-full transition-all";
 
-    for (let i = 0; i < dots.length; i++) {
-      dots[i].className = i === index ? "w-6 h-2.5 rounded-full bg-black transition-all" : "w-2.5 h-2.5 rounded-full bg-gray-300 transition-all";
+        dot.addEventListener("click", () => {
+          index = i;
+          update();
+        });
+
+        dotsContainer.appendChild(dot);
+      }
+
+      updateDots();
     }
-  }
 
-  prevBtn.addEventListener("click", () => {
-    index = Math.max(index - 1, 0);
-    update();
-  });
+    function updateDots() {
+      const dots = dotsContainer.children;
 
-  nextBtn.addEventListener("click", () => {
-    index = Math.min(index + 1, maxIndex());
-    update();
-  });
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].className = i === index ? "w-6 h-2.5 rounded-full bg-black transition-all" : "w-2.5 h-2.5 rounded-full bg-gray-300 transition-all";
+      }
+    }
 
-  viewport.addEventListener("scroll", () => {
-    const slideWidth = slides[0].offsetWidth;
-    index = Math.round(viewport.scrollLeft / slideWidth);
-    updateDots();
-  });
+    prevBtn.addEventListener("click", () => {
+      index = Math.max(index - 1, 0);
+      update();
+    });
 
-  window.addEventListener("resize", () => {
-    index = 0;
+    nextBtn.addEventListener("click", () => {
+      index = Math.min(index + 1, maxIndex());
+      update();
+    });
+
+    viewport.addEventListener("scroll", () => {
+      const slideWidth = slides[0].offsetWidth;
+      index = Math.round(viewport.scrollLeft / slideWidth);
+      updateDots();
+    });
+
+    window.addEventListener("resize", () => {
+      index = 0;
+      createDots();
+      update();
+    });
+
     createDots();
-    update();
-  });
-
-  createDots();
-</script>
+  </script>
+</MainLayout>
