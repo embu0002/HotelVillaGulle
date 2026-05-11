@@ -87,6 +87,64 @@ const aktiviteterdropdown = [
     body: "Uanset alder og fysik er der plads til alle på vores petanquebaner og ved vores kæmpe Kryds og Bolle-spil. Banerne står altid klar til fri  afbenyttelse, så tag familien med og få en hyggelig kamp i de grønne  omgivelser.",
   },
 ];
+
+import ReviewCard from "../components/ReviewCard.astro";
+const reviews = [
+  {
+    rating: 5,
+    title: "Fuld valuta for pengene",
+    text: "Atmosfæren i huset er god. Personalet meget imødekomne. Parkering fin. Også fin morgenbuffet.",
+    name: "Hans",
+  },
+  {
+    rating: 4,
+    title: "Charmerende Hotel",
+    text: "Et virkelig hyggeligt hotel med masser af charme. Ligger i centrum med gå afstand til byen.",
+    name: "Jytte",
+  },
+  {
+    rating: 5,
+    title: "Enestående",
+    text: "Charmerende hotel med plads til at vi kunne mødes og spille og hygge om aftenen i familien. Venlige og hjælpsomme værter.",
+    name: "Anette",
+  },
+  {
+    rating: 4,
+    title: "Virkelig hyggeligt og hjemligt.",
+    text: "Jeg blev overrasket over hvor flot indretningen var såvel udendørs som indendørs. Detaljegraden, stemningen, interiør og farvevalg gjorde at man gerne ville blive lidt længere.",
+    name: "Vicki",
+  },
+  {
+    rating: 5,
+    title: "Super hyggeligt sted med meget venligt personale",
+    text: "Et super hyggeligt sted, god parkeringsmulighed, meget god morgenmad, meget venligt personale, gode senge..",
+    name: "Vidjai",
+  },
+  {
+    rating: 5,
+    title: "Afslappenende og hyggeligt",
+    text: "Roen, hyggen, bare så rart",
+    name: "Jeannie",
+  },
+  {
+    rating: 5,
+    title: "Det kan kun anbefales.",
+    text: "Super charmerende sted. Afslappet stemning.",
+    name: "Leif",
+  },
+  {
+    rating: 5,
+    title: "Hyggeligt og smukt indrettet.",
+    text: "Skønt hotel med masser af karakter og charme.",
+    name: "Miriam",
+  },
+  {
+    rating: 4,
+    title: "Meget godt",
+    text: "Godt værelse, god udsigt, måske lidt mere varme/temperatur men tilfreds med opholdet",
+    name: "Anders",
+  },
+];
 ---
 
 <MainLayout title="Titel">
@@ -98,5 +156,125 @@ const aktiviteterdropdown = [
     <div>
       <DropdownSection heading="Aktiviteter" image="/public/aktiviteter_drop.png" imageAlt="Terrasse med borde og stole" items={aktiviteterdropdown} buttonText="Læs mere" buttonHref="/aktiviteter" />
     </div>
+    <section class="relative z-20">
+      <div class="flex items-center gap-4 w-full">
+        <!-- VENSTRE -->
+        <button id="prev" class="shrink-0 z-10">
+          <img src="/knap_review_venstre.png" class="w-8 h-8 pl-1 md:pl-0" alt="venstre" />
+        </button>
+
+        <!-- VIEWPORT -->
+        <div id="viewport" class="overflow-x-auto scroll-smooth flex-1 snap-x snap-mandatory scrollbar-hide">
+          <div id="track" class="flex">
+            {
+              reviews.map((r) => (
+                <div class="w-[70%] sm:w-[80%] md:w-1/2 lg:w-1/3 p-3 shrink-0 mx-auto">
+                  <ReviewCard {...r} />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- HØJRE -->
+        <button id="next" class="shrink-0 z-10">
+          <img src="/knap_review_hoejre.png" class="w-8 h-8 pr-1 md:pl-0" alt="højre" />
+        </button>
+      </div>
+
+      <!-- DOTS -->
+      <div id="dots" class="flex gap-2 mt-4 justify-center"></div>
+    </section>
   </main>
 </MainLayout>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+</style>
+
+<script>
+  const viewport = document.getElementById("viewport");
+  const track = document.getElementById("track");
+  const slides = track.children;
+
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
+  const dotsContainer = document.getElementById("dots");
+
+  let index = 0;
+
+  const getSlidesPerView = () => {
+    if (window.innerWidth >= 1024) return 3;
+    if (window.innerWidth >= 768) return 2;
+    return 1;
+  };
+
+  const maxIndex = () => slides.length - getSlidesPerView();
+
+  function update() {
+    const slideWidth = slides[0].offsetWidth;
+    viewport.scrollTo({
+      left: slideWidth * index,
+      behavior: "smooth",
+    });
+
+    updateDots();
+  }
+
+  function createDots() {
+    dotsContainer.innerHTML = "";
+
+    for (let i = 0; i <= maxIndex(); i++) {
+      const dot = document.createElement("button");
+      dot.className = "w-2.5 h-2.5 rounded-full transition-all";
+
+      dot.addEventListener("click", () => {
+        index = i;
+        update();
+      });
+
+      dotsContainer.appendChild(dot);
+    }
+
+    updateDots();
+  }
+
+  function updateDots() {
+    const dots = dotsContainer.children;
+
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].className = i === index ? "w-6 h-2.5 rounded-full bg-black transition-all" : "w-2.5 h-2.5 rounded-full bg-gray-300 transition-all";
+    }
+  }
+
+  prevBtn.addEventListener("click", () => {
+    index = Math.max(index - 1, 0);
+    update();
+  });
+
+  nextBtn.addEventListener("click", () => {
+    index = Math.min(index + 1, maxIndex());
+    update();
+  });
+
+  viewport.addEventListener("scroll", () => {
+    const slideWidth = slides[0].offsetWidth;
+    index = Math.round(viewport.scrollLeft / slideWidth);
+    updateDots();
+  });
+
+  window.addEventListener("resize", () => {
+    index = 0;
+    createDots();
+    update();
+  });
+
+  createDots();
+</script>

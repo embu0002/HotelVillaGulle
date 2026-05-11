@@ -1,0 +1,16 @@
+---
+const { title, text, name, rating } = Astro.props;
+const stjerner = Array.from({ length: rating });
+---
+
+<div class="h-full flex flex-col bg-primary-Background-50 p-6 border border-primary-green-900 border-2">
+  <div class="flex gap-1 mb-3">
+    {stjerner.map(() => <img src="/public/stjerne.png" class="w-7 h-7" alt="stjerne" />)}
+  </div>
+
+  <h4 class="text-lg font-semibold mb-2">{title}</h4>
+
+  <p class="text-gray-600 text-sm mb-4">{text}</p>
+
+  <div class="text-sm font-medium">– {name}</div>
+</div>
