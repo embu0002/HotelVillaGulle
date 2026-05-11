@@ -7,16 +7,16 @@
 
 @font-face {
   font-family: "Montserrat";
-  src: url("/fonts/Montserrat-Light.ttf") format("truetype");
+  src: url("/public/Montserrat-Light.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "EBGaramond";
-  src: url("/fonts/EBGaramond-Regular.ttf") format("truetype");
+  src: url("/public/EBGaramond-Regular.ttf") format("truetype");
 }
 @font-face {
   font-family: "Alex Brush";
-  src: url("/fonts/AlexBrush-Regular.ttf") format("truetype");
+  src: url("/public/AlexBrush-Regular.ttf") format("truetype");
 }
 
 @theme {
