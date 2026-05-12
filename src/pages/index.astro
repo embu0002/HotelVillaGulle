@@ -9,6 +9,7 @@ import Button from "../components/Button.astro";
 import DropdownSection from "../components/Dropdownsection.astro";
 import HeroPages from "../components/HeroPages.astro";
 import AktiviteterCard from "../components/AktiviteterCard.astro";
+import VarelseSlider from "../components/VarelseSlider.astro";
 
 const aktiviteterdropdown = [
   {
@@ -105,6 +106,91 @@ const reviews = [
 <MainLayout title="Titel">
   <HeroPages title="Om Hotel Villa Gulle" leftImage="/public/om_hero.png" leftImageAlt="Villa Gulle facade" rightImage="/public/Sort_logo_2.svg" rightImageAlt="Villa Gulle tegning" content="Vi er mere end et sted at sove - vi er et sted, hvor gode minder skabes. Hotellet er drevet af et passioneret team, der hver dag sætter en ære i at byde dig velkommen. Her kan du læse lidt mere om, hvem vi er og hvad vi står for. " subtitle="Villa Gulle" />
   <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10">
+    <VarelseSlider
+      slides={[
+        {
+          title: "Dobbeltværelse mod havnen",
+          description: "Nyd den smukke udsigt over vandet fra dit lyse værelse eller den private terrasse. Indrettet med en King size-seng, eget badeværelse og morgenmad inkluderet.",
+          price: "1400 dkk",
+          bookingHref: "/book",
+          image: {
+            src: "/public/forside_varelse1.png",
+            alt: "Dobbeltværelse mod havnen",
+          },
+        },
+        {
+          title: "Dobbeltværelse mod havnen",
+          description: "Nyd den smukke udsigt over vandet fra dit lyse værelse eller den private terrasse. Indrettet med en King size-seng, eget badeværelse og morgenmad inkluderet.",
+          price: "1400 dkk",
+          bookingHref: "/book",
+          image: {
+            src: "/public/forside_varelse1.png",
+            alt: "Dobbeltværelse mod havnen",
+          },
+        },
+        {
+          title: "Dobbeltværelse mod havnen",
+          description: "Nyd den smukke udsigt over vandet fra dit lyse værelse eller den private terrasse. Indrettet med en King size-seng, eget badeværelse og morgenmad inkluderet.",
+          price: "1400 dkk",
+          bookingHref: "/book",
+          image: {
+            src: "/public/forside_varelse1.png",
+            alt: "Dobbeltværelse mod havnen",
+          },
+        },
+        {
+          title: "Dobbeltværelse mod havnen",
+          description: "Nyd den smukke udsigt over vandet fra dit lyse værelse eller den private terrasse. Indrettet med en King size-seng, eget badeværelse og morgenmad inkluderet.",
+          price: "1400 dkk",
+          bookingHref: "/book",
+          image: {
+            src: "/public/forside_varelse1.png",
+            alt: "Dobbeltværelse mod havnen",
+          },
+        },
+      ]}
+    />
+    <section class="flex flex-col items-center gap-8 py-10">
+      <div class="flex items-center w-full">
+        <div class="flex-1 flex flex-col items-center gap-3 px-2">
+          <div class="h-12 flex items-end justify-center">
+            <img src="/public/ur.svg" alt="Check ind" class="w-9 h-9 md:w-14 md:h-14 object-contain" />
+          </div>
+          <Text teksttype="brødtekst" stylingclasses="font-light text-center"> Check in efter kl 15 </Text>
+        </div>
+
+        <div class="w-px h-16 bg-gray-300 shrink-0"></div>
+
+        <div class="flex-1 flex flex-col items-center gap-3 px-2">
+          <div class="h-12 flex items-end justify-center">
+            <img src="/public/parkering.svg" alt="Parkering" class="w-9 h-9 md:w-14 md:h-14 object-contain" />
+          </div>
+          <Text teksttype="brødtekst" stylingclasses="font-light text-center"> Fri parkering </Text>
+        </div>
+
+        <div class="w-px h-16 bg-gray-300 shrink-0"></div>
+
+        <div class="flex-1 flex flex-col items-center gap-3 px-2">
+          <div class="h-12 flex items-end justify-center">
+            <img src="/public/morgenmad.svg" alt="Morgenmad" class="w-9 h-9 md:w-14 md:h-14 object-contain" />
+          </div>
+          <Text teksttype="brødtekst" stylingclasses="font-light text-center"> Morgenmad inkluderet i prisen </Text>
+        </div>
+
+        <div class="w-px h-16 bg-gray-300 shrink-0"></div>
+
+        <div class="flex-1 flex flex-col items-center gap-3 px-2">
+          <div class="h-12 flex items-end justify-center">
+            <img src="/public/ur.svg" alt="Check ud" class="w-9 h-9 md:w-14 md:h-14 object-contain" />
+          </div>
+          <Text teksttype="brødtekst" stylingclasses="font-light text-center"> Check ud kl 11 </Text>
+        </div>
+      </div>
+
+      <a href="/praktiskinfo">
+        <Button variant="secondary" size="small">Læs mere</Button>
+      </a>
+    </section>
     <div>
       <DropdownSection heading="Aktiviteter" image="/public/aktiviteter_drop.png" imageAlt="Terrasse med borde og stole" items={aktiviteterdropdown} buttonText="Læs mere" buttonHref="/aktiviteter" />
     </div>
