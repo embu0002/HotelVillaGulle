@@ -1,16 +1,25 @@
 ---
+import Heading from "./Heading.astro";
+import Text from "./Text.astro";
 const { title, text, name, rating } = Astro.props;
 const stjerner = Array.from({ length: rating });
 ---
 
-<div class="h-full flex flex-col bg-primary-Background-50 p-6 border border-primary-green-900 border-2">
-  <div class="flex gap-1 mb-3">
+<div class="h-full flex flex-col bg-primary-Background-50 p-3 border-primary-green-900 border-2">
+  <div class="flex mb-3">
     {stjerner.map(() => <img src="/public/stjerne.png" class="w-7 h-7" alt="stjerne" />)}
   </div>
+  <div>
+    <Heading htmlheading="h4" size="small" font="display" stylingclasses="mb-2">
+      {title}
+    </Heading>
 
-  <h4 class="text-lg font-semibold mb-2">{title}</h4>
+    <Text teksttype="brødtekst" stylingclasses="text-gray-600 mb-4">
+      {text}
+    </Text>
 
-  <p class="text-gray-600 text-sm mb-4">{text}</p>
-
-  <div class="text-sm font-medium">– {name}</div>
+    <Text teksttype="brødtekst" stylingclasses="font-medium">
+      – {name}
+    </Text>
+  </div>
 </div>
