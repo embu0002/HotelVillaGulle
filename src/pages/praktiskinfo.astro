@@ -82,13 +82,13 @@ const aktiviteterdropdown = [
 ---
 
 <MainLayout title="Titel">
-  <HeroPages title="Praktisk info" leftImage="/public/vand.png" leftImageAlt="Petanque" rightImage="/public/praktisk_illu.svg" rightImageAlt="Villa Gulle tegning" content="På Hotel Villa Gulle ønsker vi at være med til at skabe aktiv, hyggelig og begivenhedsrig ferie for vores gæster. Derfor tilbyder vi et bredt udvalgt af faciliteter, som er inkluderet i prisen, så du kan få det maksimale ud af dine feriedage." subtitle="Villa Gulle" />
+  <HeroPages title="Praktisk info" leftImage="/public/praktisk_info_reception.png" leftImageAlt="Petanque" rightImage="/public/praktisk_illu.svg" rightImageAlt="Villa Gulle tegning" content="For at du kan fokusere på at slappe af og nyde dit ophold, har vi samlet alt det praktiske ét sted. Her finder du svar på de mest stillede spørgsmål så du kan bruge din tid på det, der virkelig betyder noget." subtitle="Villa Gulle" />
   <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10">
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 py-16 px-6 md:px-12 lg:px-24">
       {infoCards.map((card) => <InfoCard icon={card.icon} title={card.title} text={card.text} />)}
     </section>
     <div>
-      <DropdownSection heading="Vi svarer på det vigtigste" image="/public/aktiviteter_drop.png" imageAlt="Terrasse med borde og stole" items={aktiviteterdropdown} showButton={false} />
+      <DropdownSection heading="Vi svarer på det vigtigste" image="/public/praktisk_info_stue.png" imageAlt="Af daglistuen" items={aktiviteterdropdown} showButton={false} />
     </div>
   </main>
 </MainLayout>
