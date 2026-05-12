@@ -30,9 +30,10 @@ const { slides } = Astro.props;
               <Text teksttype="brødtekst" stylingclasses="font-light text-gray-700 max-w-prose mb-1">
                 {slide.description}
               </Text>
-              <Text teksttype="brødtekst" stylingclasses="font-semibold mb-2">
+              <Heading htmlheading="h4" size="small" font="display" stylingclasses=" mb-3">
                 Fra {slide.price}
-              </Text>
+              </Heading>
+
               <a href={slide.bookingHref} class="w-fit">
                 <Button variant="primary" size="small">
                   Book nu
