@@ -5,29 +5,31 @@ import Text from "./Text.astro";
 
 <footer class="bg-primary-green-900 text-white">
   <div class="container mx-auto p-4">
-    <p class="hidden md:block text-center mb-6">HOTEL VILLA GULLE</p>
+    <div class="hidden md:block text-center">
+      <Heading htmlheading="h1" size="xlarge" font="display"> HOTEL VILLA GULLE </Heading>
+    </div>
     <div class="grid md:grid-cols-3 text-center md:text-left md:gap-40 md:pl-50 md:pr-40">
       <!-- SE MERE -->
       <div class="mt-4">
-        <h3>Se mere</h3>
-        <p><a href="/omhotelvillagulle">Om Hotel Villa Gulle</a></p>
-        <p><a href="/aktiviteter">Aktiviteter</a></p>
-        <p><a href="/praktiskinfo">Praktisk Info</a></p>
+        <Heading htmlheading="h3" size="medium" font="display" stylingclasses="mt-4 md:mt-0">Se mere</Heading>
+        <Text teksttype="brødtekst" stylingclasses="font-light"> <a href="/omhotelvillagulle">Om Hotel Villa Gulle</a></Text>
+        <Text teksttype="brødtekst" stylingclasses="font-light"> <a href="/aktiviteter">Aktiviteter</a></Text>
+        <Text teksttype="brødtekst" stylingclasses="font-light"> <a href="/praktiskinfo">Praktisk Info</a></Text>
       </div>
       <!-- INFORMATION -->
       <div class="mt-4">
-        <h3>Information</h3>
-        <p>Handelsbetingelser</p>
-        <p>Persondatapolitik</p>
-        <p>Smiley rapport</p>
+        <Heading htmlheading="h3" size="medium" font="display" stylingclasses="mt-6 md:mt-0">Information</Heading>
+        <Text teksttype="brødtekst" stylingclasses="font-light"> Handelsbetingelser </Text>
+        <Text teksttype="brødtekst" stylingclasses="font-light"> Persondatapolitik </Text>
+        +45 23 23 02 19
       </div>
       <!-- KONTAKT -->
       <div class="mt-4">
-        <h3>Kontakt</h3>
-        <p>Østervoldgade 44, 5800 Nyborg, Danmark</p>
-        <p>Kontakt@hotelvillagulle.dk</p>
-        <p>+45 23 23 02 19</p>
-        <div class="flex gap-3 justify-center md:justify-start">
+        <Heading htmlheading="h3" size="medium" font="display" stylingclasses="mt-6 md:mt-0">Kontakt</Heading>
+        <Text teksttype="brødtekst" stylingclasses="font-light"> Østervoldgade 44, 5800 Nyborg, Danmark </Text>
+        <Text teksttype="brødtekst" stylingclasses="font-light"> Kontakt@hotelvillagulle.dk </Text>
+        <Text teksttype="brødtekst" stylingclasses="font-light"> +45 23 23 02 19 </Text>
+        <div class="flex gap-3 justify-center md:justify-start pt-2">
           <img class="w-6 h-6" src="/public/instaicon.png" alt='instagram"' />
           <img class="w-6 h-6" src="/public/facebookicon.png" alt='facebook"' />
         </div>
@@ -35,8 +37,9 @@ import Text from "./Text.astro";
     </div>
     <div class="flex flex-col items-center">
       <img class="w-60 md:w-110 mt-10 md:mt-3" src="public/Hvid_logo.png" alt="hvid_logo" />
-      <p class="md:hidden text-center">HOTEL VILLA GULLE</p>
+      <Heading htmlheading="h1" size="large" font="display" stylingclasses="mt-3"> HOTEL VILLA GULLE </Heading>
     </div>
+
+    <p class="text-right">&copy; 2025</p>
   </div>
-  <p class="text-right">&copy; 2025</p>
 </footer>

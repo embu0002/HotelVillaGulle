@@ -89,95 +89,95 @@ const aktivitetercard = [
       </div>
     </section>
   </main>
+</MainLayout>
 
-  <style>
-    .scrollbar-hide::-webkit-scrollbar {
-      display: none;
-    }
+<style>
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 
-    .scrollbar-hide {
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-  </style>
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+</style>
 
-  <script>
-    const viewport = document.getElementById("viewport");
-    const track = document.getElementById("track");
-    const slides = track.children;
+<script>
+  const viewport = document.getElementById("viewport");
+  const track = document.getElementById("track");
+  const slides = track.children;
 
-    const prevBtn = document.getElementById("prev");
-    const nextBtn = document.getElementById("next");
-    const dotsContainer = document.getElementById("dots");
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
+  const dotsContainer = document.getElementById("dots");
 
-    let index = 0;
+  let index = 0;
 
-    const getSlidesPerView = () => {
-      if (window.innerWidth >= 1024) return 3;
-      if (window.innerWidth >= 768) return 2;
-      return 1;
-    };
+  const getSlidesPerView = () => {
+    if (window.innerWidth >= 1024) return 3;
+    if (window.innerWidth >= 768) return 2;
+    return 1;
+  };
 
-    const maxIndex = () => slides.length - getSlidesPerView();
+  const maxIndex = () => slides.length - getSlidesPerView();
 
-    function update() {
-      const slideWidth = slides[0].offsetWidth;
-      viewport.scrollTo({
-        left: slideWidth * index,
-        behavior: "smooth",
+  function update() {
+    const slideWidth = slides[0].offsetWidth;
+    viewport.scrollTo({
+      left: slideWidth * index,
+      behavior: "smooth",
+    });
+
+    updateDots();
+  }
+
+  function createDots() {
+    dotsContainer.innerHTML = "";
+
+    for (let i = 0; i <= maxIndex(); i++) {
+      const dot = document.createElement("button");
+      dot.className = "w-2.5 h-2.5 rounded-full transition-all";
+
+      dot.addEventListener("click", () => {
+        index = i;
+        update();
       });
 
-      updateDots();
+      dotsContainer.appendChild(dot);
     }
 
-    function createDots() {
-      dotsContainer.innerHTML = "";
+    updateDots();
+  }
 
-      for (let i = 0; i <= maxIndex(); i++) {
-        const dot = document.createElement("button");
-        dot.className = "w-2.5 h-2.5 rounded-full transition-all";
+  function updateDots() {
+    const dots = dotsContainer.children;
 
-        dot.addEventListener("click", () => {
-          index = i;
-          update();
-        });
-
-        dotsContainer.appendChild(dot);
-      }
-
-      updateDots();
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].className = i === index ? "w-6 h-2.5 rounded-full bg-black transition-all" : "w-2.5 h-2.5 rounded-full bg-gray-300 transition-all";
     }
+  }
 
-    function updateDots() {
-      const dots = dotsContainer.children;
+  prevBtn.addEventListener("click", () => {
+    index = Math.max(index - 1, 0);
+    update();
+  });
 
-      for (let i = 0; i < dots.length; i++) {
-        dots[i].className = i === index ? "w-6 h-2.5 rounded-full bg-black transition-all" : "w-2.5 h-2.5 rounded-full bg-gray-300 transition-all";
-      }
-    }
+  nextBtn.addEventListener("click", () => {
+    index = Math.min(index + 1, maxIndex());
+    update();
+  });
 
-    prevBtn.addEventListener("click", () => {
-      index = Math.max(index - 1, 0);
-      update();
-    });
+  viewport.addEventListener("scroll", () => {
+    const slideWidth = slides[0].offsetWidth;
+    index = Math.round(viewport.scrollLeft / slideWidth);
+    updateDots();
+  });
 
-    nextBtn.addEventListener("click", () => {
-      index = Math.min(index + 1, maxIndex());
-      update();
-    });
-
-    viewport.addEventListener("scroll", () => {
-      const slideWidth = slides[0].offsetWidth;
-      index = Math.round(viewport.scrollLeft / slideWidth);
-      updateDots();
-    });
-
-    window.addEventListener("resize", () => {
-      index = 0;
-      createDots();
-      update();
-    });
-
+  window.addEventListener("resize", () => {
+    index = 0;
     createDots();
-  </script>
-</MainLayout>
+    update();
+  });
+
+  createDots();
+</script>

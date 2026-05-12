@@ -225,3 +225,83 @@ const reviews = [
     </section>
   </main>
 </MainLayout>
+
+<script>
+  const viewport = document.getElementById("viewport");
+  const track = document.getElementById("track");
+  const slides = track.children;
+
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
+  const dotsContainer = document.getElementById("dots");
+
+  let index = 0;
+
+  const getSlidesPerView = () => {
+    if (window.innerWidth >= 1024) return 3;
+    if (window.innerWidth >= 768) return 2;
+    return 1;
+  };
+
+  const maxIndex = () => slides.length - getSlidesPerView();
+
+  function update() {
+    const slideWidth = slides[0].offsetWidth;
+    viewport.scrollTo({
+      left: slideWidth * index,
+      behavior: "smooth",
+    });
+
+    updateDots();
+  }
+
+  function createDots() {
+    dotsContainer.innerHTML = "";
+
+    for (let i = 0; i <= maxIndex(); i++) {
+      const dot = document.createElement("button");
+      dot.className = "w-2.5 h-2.5 rounded-full transition-all";
+
+      dot.addEventListener("click", () => {
+        index = i;
+        update();
+      });
+
+      dotsContainer.appendChild(dot);
+    }
+
+    updateDots();
+  }
+
+  function updateDots() {
+    const dots = dotsContainer.children;
+
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].className = i === index ? "w-6 h-2.5 rounded-full bg-black transition-all" : "w-2.5 h-2.5 rounded-full bg-gray-300 transition-all";
+    }
+  }
+
+  prevBtn.addEventListener("click", () => {
+    index = Math.max(index - 1, 0);
+    update();
+  });
+
+  nextBtn.addEventListener("click", () => {
+    index = Math.min(index + 1, maxIndex());
+    update();
+  });
+
+  viewport.addEventListener("scroll", () => {
+    const slideWidth = slides[0].offsetWidth;
+    index = Math.round(viewport.scrollLeft / slideWidth);
+    updateDots();
+  });
+
+  window.addEventListener("resize", () => {
+    index = 0;
+    createDots();
+    update();
+  });
+
+  createDots();
+</script>
