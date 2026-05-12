@@ -16,21 +16,21 @@ const { title, leftImage, leftImageAlt, rightImage, rightImageAlt, content, subt
 ---
 
 <section class="w-full bg-[var(--color-secondary-blue-100)]">
-  <div class="flex flex-col lg:flex-row h-[85dvh] lg:h-[95dvh]">
+  <div class="flex flex-col lg:flex-row h-[75dvh] lg:h-[95dvh]">
     {/* Billede til venstre - skjult på mobil */}
     <div class="hidden lg:block lg:w-1/2 overflow-hidden">
       <img src={leftImage} alt={leftImageAlt} class="w-full h-full object-cover" />
     </div>
 
     {/* Indhold - centreret på begge platforme */}
-    <div class="lg:w-1/2 flex flex-col justify-center items-center px-10 py-16 sm:px-16 sm:py-20 lg:px-20 lg:py-24">
+    <div class="lg:w-1/2 flex flex-col justify-center items-center px-8 py-10 lg:px-12 lg:py-16">
       <div class="w-full max-w-sm flex flex-col items-center">
-        <Heading htmlheading="h1" size="large" font="display" stylingclasses="mb-8 text-center font-light w-full">
+        <Heading htmlheading="h1" size="large" font="display" stylingclasses="md:mb-2 text-center font-light w-full">
           {title}
         </Heading>
 
         {/* Illustration */}
-        <div class="mb-8 w-full">
+        <div class="md:mb-0 w-50 md:w-60">
           <img src={rightImage} alt={rightImageAlt} class="w-full h-70 object-contain" />
         </div>
 
