@@ -36,7 +36,7 @@ const { items } = Astro.props;
   <div id="slider" class="flex overflow-x-auto gap-4 px-8 py-4 snap-x snap-mandatory scroll-smooth scrollbar-hide" style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
     {
       items.map((item) => (
-        <a href={item.href ?? "#"} class="group relative shrink-0 w-[80vw] aspect-[3/4] overflow-hidden rounded snap-center block">
+        <a href={item.href ?? "#"} class="group relative shrink-0 w-[70vw] aspect-[3/4] overflow-hidden snap-center block">
           <img src={item.image} alt={item.imageAlt ?? item.title} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
           <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           <div class="absolute bottom-0 left-0 right-0 p-10">
@@ -56,10 +56,10 @@ const { items } = Astro.props;
 </div>
 
 {/* DESKTOP — grid */}
-<div class="hidden lg:grid grid-cols-3 gap-10">
+<div class="hidden lg:grid grid-cols-3 gap-14">
   {
     items.map((item) => (
-      <a href={item.href ?? "#"} class="group relative h-[550px] overflow-hidden block">
+      <a href={item.href ?? "#"} class="group relative h-[500px] overflow-hidden block ">
         {/* Billede */}
         <img src={item.image} alt={item.imageAlt ?? item.title} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
 

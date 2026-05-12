@@ -10,51 +10,6 @@ import DropdownSection from "../components/Dropdownsection.astro";
 import HeroPages from "../components/HeroPages.astro";
 import AktiviteterCard from "../components/AktiviteterCard.astro";
 
-const aktivitetercard = [
-  {
-    title: "Haven & terassen",
-    body: "Vi har med stor glæde skabt hyggelige, grønne og afslappende udendørsområder på vores hotel. Her tilbyder vi servering af kolde forfriskning skal kan nydes i afslappende i den friske luft.",
-    image: "/public/havenogterassen.png",
-    imageAlt: "Haven og terassen",
-    href: "/aktiviteter",
-  },
-  {
-    title: "Beskyttelsesrum",
-    body: "Der er et beskyttelsesrum fra 2. verdenskrig på hotellets grund. Gå på opdagelse i mørket og udforsk hotellets bunker, hvor du kan få et fascinerende indblik i historien. ",
-    image: "/public/beskyttelsesrum.png",
-    imageAlt: "Beskyttelsesrum",
-    href: "/aktiviteter",
-  },
-  {
-    title: "Kano",
-    body: "Kunne du tænke dig at se Nyborg voldgrav fra et nyt perspektiv? Så prøv hotellets kano, der står til fri afbenyttelse for alle hotellets gæster.",
-    image: "/public/kano.png",
-    imageAlt: "Kano",
-    href: "/aktiviteter",
-  },
-  {
-    title: "Cykler",
-    body: "Nyd et cykeleventyr i Nyborg ved at låne en af vores cykler og oplev alt, hvad byen har at byde på – på en aktiv og sjov måde. Udforsk for eksempel de smukke badestrande, besøg Nyborg Fæstning eller tag en tur rundt til byens mange shoppingmuligheder.",
-    image: "/public/cykler.png",
-    imageAlt: "cykler",
-    href: "/aktiviteter",
-  },
-  {
-    title: "Petanque baner & spil",
-    body: "Hotellets petanque baner og vores udgave af spillet “Kryds og bolle” står altid klar og er til fri afbenyttelse. Alder og fysik spiller ingen roller, og netop derfor disse perfekte spil for hele familien.",
-    image: "/public/spil.png",
-    imageAlt: "spil",
-    href: "/aktiviteter",
-  },
-  {
-    title: "Orangeriet",
-    body: "Vores orangeri forlænger sæsonen og gør det muligt at nyde udeområdet i de koldere måneder. Det skaber en varm og behagelig atmosfære, perfekt til afslapning og sociale sammenkomster.",
-    image: "/public/orangeri.png",
-    imageAlt: "orangeriet",
-    href: "/aktiviteter",
-  },
-];
-
 const aktiviteterdropdown = [
   {
     title: "Haven & terrassen",
@@ -151,39 +106,6 @@ const reviews = [
   <HeroPages title="Om Hotel Villa Gulle" leftImage="/public/om_hero.png" leftImageAlt="Villa Gulle facade" rightImage="/public/Sort_logo_2.svg" rightImageAlt="Villa Gulle tegning" content="Vi er mere end et sted at sove - vi er et sted, hvor gode minder skabes. Hotellet er drevet af et passioneret team, der hver dag sætter en ære i at byde dig velkommen. Her kan du læse lidt mere om, hvem vi er og hvad vi står for. " subtitle="Villa Gulle" />
   <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10">
     <div>
-      <AktiviteterCard items={aktivitetercard} />
-    </div>
-    <section class="px-10 py-12">
-      <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-8 text-center"> Hotellets omgivelser </Heading>
-
-      <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div class="flex flex-col gap-8 max-w-md">
-          {/* Blok 1: Hvad tilbyder byen? */}
-          <div class="flex flex-col gap-3">
-            <Heading htmlheading="h3" size="medium" font="display" stylingclasses=""> Hvad tilbyder byen? </Heading>
-            <Text teksttype="brødtekst"> Nyborg er en by fyldt med spændende oplevelser, og har mange gode udflugtsmuligheder inden for kort afstand. Som gæst på Hotel Villa Gulle har du en perfekt beliggende base til at kunne udforske Nyborg by og dens nærområde. </Text>
-            <a href="https://www.visitnyborg.dk/nyborg/oplev-nyborg" target="_blank" rel="noopener noreferrer">
-              <Button variant="secondary" size="small">Læs mere</Button>
-            </a>
-          </div>
-
-          {/* Blok 2: Hvad tilbyder Fyn? */}
-          <div class="flex flex-col gap-3">
-            <Heading htmlheading="h3" size="medium" font="display" stylingclasses=""> Hvad tilbyder Fyn? </Heading>
-            <Text teksttype="brødtekst"> Fyn byder på en uforglemmelig blanding af kultur, natur og historie. Herregårde, maleriske landsbyer, frodig natur og fantastiske badestrande med rent og klart vand. Nyborg og Hotel Villa Gulle har den bedste infrastruktur til besøg rundt på øen. </Text>
-            <a href="https://www.visitfyn.dk/explore/begivenheder-cid58/det-sker-cid59?sort=DATE" target="_blank" rel="noopener noreferrer">
-              <Button variant="secondary" size="small">Læs mere</Button>
-            </a>
-          </div>
-        </div>
-
-        {/* Højre kolonne — kortbilledet */}
-        <div class="flex items-center justify-center">
-          <img src="/public/kort_nyborg.png" alt="Kort over Nyborg" class="w-full object-contain" />
-        </div>
-      </div>
-    </section>
-    <div>
       <DropdownSection heading="Aktiviteter" image="/public/aktiviteter_drop.png" imageAlt="Terrasse med borde og stole" items={aktiviteterdropdown} buttonText="Læs mere" buttonHref="/aktiviteter" />
     </div>
     <section class="relative z-20">
@@ -216,95 +138,4 @@ const reviews = [
       <div id="dots" class="flex gap-2 mt-4 justify-center"></div>
     </section>
   </main>
-
-  <style>
-    .scrollbar-hide::-webkit-scrollbar {
-      display: none;
-    }
-
-    .scrollbar-hide {
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-  </style>
-
-  <script>
-    const viewport = document.getElementById("viewport");
-    const track = document.getElementById("track");
-    const slides = track.children;
-
-    const prevBtn = document.getElementById("prev");
-    const nextBtn = document.getElementById("next");
-    const dotsContainer = document.getElementById("dots");
-
-    let index = 0;
-
-    const getSlidesPerView = () => {
-      if (window.innerWidth >= 1024) return 3;
-      if (window.innerWidth >= 768) return 2;
-      return 1;
-    };
-
-    const maxIndex = () => slides.length - getSlidesPerView();
-
-    function update() {
-      const slideWidth = slides[0].offsetWidth;
-      viewport.scrollTo({
-        left: slideWidth * index,
-        behavior: "smooth",
-      });
-
-      updateDots();
-    }
-
-    function createDots() {
-      dotsContainer.innerHTML = "";
-
-      for (let i = 0; i <= maxIndex(); i++) {
-        const dot = document.createElement("button");
-        dot.className = "w-2.5 h-2.5 rounded-full transition-all";
-
-        dot.addEventListener("click", () => {
-          index = i;
-          update();
-        });
-
-        dotsContainer.appendChild(dot);
-      }
-
-      updateDots();
-    }
-
-    function updateDots() {
-      const dots = dotsContainer.children;
-
-      for (let i = 0; i < dots.length; i++) {
-        dots[i].className = i === index ? "w-6 h-2.5 rounded-full bg-black transition-all" : "w-2.5 h-2.5 rounded-full bg-gray-300 transition-all";
-      }
-    }
-
-    prevBtn.addEventListener("click", () => {
-      index = Math.max(index - 1, 0);
-      update();
-    });
-
-    nextBtn.addEventListener("click", () => {
-      index = Math.min(index + 1, maxIndex());
-      update();
-    });
-
-    viewport.addEventListener("scroll", () => {
-      const slideWidth = slides[0].offsetWidth;
-      index = Math.round(viewport.scrollLeft / slideWidth);
-      updateDots();
-    });
-
-    window.addEventListener("resize", () => {
-      index = 0;
-      createDots();
-      update();
-    });
-
-    createDots();
-  </script>
 </MainLayout>
