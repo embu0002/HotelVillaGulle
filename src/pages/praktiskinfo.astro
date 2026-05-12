@@ -100,8 +100,27 @@ const aktiviteterdropdown = [
     <div>
       <DropdownSection heading="Vi svarer på det vigtigste" image="/public/praktisk_info_stue.png" imageAlt="Af daglistuen" items={aktiviteterdropdown} showButton={false} />
     </div>
-    <section>
-      <p>Kontaktinformation her</p>
+    <section class="grid md:grid-cols-2 p-20">
+      <div class="order-1 md:order-2 md:pt-30">
+        <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-8"> Kontaktoplysninger </Heading>
+        <div>
+          <div class="flex gap-5">
+            <img src="/public/ikon_adresse.png" class="w-9 h-9" alt="Adresse" />
+            <Text teksttype="brødtekst" stylingclasses="font-light line-clamp-4"> Østervoldgade 44, 5800 Nyborg, Denmark </Text>
+          </div>
+          <div class="flex gap-5">
+            <img src="/public/ikon_mail.png" class="w-8 h-8" alt="Mail" />
+            <Text teksttype="brødtekst" stylingclasses="font-light line-clamp-4"> Kontakt@hotelvillagulle.dk</Text>
+          </div>
+          <div class="flex gap-5">
+            <img src="/public/ikon_nummer.png" class="w-4 h-11" alt="Nummer" />
+            <Text teksttype="brødtekst" stylingclasses="font-light line-clamp-4"> + 45 23 23 02 19</Text>
+          </div>
+        </div>
+      </div>
+      <div class="order-2 md:order-1">
+        <img src="/public/hotellets_grund.png" class="w-120 h-auto" alt="Tegning af hotellets grund" />
+      </div>
     </section>
   </main>
 </MainLayout>
