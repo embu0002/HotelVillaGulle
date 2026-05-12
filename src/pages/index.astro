@@ -114,7 +114,7 @@ const reviews = [
           price: "1400 dkk",
           bookingHref: "/book",
           image: {
-            src: "/public/forside_varelse1.png",
+            src: "/public/deluxe1.png",
             alt: "Dobbeltværelse mod havnen",
           },
         },
@@ -124,7 +124,7 @@ const reviews = [
           price: "1295 dkk",
           bookingHref: "/book",
           image: {
-            src: "/public/forside_varelse2.png",
+            src: "/public/deluxe2.png",
             alt: "Dobbeltværelse mod havnen",
           },
         },
@@ -134,7 +134,7 @@ const reviews = [
           price: "890 dkk",
           bookingHref: "/book",
           image: {
-            src: "/public/forside_varelse3.png",
+            src: "/public/deluxe3.png",
             alt: "Dobbeltværelse mod havnen",
           },
         },
@@ -144,7 +144,7 @@ const reviews = [
           price: "890 dkk",
           bookingHref: "/book",
           image: {
-            src: "/public/forside_varelse4.png",
+            src: "/public/deluxe4.png",
             alt: "Dobbeltværelse mod havnen",
           },
         },
@@ -154,7 +154,7 @@ const reviews = [
           price: "1045 dkk",
           bookingHref: "/book",
           image: {
-            src: "/public/forside_varelse4.png",
+            src: "/public/deluxe5.png",
             alt: "Dobbeltværelse mod havnen",
           },
         },
@@ -164,7 +164,7 @@ const reviews = [
           price: "695 dkk",
           bookingHref: "/book",
           image: {
-            src: "/public/forside_varelse4.png",
+            src: "/public/enkelt6.png",
             alt: "Dobbeltværelse mod havnen",
           },
         },
@@ -210,6 +210,19 @@ const reviews = [
       <a href="/praktiskinfo">
         <Button variant="secondary" size="small">Læs mere</Button>
       </a>
+    </section>
+    <section class="grid grid-cols-2">
+      <div>
+        <img src="/public/aktiviteter_drop.png" alt="Aktiviteter" />
+      </div>
+      <div class="bg-[var(--color-secondary-blue-100)] justify-center flex flex-col gap-2 px-10 py-5">
+        <Heading htmlheading="h2" size="large" font="display" stylingclasses="font-light mb-1"> På sporet af hotellets historie </Heading>
+        <Text teksttype="brødtekst" stylingclasses="font-light "> Når du træder ind ad døren på Hotel Villa Gulle, træder du ind i et stykke af Nyborgs historie. </Text>
+        <Text teksttype="brødtekst" stylingclasses="font-light "> Vores fundament blev lagt helt tilbage i 1873, da den fynske skibsmægler Hans Friis opførte en storslået klassicistisk villa til sig selv og sin familie. Siden da har bygningerne levet mange liv – fra samlingspunkt for byens borgere i 1920’ernes nybyggede festsal til det lokale missionshotel. </Text>
+        <a href="/omhotelvillagulle">
+          <Button variant="secondary" size="small">Læs mere</Button>
+        </a>
+      </div>
     </section>
     <div>
       <DropdownSection heading="Aktiviteter" image="/public/aktiviteter_drop.png" imageAlt="Terrasse med borde og stole" items={aktiviteterdropdown} buttonText="Læs mere" buttonHref="/aktiviteter" />
