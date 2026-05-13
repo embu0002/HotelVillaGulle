@@ -72,7 +72,7 @@ const reviews = [
   },
   {
     rating: 5,
-    title: "Super hyggeligt sted med meget venligt personale",
+    title: "Super hyggeligt sted. Meget venligt personale",
     text: "Et super hyggeligt sted, god parkeringsmulighed, meget god morgenmad, meget venligt personale, gode senge..",
     name: "Vidjai",
   },
@@ -104,237 +104,263 @@ const reviews = [
 ---
 
 <MainLayout title="Titel">
-  <HeroPages title="Om Hotel Villa Gulle" leftImage="/public/om_hero.png" leftImageAlt="Villa Gulle facade" rightImage="/public/Sort_logo_2.svg" rightImageAlt="Villa Gulle tegning" content="Vi er mere end et sted at sove - vi er et sted, hvor gode minder skabes. Hotellet er drevet af et passioneret team, der hver dag sætter en ære i at byde dig velkommen. Her kan du læse lidt mere om, hvem vi er og hvad vi står for. " subtitle="Villa Gulle" />
-  <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10" style="--page-padding: clamp(1rem, 4vw, 2.5rem)">
-    <VarelseSlider
-      slides={[
-        {
-          title: "Deluxe dobbeltværelse - Havudsigt",
-          description: "Nyd den smukke udsigt over vandet fra dit lyse værelse eller den private terrasse. Indrettet med en King size-seng, eget badeværelse og morgenmad inkluderet.",
-          price: "1400 dkk",
-          bookingHref: "/book",
-          image: {
-            src: "/public/deluxe1.png",
-            alt: "Dobbeltværelse mod havnen",
-          },
-        },
-        {
-          title: "Deluxedobbeltværelse",
-          description: "Nyd udsigten over byens liv og den smukke kirke fra dit stemningsfulde værelse. Indrettet med en King size-seng, eget badeværelse og morgenmad inkluderet.",
-          price: "1295 dkk",
-          bookingHref: "/book",
-          image: {
-            src: "/public/deluxe2.png",
-            alt: "Dobbeltværelse mod havnen",
-          },
-        },
-        {
-          title: "Dobbeltværelse mod havnen",
-          description: "Nyd udsigten over havnen fra dit stemningsfulde værelse med dobbeltseng, siddepladser og tv. Eget badeværelse og morgenmad inkluderet.",
-          price: "890 dkk",
-          bookingHref: "/book",
-          image: {
-            src: "/public/deluxe3.png",
-            alt: "Dobbeltværelse mod havnen",
-          },
-        },
-        {
-          title: "Dobbeltværelse mod gaden",
-          description: "Tag byens stemning ind fra dit lyse værelse med udsigt over byens liv.  Indrettet med en dobbeltseng, eget badeværelse og morgenmad inkluderet",
-          price: "890 dkk",
-          bookingHref: "/book",
-          image: {
-            src: "/public/deluxe4.png",
-            alt: "Dobbeltværelse mod havnen",
-          },
-        },
-        {
-          title: "Dobbeltværelse i stueetagen",
-          description: "Tæt på vandet og byens puls — et stemningsfuldt værelse i stueetagen med udsigt over havnen. Dobbeltseng, eget badeværelse og morgenmad inkluderet.",
-          price: "1045 dkk",
-          bookingHref: "/book",
-          image: {
-            src: "/public/deluxe5.png",
-            alt: "Dobbeltværelse mod havnen",
-          },
-        },
-        {
-          title: "Enkeltværelse med havudsigt",
-          description: "Et charmerende værelse under tagene med karakterfulde skråvægge og udsigt over havnen. Eget badeværelse og morgenmad inkluderet.",
-          price: "695 dkk",
-          bookingHref: "/book",
-          image: {
-            src: "/public/enkelt6.png",
-            alt: "Dobbeltværelse mod havnen",
-          },
-        },
-      ]}
-    />
-    <section class="flex flex-col items-center gap-8 py-10">
-      <div class="flex items-center w-full">
-        <div class="flex-1 flex flex-col items-center gap-3 px-2">
-          <div class="h-12 flex items-end justify-center">
-            <img src="/public/ur.svg" alt="Check ind" class="w-9 h-9 md:w-14 md:h-14 object-contain" />
-          </div>
-          <Text teksttype="brødtekst" stylingclasses="font-light text-center"> Check in efter kl 15 </Text>
-        </div>
-
-        <div class="w-px h-16 bg-gray-300 shrink-0"></div>
-
-        <div class="flex-1 flex flex-col items-center gap-3 px-2">
-          <div class="h-12 flex items-end justify-center">
-            <img src="/public/parkering.svg" alt="Parkering" class="w-9 h-9 md:w-14 md:h-14 object-contain" />
-          </div>
-          <Text teksttype="brødtekst" stylingclasses="font-light text-center"> Fri parkering </Text>
-        </div>
-
-        <div class="w-px h-16 bg-gray-300 shrink-0"></div>
-
-        <div class="flex-1 flex flex-col items-center gap-3 px-2">
-          <div class="h-12 flex items-end justify-center">
-            <img src="/public/morgenmad.svg" alt="Morgenmad" class="w-9 h-9 md:w-14 md:h-14 object-contain" />
-          </div>
-          <Text teksttype="brødtekst" stylingclasses="font-light text-center"> Morgenmad inkluderet i prisen </Text>
-        </div>
-
-        <div class="w-px h-16 bg-gray-300 shrink-0"></div>
-
-        <div class="flex-1 flex flex-col items-center gap-3 px-2">
-          <div class="h-12 flex items-end justify-center">
-            <img src="/public/ur.svg" alt="Check ud" class="w-9 h-9 md:w-14 md:h-14 object-contain" />
-          </div>
-          <Text teksttype="brødtekst" stylingclasses="font-light text-center"> Check ud kl 11 </Text>
+  <!-- HERO SECTION -->
+  <section class="relative w-full h-160 overflow-hidden">
+    <div>
+      <video class="absolute inset-0 w-full h-full object-cover z-0" autoplay muted loop playsinline>
+        <source src="/videohero.mp4" type="video/mp4" />
+      </video>
+      <div class="absolute inset-0 bg-black/30 z-10"></div>
+    </div>
+    <main class="relative z-20 px-[var(--gutter)] mx-auto max-w-[1340px] pt-40">
+      <div class="text-center">
+        <Heading htmlheading="h3" size="medium" font="display" stylingclasses="font-light text-white"> Boutique hotel i hjertet af Nyborg </Heading>
+        <Heading htmlheading="h1" size="hero" font="display" stylingclasses="font-light text-white md:max-w-120 md:mx-auto text-center md:leading-none md:pt-4"> Dit hjem når du er væk hjemmefra </Heading>
+        <div class="pt-5 md:pt-8 flex md:flex gap-3 md:gap-7 justify-center">
+          <Button class="w-45 md:w-64" variant="secondary-large" size="medium">Læs mere om hotellet</Button>
+          <Button class="w-45 md:w-64" variant="primary-large" size="medium">Book nu</Button>
         </div>
       </div>
+      <!-- PIL -->
+      <div class="absolute inset-x-0 flex justify-center z-20 top-130 md:top-130">
+        <div class="relative w-20 h-20">
+          <span class="absolute left-0 top-1/2 w-[61%] h-[4px] bg-white rotate-45"></span>
+          <span class="absolute right-0 top-1/2 w-[60%] h-[4px] bg-white -rotate-45"></span>
+        </div>
+      </div>
+    </main>
+  </section>
 
-      <a href="/praktiskinfo">
+  <!-- VÆRELSES SECTION -->
+  <VarelseSlider
+    slides={[
+      {
+        title: "Deluxe dobbeltværelse - Havudsigt",
+        description: "Nyd den smukke udsigt over vandet fra dit lyse værelse eller den private terrasse. Indrettet med en King size-seng, eget badeværelse og morgenmad inkluderet.",
+        price: "1400 dkk",
+        bookingHref: "/book",
+        image: {
+          src: "/public/deluxe1.png",
+          alt: "Dobbeltværelse mod havnen",
+        },
+      },
+      {
+        title: "Deluxedobbeltværelse",
+        description: "Nyd udsigten over byens liv og den smukke kirke fra dit stemningsfulde værelse. Indrettet med en King size-seng, eget badeværelse og morgenmad inkluderet.",
+        price: "1295 dkk",
+        bookingHref: "/book",
+        image: {
+          src: "/public/deluxe2.png",
+          alt: "Dobbeltværelse mod havnen",
+        },
+      },
+      {
+        title: "Dobbeltværelse mod havnen",
+        description: "Nyd udsigten over havnen fra dit stemningsfulde værelse med dobbeltseng, siddepladser og tv. Eget badeværelse og morgenmad inkluderet.",
+        price: "890 dkk",
+        bookingHref: "/book",
+        image: {
+          src: "/public/deluxe3.png",
+          alt: "Dobbeltværelse mod havnen",
+        },
+      },
+      {
+        title: "Dobbeltværelse mod gaden",
+        description: "Tag byens stemning ind fra dit lyse værelse med udsigt over byens liv.  Indrettet med en dobbeltseng, eget badeværelse og morgenmad inkluderet",
+        price: "890 dkk",
+        bookingHref: "/book",
+        image: {
+          src: "/public/deluxe4.png",
+          alt: "Dobbeltværelse mod havnen",
+        },
+      },
+      {
+        title: "Dobbeltværelse i stueetagen",
+        description: "Tæt på vandet og byens puls — et stemningsfuldt værelse i stueetagen med udsigt over havnen. Dobbeltseng, eget badeværelse og morgenmad inkluderet.",
+        price: "1045 dkk",
+        bookingHref: "/book",
+        image: {
+          src: "/public/deluxe5.png",
+          alt: "Dobbeltværelse mod havnen",
+        },
+      },
+      {
+        title: "Enkeltværelse med havudsigt",
+        description: "Et charmerende værelse under tagene med karakterfulde skråvægge og udsigt over havnen. Eget badeværelse og morgenmad inkluderet.",
+        price: "695 dkk",
+        bookingHref: "/book",
+        image: {
+          src: "/public/enkelt6.png",
+          alt: "Dobbeltværelse mod havnen",
+        },
+      },
+    ]}
+  />
+
+  <!-- INFOGRAFIK SECTION -->
+  <section class="flex flex-col items-center gap-8 py-10">
+    <div class="flex items-center w-full">
+      <div class="flex-1 flex flex-col items-center gap-3 px-2">
+        <div class="h-12 flex items-end justify-center">
+          <img src="/public/ur.svg" alt="Check ind" class="w-9 h-9 md:w-14 md:h-14 object-contain" />
+        </div>
+        <Text teksttype="brødtekst" stylingclasses="font-light text-center"> Check in efter kl 15 </Text>
+      </div>
+      <div class="w-px h-24 md:h-31 bg-primary-neutral-950 shrink-0"></div>
+      <div class="flex-1 flex flex-col items-center gap-3 px-2">
+        <div class="h-12 flex items-end justify-center">
+          <img src="/public/parkering.svg" alt="Parkering" class="w-9 h-9 md:w-14 md:h-14 object-contain" />
+        </div>
+        <Text teksttype="brødtekst" stylingclasses="font-light text-center"> Fri parkering </Text>
+      </div>
+      <div class="w-px h-24 md:h-31 bg-primary-neutral-950 shrink-0"></div>
+      <div class="flex-1 flex flex-col items-center gap-3 px-2">
+        <div class="h-12 flex items-end justify-center">
+          <img src="/public/morgenmad.svg" alt="Morgenmad" class="w-9 h-9 md:w-14 md:h-14 object-contain" />
+        </div>
+        <Text teksttype="brødtekst" stylingclasses="font-light text-center"> Morgenmad inkluderet i prisen </Text>
+      </div>
+      <div class="w-px h-24 md:h-31 bg-primary-neutral-950 shrink-0"></div>
+      <div class="flex-1 flex flex-col items-center gap-3 px-2">
+        <div class="h-12 flex items-end justify-center">
+          <img src="/public/ur.svg" alt="Check ud" class="w-9 h-9 md:w-14 md:h-14 object-contain" />
+        </div>
+        <Text teksttype="brødtekst" stylingclasses="font-light text-center"> Check ud kl 11 </Text>
+      </div>
+    </div>
+    <a href="/praktiskinfo">
+      <Button variant="secondary" size="small">Læs mere</Button>
+    </a>
+  </section>
+
+  <!-- HISTORIE SECTION -->
+  <section class="grid grid-cols-2">
+    <div>
+      <img src="/public/aktiviteter_drop.png" alt="Aktiviteter" />
+    </div>
+    <div class="bg-[var(--color-secondary-blue-100)] justify-center flex flex-col gap-2 px-10 py-5">
+      <Heading htmlheading="h2" size="large" font="display" stylingclasses="font-light mb-1"> På sporet af hotellets historie </Heading>
+      <Text teksttype="brødtekst" stylingclasses="font-light "> Når du træder ind ad døren på Hotel Villa Gulle, træder du ind i et stykke af Nyborgs historie. </Text>
+      <Text teksttype="brødtekst" stylingclasses="font-light "> Vores fundament blev lagt helt tilbage i 1873, da den fynske skibsmægler Hans Friis opførte en storslået klassicistisk villa til sig selv og sin familie. Siden da har bygningerne levet mange liv – fra samlingspunkt for byens borgere i 1920’ernes nybyggede festsal til det lokale missionshotel. </Text>
+      <a href="/omhotelvillagulle">
         <Button variant="secondary" size="small">Læs mere</Button>
       </a>
-    </section>
-    <section class="grid grid-cols-2">
-      <div>
-        <img src="/public/aktiviteter_drop.png" alt="Aktiviteter" />
-      </div>
-      <div class="bg-[var(--color-secondary-blue-100)] justify-center flex flex-col gap-2 px-10 py-5">
-        <Heading htmlheading="h2" size="large" font="display" stylingclasses="font-light mb-1"> På sporet af hotellets historie </Heading>
-        <Text teksttype="brødtekst" stylingclasses="font-light "> Når du træder ind ad døren på Hotel Villa Gulle, træder du ind i et stykke af Nyborgs historie. </Text>
-        <Text teksttype="brødtekst" stylingclasses="font-light "> Vores fundament blev lagt helt tilbage i 1873, da den fynske skibsmægler Hans Friis opførte en storslået klassicistisk villa til sig selv og sin familie. Siden da har bygningerne levet mange liv – fra samlingspunkt for byens borgere i 1920’ernes nybyggede festsal til det lokale missionshotel. </Text>
-        <a href="/omhotelvillagulle">
-          <Button variant="secondary" size="small">Læs mere</Button>
-        </a>
-      </div>
-    </section>
-    <div>
-      <DropdownSection heading="Aktiviteter" image="/public/aktiviteter_drop.png" imageAlt="Terrasse med borde og stole" items={aktiviteterdropdown} buttonText="Læs mere" buttonHref="/aktiviteter" />
     </div>
-    <section class="relative z-20">
-      <div class="flex items-center gap-4 w-full">
-        <!-- VENSTRE -->
-        <button id="prev" class="shrink-0 z-10">
-          <img src="/knap_review_venstre.png" class="w-8 h-8 pl-1 md:pl-0" alt="venstre" />
-        </button>
+  </section>
 
-        <!-- VIEWPORT -->
-        <div id="viewport" class="overflow-x-auto scroll-smooth flex-1 snap-x snap-mandatory scrollbar-hide">
-          <div id="track" class="flex">
-            {
-              reviews.map((r) => (
-                <div class="w-[70%] sm:w-[80%] md:w-1/2 lg:w-1/3 p-3 shrink-0 mx-auto">
-                  <ReviewCard {...r} />
-                </div>
-              ))
-            }
-          </div>
+  <!-- AKTIVITETER SECTION -->
+  <section>
+    <DropdownSection heading="Aktiviteter" image="/public/aktiviteter_drop.png" imageAlt="Terrasse med borde og stole" items={aktiviteterdropdown} buttonText="Læs mere" buttonHref="/aktiviteter" />
+  </section>
+
+  <!-- GÆSTE REVIEWS SECTION -->
+  <section class="relative z-20 md:pb-15">
+    <div class="flex items-center gap-4 w-full">
+      <!-- VENSTRE -->
+      <button id="prev" class="shrink-0 z-10">
+        <img src="/knap_review_venstre.png" class="w-8 h-7 pl-1 md:pl-1" alt="venstre" />
+      </button>
+
+      <!-- VIEWPORT -->
+      <div id="viewport" class="overflow-x-auto scroll-smooth flex-1 snap-x snap-mandatory scrollbar-hide">
+        <div id="track" class="flex">
+          {
+            reviews.map((r) => (
+              <div class="w-[70%] sm:w-[80%] md:w-1/2 lg:w-1/3 p-3 shrink-0 mx-auto">
+                <ReviewCard {...r} />
+              </div>
+            ))
+          }
         </div>
-
-        <!-- HØJRE -->
-        <button id="next" class="shrink-0 z-10">
-          <img src="/knap_review_hoejre.png" class="w-8 h-8 pr-1 md:pl-0" alt="højre" />
-        </button>
       </div>
 
-      <!-- DOTS -->
-      <div id="dots" class="flex gap-2 mt-4 justify-center"></div>
-    </section>
-  </main>
-</MainLayout>
+      <!-- HØJRE -->
+      <button id="next" class="shrink-0 z-10">
+        <img src="/knap_review_hoejre.png" class="w-8 h-7 pr-1 md:pl-1" alt="højre" />
+      </button>
+    </div>
 
-<script>
-  const viewport = document.getElementById("viewport");
-  const track = document.getElementById("track");
-  const slides = track.children;
+    <!-- DOTS -->
+    <div id="dots" class="flex gap-2 mt-4 justify-center"></div>
+  </section>
 
-  const prevBtn = document.getElementById("prev");
-  const nextBtn = document.getElementById("next");
-  const dotsContainer = document.getElementById("dots");
+  <script>
+    const viewport = document.getElementById("viewport");
+    const track = document.getElementById("track");
+    const slides = track.children;
 
-  let index = 0;
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+    const dotsContainer = document.getElementById("dots");
 
-  const getSlidesPerView = () => {
-    if (window.innerWidth >= 1024) return 3;
-    if (window.innerWidth >= 768) return 2;
-    return 1;
-  };
+    let index = 0;
 
-  const maxIndex = () => slides.length - getSlidesPerView();
+    const getSlidesPerView = () => {
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 768) return 2;
+      return 1;
+    };
 
-  function update() {
-    const slideWidth = slides[0].offsetWidth;
-    viewport.scrollTo({
-      left: slideWidth * index,
-      behavior: "smooth",
-    });
+    const maxIndex = () => slides.length - getSlidesPerView();
 
-    updateDots();
-  }
-
-  function createDots() {
-    dotsContainer.innerHTML = "";
-
-    for (let i = 0; i <= maxIndex(); i++) {
-      const dot = document.createElement("button");
-      dot.className = "w-2.5 h-2.5 rounded-full transition-all";
-
-      dot.addEventListener("click", () => {
-        index = i;
-        update();
+    function update() {
+      const slideWidth = slides[0].offsetWidth;
+      viewport.scrollTo({
+        left: slideWidth * index,
+        behavior: "smooth",
       });
 
-      dotsContainer.appendChild(dot);
+      updateDots();
     }
 
-    updateDots();
-  }
+    function createDots() {
+      dotsContainer.innerHTML = "";
 
-  function updateDots() {
-    const dots = dotsContainer.children;
+      for (let i = 0; i <= maxIndex(); i++) {
+        const dot = document.createElement("button");
+        dot.className = "w-2.5 h-2.5 rounded-full transition-all";
 
-    for (let i = 0; i < dots.length; i++) {
-      dots[i].className = i === index ? "w-6 h-2.5 rounded-full bg-black transition-all" : "w-2.5 h-2.5 rounded-full bg-gray-300 transition-all";
+        dot.addEventListener("click", () => {
+          index = i;
+          update();
+        });
+
+        dotsContainer.appendChild(dot);
+      }
+
+      updateDots();
     }
-  }
 
-  prevBtn.addEventListener("click", () => {
-    index = Math.max(index - 1, 0);
-    update();
-  });
+    function updateDots() {
+      const dots = dotsContainer.children;
 
-  nextBtn.addEventListener("click", () => {
-    index = Math.min(index + 1, maxIndex());
-    update();
-  });
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].className = i === index ? "w-6 h-2.5 rounded-full bg-black transition-all" : "w-2.5 h-2.5 rounded-full bg-gray-300 transition-all";
+      }
+    }
 
-  viewport.addEventListener("scroll", () => {
-    const slideWidth = slides[0].offsetWidth;
-    index = Math.round(viewport.scrollLeft / slideWidth);
-    updateDots();
-  });
+    prevBtn.addEventListener("click", () => {
+      index = Math.max(index - 1, 0);
+      update();
+    });
 
-  window.addEventListener("resize", () => {
-    index = 0;
+    nextBtn.addEventListener("click", () => {
+      index = Math.min(index + 1, maxIndex());
+      update();
+    });
+
+    viewport.addEventListener("scroll", () => {
+      const slideWidth = slides[0].offsetWidth;
+      index = Math.round(viewport.scrollLeft / slideWidth);
+      updateDots();
+    });
+
+    window.addEventListener("resize", () => {
+      index = 0;
+      createDots();
+      update();
+    });
+
     createDots();
-    update();
-  });
-
-  createDots();
-</script>
+  </script>
+</MainLayout>
