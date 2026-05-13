@@ -11,28 +11,33 @@ import HeroPages from "../components/HeroPages.astro";
 
 <MainLayout title="Titel">
   <HeroPages title="Om Hotel Villa Gulle" leftImage="/public/om_hero.png" leftImageAlt="Villa Gulle facade" rightImage="/public/Sort_logo_2.svg" rightImageAlt="Villa Gulle tegning" content="Vi er mere end et sted at sove - vi er et sted, hvor gode minder skabes. Hotellet er drevet af et passioneret team, der hver dag sætter en ære i at byde dig velkommen. Her kan du læse lidt mere om, hvem vi er og hvad vi står for. " subtitle="Villa Gulle" />
-  <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10">
-    <section class="p-20 md:p-40 grid md:grid-cols-2 items-center">
+  <main class="px-[var(--gutter)] mx-auto max-w-[1340px]">
+    <!-- NY BEGYNDELSE SECTION -->
+    <section class="md:px-40 grid md:grid-cols-2 items-center md:pt-15 md:pb-15">
       <div class="order-1 md:order-2">
-        <h2 class="mb-5">En ny begyndelse med respekt for arven</h2>
-        <p>I 2021 overtog vi, familien Kongsmark, nøglerne til Hotel Villa Gulle. Vores drøm var klar: Vi ville forandre for at bevare. <br /> Efter en nænsom og gennemgribende renovering genåbnede vi hotellet i sommeren 2022. Hver en farve, hvert et møbel og hver en detalje er valgt med dyb respekt for bygningens historiske sjæl – og ikke mindst i Gudruns varme ånd. <br /> I dag er Hotel Villa Gulle et moderne frirum, hvor fortidens charme møder nutidens komfort. Et sted, hvor det gode værtskab og den personlige atmosfære stadig sidder i væggene. <br /> Vi glæder os til at byde dig velkommen hjem.</p>
+        <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-8">En ny begyndelse med respekt for arven </Heading>
+        <Text teksttype="brødtekst">I 2021 overtog vi, familien Kongsmark, nøglerne til Hotel Villa Gulle. Vores drøm var klar: Vi ville forandre for at bevare.</Text>
+        <Text teksttype="brødtekst">Efter en nænsom og gennemgribende renovering genåbnede vi hotellet i sommeren 2022. Hver en farve, hvert et møbel og hver en detalje er valgt med dyb respekt for bygningens historiske sjæl – og ikke mindst i Gudruns varme ånd.</Text>
+        <Text teksttype="brødtekst">I dag er Hotel Villa Gulle et moderne frirum, hvor fortidens charme møder nutidens komfort. Et sted, hvor det gode værtskab og den personlige atmosfære stadig sidder i væggene.</Text>
+        <Text teksttype="brødtekst">Vi glæder os til at byde dig velkommen hjem.</Text>
       </div>
-      <div class="flex justify-center order-2 md:order-1 mt-10">
+      <div class="flex justify-center order-2 md:order-1">
         <img src="/sort_hvid_af_hotel.png" class="w-80 h-auto md:w-100 md:h-auto" alt="sort hvid af hotel" />
       </div>
     </section>
+    <!-- HISTORIEN BAG SECTION -->
     <section class="pr-20 grid md:grid-cols-2 items-center mb-20">
-      <div class="bg-secondary-beige-100 pl-10 pb-30 p-15 md:p-27">
-        <h2 class="">Historien bag Hotel Villa Gulle</h2>
-        <div>
-          <p>Når du træder ind ad døren på Hotel Villa Gulle, træder du ind i et stykke af Nyborgs historie. Vores fundament blev lagt helt tilbage i 1873, da den fynske skibsmægler Hans Friis opførte en storslået klassicistisk villa til sig selv og sin familie. Siden da har bygningerne levet mange liv – fra samlingspunkt for byens borgere i 1920’ernes nybyggede festsal til det lokale missionshotel.</p>
-          <p>Det var dog først i 1996, at hotellet fik sit nuværende navn og sin helt særlige personlighed. Her overtog Gudrun Simonsen stedet og døbte det kærligt 'Hotel Villa Gulle’ – en sammentrækning af husets oprindelse som villa og hendes eget kaldenavn. I et kvart århundrede drev Gudrun hotellet med et usædvanligt hjerterum, der gjorde det til et elsket byhotel.</p>
+      <div class="bg-secondary-beige-100 w-210 pb-30 md:p-27">
+        <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-8">Historien bag Hotel Villa Gulle</Heading>
+        <div class="max-w-125">
+          <Text teksttype="brødtekst">Når du træder ind ad døren på Hotel Villa Gulle, træder du ind i et stykke af Nyborgs historie. Vores fundament blev lagt helt tilbage i 1873, da den fynske skibsmægler Hans Friis opførte en storslået klassicistisk villa til sig selv og sin familie. Siden da har bygningerne levet mange liv – fra samlingspunkt for byens borgere i 1920’ernes nybyggede festsal til det lokale missionshotel.</Text>
+          <Text teksttype="brødtekst">Det var dog først i 1996, at hotellet fik sit nuværende navn og sin helt særlige personlighed. Her overtog Gudrun Simonsen stedet og døbte det kærligt 'Hotel Villa Gulle’ – en sammentrækning af husets oprindelse som villa og hendes eget kaldenavn. I et kvart århundrede drev Gudrun hotellet med et usædvanligt hjerterum, der gjorde det til et elsket byhotel.</Text>
         </div>
       </div>
       <div class="relative w-150 h-150">
         <!-- 1. billede -->
         <img src="/dekoration1.png" class="absolute w-48 object-cover -top-20 left-80
-           md:top-15 md:-left-12 md:w-56" />
+           md:top-15 md:-left-4 md:w-56" />
 
         <!-- 2. billede -->
         <img src="/dekoration2.png" class="absolute w-48 object-cover top-4 left-13
@@ -46,6 +51,7 @@ import HeroPages from "../components/HeroPages.astro";
     <section>
       <p>Før/efter renovering mangler her</p>
     </section>
+    <!-- BREV SECTION -->
     <section class="relative py-30 md:py-55">
       <img src="/public/tapet_baggrund.png" class="absolute inset-0 w-full h-full object-cover z-0" alt="tapet_baggrund" />
       <div class="relative z-10 bg-primary-Background-50 p-10 md:p-10 w-3/4 md:w-2/4 mx-auto">
