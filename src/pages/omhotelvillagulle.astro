@@ -13,7 +13,7 @@ import HeroPages from "../components/HeroPages.astro";
   <HeroPages title="Om Hotel Villa Gulle" leftImage="/public/om_hero.png" leftImageAlt="Villa Gulle facade" rightImage="/public/Sort_logo_2.svg" rightImageAlt="Villa Gulle tegning" content="Vi er mere end et sted at sove - vi er et sted, hvor gode minder skabes. Hotellet er drevet af et passioneret team, der hver dag sætter en ære i at byde dig velkommen. Her kan du læse lidt mere om, hvem vi er og hvad vi står for. " subtitle="Villa Gulle" />
   <main class="px-[var(--gutter)] mx-auto max-w-[1340px]">
     <!-- NY BEGYNDELSE SECTION -->
-    <section class="md:px-40 grid md:grid-cols-2 items-center md:pt-15 md:pb-15">
+    <section class="md:px-40 grid md:grid-cols-2 items-center md:pt-15 md:pb-15 p-15">
       <div class="order-1 md:order-2">
         <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-8">En ny begyndelse med respekt for arven </Heading>
         <Text teksttype="brødtekst">I 2021 overtog vi, familien Kongsmark, nøglerne til Hotel Villa Gulle. Vores drøm var klar: Vi ville forandre for at bevare.</Text>
@@ -26,8 +26,8 @@ import HeroPages from "../components/HeroPages.astro";
       </div>
     </section>
     <!-- HISTORIEN BAG SECTION -->
-    <section class="pr-20 grid md:grid-cols-2 items-center mb-20">
-      <div class="bg-secondary-beige-100 w-210 pb-30 md:p-27">
+    <section class="grid md:grid-cols-2 items-center mb-20 w-screen relative left-1/2 right-1/2 -translate-x-1/2">
+      <div class="bg-secondary-beige-100 md:w-210 md:pl-40 p-10 md:p-27">
         <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-8">Historien bag Hotel Villa Gulle</Heading>
         <div class="max-w-125">
           <Text teksttype="brødtekst">Når du træder ind ad døren på Hotel Villa Gulle, træder du ind i et stykke af Nyborgs historie. Vores fundament blev lagt helt tilbage i 1873, da den fynske skibsmægler Hans Friis opførte en storslået klassicistisk villa til sig selv og sin familie. Siden da har bygningerne levet mange liv – fra samlingspunkt for byens borgere i 1920’ernes nybyggede festsal til det lokale missionshotel.</Text>
@@ -36,30 +36,82 @@ import HeroPages from "../components/HeroPages.astro";
       </div>
       <div class="relative w-150 h-150">
         <!-- 1. billede -->
-        <img src="/dekoration1.png" class="absolute w-48 object-cover -top-20 left-80
-           md:top-15 md:-left-4 md:w-56" />
+        <img src="/dekoration1.png" class="absolute w-48 object-cover -top-20 left-80 md:top-10 md:left-0 md:w-65" />
 
         <!-- 2. billede -->
-        <img src="/dekoration2.png" class="absolute w-48 object-cover top-4 left-13
-           md:top-20 md:left-50 md:w-56" />
+        <img src="/dekoration2.png" class="absolute w-48 object-cover top-4 left-13 md:top-32 md:left-70 md:w-56" />
 
         <!-- 3. billede -->
-        <img src="/dekoration3.png" class="absolute w-48 object-cover top-60 left-80
-           md:top-96 md:left-15 md:w-56" />
+        <img src="/dekoration3.png" class="absolute w-48 object-cover top-60 left-80 md:top-100 md:left-42 md:w-50" />
       </div>
     </section>
-    <section>
-      <p>Før/efter renovering mangler her</p>
-    </section>
-    <!-- BREV SECTION -->
-    <section class="relative py-30 md:py-55">
-      <img src="/public/tapet_baggrund.png" class="absolute inset-0 w-full h-full object-cover z-0" alt="tapet_baggrund" />
-      <div class="relative z-10 bg-primary-Background-50 p-10 md:p-10 w-3/4 md:w-2/4 mx-auto">
-        <h3>Kære gæster på Hotel Villa Gulle,</h3>
-        <p>Det glæder mig at byde jer velkommen til et sted, hvor ro og varme mødes. Jeg har skabt dette hotel med ønsket om, at alle skal føle sig hjemme, blot lidt mere forkælet.</p>
-        <p>Nyd vores stille kroge, den bløde morgenkaffe og den venlige stemning i hvert rum. Skulle I mangle noget, er min dør altid åben, og jeg lytter gerne.</p>
-        <h5>Med venlig hilsen, Joakim, jeres hotelejer</h5>
+
+    <!-- FØR/EFTER SECTION -->
+    <section class="p-10 md:p-10 flex flex-col">
+      <!-- <Heading htmlheading="h2" size="large" font="display" stylingclasses="text-center">Før og efter renovering af hotellets dagligstue</Heading> -->
+      <div class="relative w-full max-w-[700px] aspect-[4/3] overflow-hidden select-none mx-auto" id="compare">
+        <!-- EFTER -->
+        <img src="/stue_efter.png" class="absolute inset-0 w-full h-full object-cover" alt="Efter renovering" />
+        <!-- FØR -->
+        <img src="/stue_foer.png" class="absolute inset-0 w-full h-full object-cover" alt="Før renovering" id="beforeImage" style="clip-path: inset(0 50% 0 0);" />
+        <!-- Slider line -->
+        <div class="absolute top-0 bottom-0 w-0.5 bg-secondary-beige-100 z-20" id="sliderLine" style="left: 50%; transform: translateX(-50%);"></div>
+        <!-- Handle -->
+        <div class="absolute top-1/2 z-30 w-10 h-10 bg-secondary-beige-100 rounded-full cursor-ew-resize flex items-center justify-center" id="handle" style="left: 50%; transform: translate(-50%, -50%);"><span class="text-m">↔</span></div>
+      </div>
+
+      <!-- Tekst -->
+      <div class="w-full max-w-[700px] mx-auto">
+        <Text teksttype="brødtekst">Se før og efter renovering af hotellets dagligstue.</Text>
       </div>
     </section>
   </main>
+  <!-- BREV SECTION -->
+  <section class="relative py-20 md:py-30">
+    <img src="/public/tapet_baggrund.png" class="absolute inset-0 w-full h-full object-cover z-0" alt="tapet_baggrund" />
+    <div class="relative z-10 bg-primary-Background-50 p-10 md:p-20 w-3/4 md:w-200 mx-auto">
+      <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-5 md:mb-10">Kære gæster på Hotel Villa Gulle,</Heading>
+      <Text teksttype="brødtekst" stylingclasses="mb-2 md:mb-5">Det glæder mig at byde jer velkommen til et sted, hvor ro og varme mødes. Jeg har skabt dette hotel med ønsket om, at alle skal føle sig hjemme, blot lidt mere forkælet.</Text>
+      <Text teksttype="brødtekst">Nyd vores stille kroge, den bløde morgenkaffe og den venlige stemning i hvert rum. Skulle I mangle noget, er min dør altid åben, og jeg lytter gerne.</Text>
+      <Heading htmlheading="h5" size="xsmall" font="display" stylingclasses="mt-5 md:mt-10">Med venlig hilsen, Joakim, jeres hotelejer</Heading>
+    </div>
+  </section>
+
+  <script>
+    const container = document.getElementById("compare");
+    const beforeImage = document.getElementById("beforeImage");
+    const sliderLine = document.getElementById("sliderLine");
+    const handle = document.getElementById("handle");
+
+    let isDown = false;
+
+    function setPosition(x) {
+      const rect = container.getBoundingClientRect();
+      let pos = (x - rect.left) / rect.width;
+
+      pos = Math.max(0, Math.min(1, pos));
+
+      const percent = pos * 100;
+
+      beforeImage.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+      sliderLine.style.left = `${percent}%`;
+      handle.style.left = `${percent}%`;
+    }
+
+    container.addEventListener("mousedown", () => (isDown = true));
+    window.addEventListener("mouseup", () => (isDown = false));
+
+    window.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      setPosition(e.clientX);
+    });
+
+    container.addEventListener("touchstart", () => (isDown = true));
+    window.addEventListener("touchend", () => (isDown = false));
+
+    window.addEventListener("touchmove", (e) => {
+      if (!isDown) return;
+      setPosition(e.touches[0].clientX);
+    });
+  </script>
 </MainLayout>
