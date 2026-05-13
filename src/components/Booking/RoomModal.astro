@@ -1,0 +1,39 @@
+---
+import Heading from "../Heading.astro";
+import Text from "../Text.astro";
+import Button from "../Button.astro";
+
+const { data } = Astro.props;
+
+const name = data.name;
+const description = data.description;
+const price = data.price_per_night;
+const image = data.image;
+const slug = data.slug;
+---
+
+<article class="w-full max-w-[920px] grid gap-6 p-5 rounded-md shadow-md bg-[var(--color-secondary-beige-50)] md:grid-cols-[2fr_3fr]">
+  <img src={image} alt={name} class="w-full object-cover h-auto max-h-[320px] rounded-2xl md:rounded-md" />
+
+  <div class="flex flex-col justify-between py-2">
+    <div class="flex flex-col gap-2">
+      <Heading htmlheading="h2" size="medium" font="display" stylingclasses="font-light">
+        {name}
+      </Heading>
+
+      <Text teksttype="brødtekst" stylingclasses="font-light text-gray-700 max-w-prose line-clamp-7">
+        {description}
+      </Text>
+    </div>
+
+    <div class="flex justify-between items-center mt-4">
+      <Heading htmlheading="h4" size="small" font="display">
+        Fra {price} dkk
+      </Heading>
+
+      <a href={`/rooms/${slug}`}>
+        <Button variant="secondary" size="small">Mere info</Button>
+      </a>
+    </div>
+  </div>
+</article>

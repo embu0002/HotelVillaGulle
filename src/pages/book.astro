@@ -1,0 +1,108 @@
+---
+// @ts-nocheck
+import MainLayout from "../layouts/MainLayout.astro";
+import RoomModal from "../components/Booking/RoomModal.astro";
+import Heading from "../components/Heading.astro";
+import Text from "../components/Text.astro";
+import StepIndicator from "../components/StepIndicator.astro";
+
+const url = "https://egxoxtzgworkaghvxrbv.supabase.co/rest/v1/rooms?select=*";
+const key = "sb_publishable_dzoaD8ZHxR8hKpgA_C6b0A_lNV1xVMu";
+
+const options = {
+  headers: {
+    apikey: key,
+  },
+};
+
+const res = await fetch(url, options);
+const data = await res.json();
+
+const rooms = data.slice(0, 6);
+---
+
+<MainLayout>
+  <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10" style="--page-padding: clamp(1rem, 4vw, 2.5rem)">
+    <div>
+      <StepIndicator currentStep={1} />
+    </div>
+    <div>
+      <Heading htmlheading="h2" size="large" font="display" stylingclasses=" mb-6 text-center"> Vælg dato </Heading>
+    </div>
+    <div>
+      <img src="/public/stars.svg" alt="Trustpilot 5 stjener" class="w-45" />
+      <Heading htmlheading="h4" size="small" font="display" stylingclasses=" mb-6"> 4,9 stjener på Trustpilot </Heading>
+    </div>
+    <section class="booking-layout">
+      <div class="calendar-side">Kalender kommer her</div>
+
+      <div class="rooms-scroll">
+        {rooms.map((room) => <RoomModal data={room} />)}
+      </div>
+    </section>
+  </main>
+</MainLayout>
+
+<style>
+  .booking-layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  /* Kalender (venstre side) */
+  .calendar-side {
+    position: sticky;
+    top: 2rem;
+    background: var(--color-primary-green-900);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    min-height: 520px; /* placeholder til kalender */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Scroll liste */
+  .rooms-scroll {
+    height: calc(100vh - 4rem);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Scrollbar (valgfri, men giver samme feel) */
+  .rooms-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .rooms-scroll::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+  }
+
+  /* 📱 MOBIL */
+  @media (max-width: 768px) {
+    .booking-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .calendar-side {
+      position: relative;
+      top: 0;
+      min-height: auto;
+      background: transparent;
+      color: black;
+      padding: 0;
+    }
+
+    .rooms-scroll {
+      height: auto;
+      overflow: visible;
+      gap: 1rem;
+    }
+  }
+</style>
