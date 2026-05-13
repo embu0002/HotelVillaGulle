@@ -55,36 +55,34 @@ const aktivitetercard = [
 <MainLayout title="Titel">
   <HeroPages title="Aktiviteter" leftImage="/public/hero_aktiviteter.png" leftImageAlt="Villa Gulle facade" rightImage="/public/Petanque2.svg" rightImageAlt="Villa Gulle tegning" content="På Hotel Villa Gulle ønsker vi at være med til at skabe aktiv, hyggelig og begivenhedsrig ferie for vores gæster. Derfor tilbyder vi et bredt udvalgt af faciliteter, som er inkluderet i prisen, så du kan få det maksimale ud af dine feriedage." subtitle="Villa Gulle" />
   <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10">
-    <div>
+    <div class="">
       <AktiviteterCard items={aktivitetercard} />
     </div>
-    <section class="px-10 py-12">
-      <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-8 text-center"> Hotellets omgivelser </Heading>
-
-      <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div class="flex flex-col gap-8 max-w-md">
-          {/* Blok 1: Hvad tilbyder byen? */}
-          <div class="flex flex-col gap-3">
-            <Heading htmlheading="h3" size="medium" font="display" stylingclasses=""> Hvad tilbyder byen? </Heading>
+    <section class="p-20">
+      <Heading htmlheading="h2" size="large" font="display" stylingclasses="text-center pb-5"> Hotellets omgivelser </Heading>
+      <div class="grid md:grid-cols-3 gap-10 items-center">
+        <!-- Byen -->
+        <div class="flex flex-col gap-8 md:col-span-1">
+          <div class="flex flex-col">
+            <Heading htmlheading="h3" size="medium" font="display"> Hvad tilbyder byen? </Heading>
             <Text teksttype="brødtekst"> Nyborg er en by fyldt med spændende oplevelser, og har mange gode udflugtsmuligheder inden for kort afstand. Som gæst på Hotel Villa Gulle har du en perfekt beliggende base til at kunne udforske Nyborg by og dens nærområde. </Text>
             <a href="https://www.visitnyborg.dk/nyborg/oplev-nyborg" target="_blank" rel="noopener noreferrer">
               <Button variant="secondary" size="small">Læs mere</Button>
             </a>
           </div>
-
-          {/* Blok 2: Hvad tilbyder Fyn? */}
-          <div class="flex flex-col gap-3">
-            <Heading htmlheading="h3" size="medium" font="display" stylingclasses=""> Hvad tilbyder Fyn? </Heading>
-            <Text teksttype="brødtekst"> Fyn byder på en uforglemmelig blanding af kultur, natur og historie. Herregårde, maleriske landsbyer, frodig natur og fantastiske badestrande med rent og klart vand. Nyborg og Hotel Villa Gulle har den bedste infrastruktur til besøg rundt på øen. </Text>
+          <!-- Fyn -->
+          <div class="flex flex-col">
+            <Heading htmlheading="h3" size="medium" font="display"> Hvad tilbyder Fyn? </Heading>
+            <Text teksttype="brødtekst"> Fyn byder på en uforglemmelig blanding af kultur, natur og historie. Herregårde, maleriske landsbyer, frodig natur og fantastiske badestrande med rent og klart vand. </Text>
             <a href="https://www.visitfyn.dk/explore/begivenheder-cid58/det-sker-cid59?sort=DATE" target="_blank" rel="noopener noreferrer">
               <Button variant="secondary" size="small">Læs mere</Button>
             </a>
           </div>
         </div>
 
-        {/* Højre kolonne — kortbilledet */}
-        <div class="flex items-center justify-center">
-          <img src="/public/kort_nyborg.png" alt="Kort over Nyborg" class="w-full object-contain" />
+        <!-- Billede -->
+        <div class="md:col-span-2 flex justify-center">
+          <img src="/public/kort_nyborg.png" alt="Kort over Nyborg" class="w-full max-h-[650px] object-contain" />
         </div>
       </div>
     </section>

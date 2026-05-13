@@ -1,0 +1,25 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import RoomModal from "../components/Booking/RoomModal.astro";
+import Heading from "../components/Heading.astro";
+import Text from "../components/Text.astro";
+import StepIndicator from "../components/StepIndicator.astro";
+---
+
+<MainLayout title="Bekræftelse">
+  <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10" style="--page-padding: clamp(1rem, 4vw, 2.5rem)">
+    <div>
+      <StepIndicator currentStep={4} />
+    </div>
+    <div class="text-center pt-7">
+      <Heading htmlheading="h2" size="large" font="display" stylingclasses="md:pb-6"> Tak for din booking</Heading>
+      <Text stylingclasses="font-light"> Tusind tak for din booking hos Hotel Villa Gulle. </Text>
+      <Text stylingclasses="font-light max-w-[350px] md:max-w-[500px] mx-auto pb-6"> Vi sætter stor pris på din reservation, og glæder os til at byde dig velkommen. Vi har fremsendt en mail med bekræftelse på din reservation. </Text>
+      <Text stylingclasses="font-light"> Med venlig hilsen </Text>
+      <Text teksttype="signatur" stylingclasses="text-center pb-4">Villa Gulle </Text>
+    </div>
+    <div class="flex justify-center pb-7">
+      <img src="Sort_logo_2.svg" alt="Sort logo" class="w-80 sd:w-70 md:w-150 h-auto mx-auto" />
+    </div>
+  </main></MainLayout
+>

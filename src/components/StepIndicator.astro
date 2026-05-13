@@ -15,7 +15,8 @@ const steps = ["Vælg dato", "Vælg værelse", "Betaling", "Bekræftelse"];
       return (
         <div class="step">
           <div class="visual">
-            <div class={`circle ${isActive ? "active" : ""} ${isCompleted ? "done" : ""}`} />
+            {/* <div class={`circle ${isActive ? "active" : ""} ${isCompleted ? "done" : ""}`} /> */}
+            <div class={`circle ${isActive ? "active" : ""}`} />
             {index < steps.length - 1 && <div class="line" />}
           </div>
 
@@ -45,10 +46,10 @@ const steps = ["Vælg dato", "Vælg værelse", "Betaling", "Bekræftelse"];
   }
 
   /* completed (valgfri) */
-  .circle.done {
+  /* .circle.done {
     background: var(--color-primary-green-900);
     border-color: var(--color-primary-green-900);
-  }
+  } */
 
   /* linje */
   .line {
