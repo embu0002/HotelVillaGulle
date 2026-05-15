@@ -54,38 +54,36 @@ const { room } = Astro.props as { room: Room };
         <Heading htmlheading="h3" size="medium" font="display" stylingclasses="mb-4"> Inkluderet </Heading>
         <ul class="space-y-2">
           <li>
-            <img src="public/icons/morgenmad.svg" alt="" aria-hidden="true" />
-            Morgenmad
+            <img src="/public/icons/morgenmad.svg" alt="Morgenmad" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
+            Fri parkering Morgenmad
           </li>
           <li>
-            <img src="public/icons/parkering.svg" alt="" aria-hidden="true" />
+            <img src="/public/icons/parkering.svg" alt="Parkering" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
             Fri parkering
           </li>
           <li>
-            <img src="public/icons/badevarelse.svg" alt="" aria-hidden="true" />
+            <img src="/public/icons/badevarelse.svg" alt="Badeværelse" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
             Eget badeværelse
           </li>
           <li>
-            <img src="public/icons/udsigt.svg" alt="" aria-hidden="true" />
+            <img src="/public/icons/udsigt.svg" alt="Udsigt" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
             Udsigt til havnen
           </li>
-
-          <!-- Dynamisk fra Supabase -->
           <li>
-            <img src="public/icons/kvadratmeter.svg" alt="" aria-hidden="true" />
+            <img src="/public/icons/kvadratmeter.svg" alt="Kvadratmeter" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
             {room.size_sqm} m² værelse
           </li>
           <li>
-            <img src="public/icons/personer.svg" alt="" aria-hidden="true" />
+            <img src="/public/icons/personer.svg" alt="Personer" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
             {room.capacity} personer
           </li>
 
           <li>
-            <img src="public/icons/selvbetjening.svg" alt="" aria-hidden="true" />
+            <img src="/public/icons/selvbetjening.svg" alt="Selvbetjening" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
             Selvbetjening af Trust-bar
           </li>
           <li>
-            <img src="public/icons/udeareal.svg" alt="" aria-hidden="true" />
+            <img src="/public/icons/udeareal.svg" alt="Udeareal" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
             Ude areal
           </li>
         </ul>
