@@ -1,3 +1,102 @@
 ---
-const { roominfo } = Astro.params;
+import MainLayout from "../../layouts/MainLayout.astro";
+import Heading from "../../components/Heading.astro";
+import Text from "../../components/Text.astro";
+
+// Definer typen for et værelse
+interface Room {
+  slug: string;
+  size_sqm: number;
+  capacity: number;
+  description: string;
+  Images?: string[];
+  // Tilføj evt. flere felter her efterhånden
+}
+
+export async function getStaticPaths() {
+  const url = "https://egxoxtzgworkaghvxrbv.supabase.co/rest/v1/rooms?select=*";
+  const key = "sb_publishable_dzoaD8ZHxR8hKpgA_C6b0A_lNV1xVMu";
+
+  const res = await fetch(url, { headers: { apikey: key } });
+  const data: Room[] = await res.json();
+
+  return data.map((rooms) => ({
+    params: { roominfo: rooms.slug },
+    props: { room: rooms },
+  }));
+}
+
+// Nu kender TypeScript typen på room
+const { room } = Astro.props as { room: Room };
 ---
+
+<MainLayout>
+  <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10">
+    <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-6 text-center"> Mere info </Heading>
+
+    <!-- Tilbage-knap til /book -->
+    <div class="mb-6">
+      <a href="/book" class="flex items-center gap-2 text-sm">
+        <img src="/tilbage.svg" alt="Tilbage" width="20" height="20" />
+        Tilbage
+      </a>
+    </div>
+
+    <!-- 2-kolonners layout som på skærmbilledet -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Billede -->
+      <div>
+        {room.Images?.[0] && <img src={room.Images[0]} alt={room.name} class="rounded-lg w-full object-cover" width="600" height="400" loading="lazy" />}
+      </div>
+
+      <!-- Inkluderede features -->
+      <div>
+        <Heading htmlheading="h3" size="medium" font="display" stylingclasses="mb-4"> Inkluderet </Heading>
+        <ul class="space-y-2">
+          <li>
+            <img src="public/icons/morgenmad.svg" alt="" aria-hidden="true" />
+            Morgenmad
+          </li>
+          <li>
+            <img src="public/icons/parkering.svg" alt="" aria-hidden="true" />
+            Fri parkering
+          </li>
+          <li>
+            <img src="public/icons/badevarelse.svg" alt="" aria-hidden="true" />
+            Eget badeværelse
+          </li>
+          <li>
+            <img src="public/icons/udsigt.svg" alt="" aria-hidden="true" />
+            Udsigt til havnen
+          </li>
+
+          <!-- Dynamisk fra Supabase -->
+          <li>
+            <img src="public/icons/kvadratmeter.svg" alt="" aria-hidden="true" />
+            {room.size_sqm} m² værelse
+          </li>
+          <li>
+            <img src="public/icons/personer.svg" alt="" aria-hidden="true" />
+            {room.capacity} personer
+          </li>
+
+          <li>
+            <img src="public/icons/selvbetjening.svg" alt="" aria-hidden="true" />
+            Selvbetjening af Trust-bar
+          </li>
+          <li>
+            <img src="public/icons/udeareal.svg" alt="" aria-hidden="true" />
+            Ude areal
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Beskrivelse -->
+    <div class="mt-8">
+      <Text teksttype="brødtekst" stylingclasses="text-base">
+        {room.description}
+      </Text>
+    </div>
+  </main>
+</MainLayout>

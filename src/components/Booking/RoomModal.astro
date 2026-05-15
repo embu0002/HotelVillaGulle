@@ -4,6 +4,7 @@ import Text from "../Text.astro";
 import Button from "../Button.astro";
 
 const { data } = Astro.props;
+console.log("Room data:", data);
 
 const name = data.name;
 const description = data.description;
@@ -31,7 +32,7 @@ const slug = data.slug;
         Fra {price} dkk
       </Heading>
 
-      <a href={`/rooms/${slug}`}>
+      <a href={`/rooms/${data.slug}`}>
         <Button variant="secondary" size="small">Mere info</Button>
       </a>
     </div>
