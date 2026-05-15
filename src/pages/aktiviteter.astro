@@ -55,7 +55,10 @@ const aktivitetercard = [
 <MainLayout title="Titel">
   <HeroPages title="Aktiviteter" leftImage="/public/hero_aktiviteter.png" leftImageAlt="Villa Gulle facade" rightImage="/public/Petanque2.svg" rightImageAlt="Villa Gulle tegning" content="På Hotel Villa Gulle ønsker vi at være med til at skabe aktiv, hyggelig og begivenhedsrig ferie for vores gæster. Derfor tilbyder vi et bredt udvalgt af faciliteter, som er inkluderet i prisen, så du kan få det maksimale ud af dine feriedage." subtitle="Villa Gulle" />
   <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10">
-    <div class="">
+    <div class="text-center">
+      <Heading htmlheading="h2" size="large" font="display" stylingclasses="font-light"> Hvad du kan opleve</Heading>
+    </div>
+    <div class="pt-6 md:pt-15">
       <AktiviteterCard items={aktivitetercard} />
     </div>
     <section class="p-20">
