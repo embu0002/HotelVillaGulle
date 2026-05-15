@@ -43,7 +43,7 @@ const { room } = Astro.props as { room: Room };
     </div>
 
     <!-- 2-kolonners layout som på skærmbilledet -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-primary-green-900">
       <!-- Billede -->
       <div>
         {room.Images?.[0] && <img src={room.Images[0]} alt={room.name} class="rounded-lg w-full object-cover" width="600" height="400" loading="lazy" />}
