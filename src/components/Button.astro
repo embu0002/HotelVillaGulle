@@ -1,7 +1,7 @@
 ---
 const { variant = "primary", size = "medium", disabled = false, class: className } = Astro.props;
 
-const buttonStyling = "inline-block border-2 cursor-pointer font-medium tracking-wide transition-all duration-300";
+const buttonStyling = "inline-block border-2 cursor-pointer font-display tracking-wide transition-all duration-300";
 
 const variantClasses = {
   primary: `
@@ -54,7 +54,7 @@ const variantClasses = {
 const sizeClasses = {
   // Eksisterende
   large: "py-4 px-[46px] text-lg",
-  medium: "py-3 px-4 text-base text-sm md:py-4 md:px-[46px]",
+  medium: "py-3 px-4 text-base text-sm md:py-3 md:px-[46px]",
   small: "py-3 px-5 md:py-3 md:px-[35px] text-sm",
 
   // Stor hero-knap: Mobil 137×32px → Web 345×62px

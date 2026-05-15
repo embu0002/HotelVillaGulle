@@ -1,56 +1,85 @@
 ---
 // Header.astro
 import Button from "./Button.astro";
+import Heading from "./Heading.astro";
 ---
 
-<header class="w-full bg-[var(--color-primary-green-900)]">
+<header class="w-full bg-primary-green-900">
   <!-- DESKTOP -->
   <div class="hidden lg:flex items-center justify-between px-10 py-6">
     <!-- Nav links venstre -->
     <nav class="flex items-center gap-10">
-      <a href="/omhotelvillagulle" class="relative text-white font-sans text-sm tracking-wide
+      <Heading htmlheading="h4" size="small" font="display" stylingclasses=" mb-2">
+             <a href="/omhotelvillagulle" class="relative text-white  text-sm tracking-wide
     after:content-[''] after:absolute after:left-0 after:-bottom-1
-    after:h-[1px] after:w-0 after:bg-white
+    after:h-px after:w-0 after:bg-white
     after:transition-all after:duration-400
     hover:after:w-full"> Om Hotel Villa Gulle </a>
+            </Heading>
 
-      <a href="/aktiviteter" class="relative text-white font-sans text-sm tracking-wide
+            <Heading htmlheading="h4" size="small" font="display" stylingclasses=" mb-2">
+              <a href="/aktiviteter" class="relative text-white text-sm tracking-wide
     after:content-[''] after:absolute after:left-0 after:-bottom-1
-    after:h-[1px] after:w-0 after:bg-white
+    after:h-px after:w-0 after:bg-white
     after:transition-all after:duration-400
     hover:after:w-full"> Aktiviteter </a>
-
-      <a href="/praktiskinfo" class="relative text-white font-sans text-sm tracking-wide
+            </Heading>
+      
+<Heading htmlheading="h4" size="small" font="display" stylingclasses=" mb-2">
+              <a href="/praktiskinfo" class="relative text-white text-sm tracking-wide
     after:content-[''] after:absolute after:left-0 after:-bottom-1
-    after:h-[1px] after:w-0 after:bg-white
+    after:h-px after:w-0 after:bg-white
     after:transition-all after:duration-400
     hover:after:w-full"> Praktisk info </a>
+            </Heading>
+     
     </nav>
 
     <!-- Logo i midten -->
     <a href="/" class="absolute left-1/2 -translate-x-1/2">
       <div class="flex flex-col items-center gap-1">
-        <img src="/public/Sort_logo_2.svg" alt="Hotel Villa Gulle logo" class="h-10 invert opacity-80" />
-        <span class="text-white font-sans text-xs tracking-[0.25em] uppercase opacity-80"> HOTEL VILLA GULLE </span>
+        <img src="/public/Sort_logo_2.svg" alt="Hotel Villa Gulle logo" class="h-13 invert opacity-80 mt-3" />
+      <Heading htmlheading="h3" size="medium" font="display" stylingclasses=" mb-1">
+               <span class="text-white tracking-[0.25em] uppercase opacity-80"> HOTEL VILLA GULLE </span>
+            </Heading>
       </div>
     </a>
 
     <!-- Højre side: sprog + knap -->
     <div class="flex items-center gap-6">
-      <span class="text-white font-sans text-sm opacity-70"> Da/En </span>
+      <Heading htmlheading="h3" size="medium" font="display" stylingclasses=" mb-1">
+               <span class="text-white text-sm opacity-70"> Da/En </span>
+            </Heading>
       <a href="/book">
         <Button variant="ghost" size="small">Book nu</Button>
       </a>
     </div>
   </div>
 
-  <!-- MOBIL -->
-  <div class="lg:hidden flex items-center justify-between px-6 py-4">
-    <!-- Logo venstre -->
-    <a href="/" class="flex items-center gap-2">
-      <img src="/public/Sort_logo_2.svg" alt="Hotel Villa Gulle" class="h-8 invert opacity-80" />
-      <span class="text-white font-sans text-xs tracking-widest uppercase opacity-80"> Hotel Villa Gulle </span>
-    </a>
+<!-- MOBIL -->
+<div class="lg:hidden flex items-center justify-between px-4 py-2">
+  
+  <!-- Logo venstre -->
+  <a href="/" class="flex flex-col items-center justify-center">
+    
+    <img
+      src="/public/Sort_logo_2.svg"
+      alt="Hotel Villa Gulle"
+      class="h-12 invert opacity-80 mb-1"
+    />
+
+    <Heading
+      htmlheading="h3"
+      size="medium"
+      font="display"
+      stylingclasses=""
+    >
+      <span class="text-white">
+        HOTEL VILLA GULLE
+      </span>
+    </Heading>
+
+  </a>
 
     <!-- Højre: Book knap + hamburger -->
     <div class="flex items-center gap-3">
@@ -58,7 +87,7 @@ import Button from "./Button.astro";
         <Button variant="ghost" size="small">Book nu</Button>
       </a>
       <!-- Hamburger -->
-      <button id="menu-toggle" aria-label="Åbn menu" class="flex flex-col justify-center items-center gap-[5px] p-2">
+      <button id="menu-toggle" aria-label="Åbn menu" class="flex flex-col justify-center items-center gap-1.25 p-2">
         <span class="block w-6 h-[1.5px] bg-white transition-all duration-300" id="line1"></span>
         <span class="block w-6 h-[1.5px] bg-white transition-all duration-300" id="line2"></span>
         <span class="block w-6 h-[1.5px] bg-white transition-all duration-300" id="line3"></span>
