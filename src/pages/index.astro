@@ -117,8 +117,8 @@ const reviews = [
         <Heading htmlheading="h3" size="medium" font="display" stylingclasses="font-light text-white"> Boutique hotel i hjertet af Nyborg </Heading>
         <Heading htmlheading="h1" size="hero" font="display" stylingclasses="font-light text-white md:max-w-120 md:mx-auto text-center md:leading-none md:pt-4"> Dit hjem når du er væk hjemmefra </Heading>
         <div class="pt-5 md:pt-8 flex md:flex gap-3 md:gap-7 justify-center">
-          <Button class="w-45 md:w-64" variant="secondary-large" size="medium">Læs mere om hotellet</Button>
-          <Button class="w-45 md:w-64" variant="primary-large" size="medium">Book nu</Button>
+          <a href="/omhotelvillagulle"><Button class="w-45 md:w-64" variant="secondary-large" size="medium">Læs mere om hotellet</Button></a>
+          <a href="/book"> <Button class="w-45 md:w-64" variant="primary-large" size="medium">Book nu</Button></a>
         </div>
       </div>
       <!-- PIL -->
@@ -234,17 +234,20 @@ const reviews = [
   </section>
 
   <!-- HISTORIE SECTION -->
-  <section class="grid grid-cols-2">
-    <div>
-      <img src="/public/aktiviteter_drop.png" alt="Aktiviteter" />
-    </div>
-    <div class="bg-[var(--color-secondary-blue-100)] justify-center flex flex-col gap-2 px-10 py-5">
-      <Heading htmlheading="h2" size="large" font="display" stylingclasses="font-light mb-1"> På sporet af hotellets historie </Heading>
-      <Text teksttype="brødtekst" stylingclasses="font-light"> Når du træder ind ad døren på Hotel Villa Gulle, træder du ind i et stykke af Nyborgs historie. </Text>
-      <Text teksttype="brødtekst" stylingclasses="font-light"> Vores fundament blev lagt helt tilbage i 1873, da den fynske skibsmægler Hans Friis opførte en storslået klassicistisk villa til sig selv og sin familie. Siden da har bygningerne levet mange liv – fra samlingspunkt for byens borgere i 1920’ernes nybyggede festsal til det lokale missionshotel. </Text>
-      <a href="/omhotelvillagulle">
-        <Button variant="secondary" size="small">Læs mere</Button>
-      </a>
+  <section class="relative py-10 mb-20">
+    <div class="relative md:flex md:items-start">
+      <div class="bg-secondary-blue-100 px-15 md:px-60 md:py-20 py-8 w-[80%] relative z-10 md:order-2">
+        <Heading htmlheading="h2" size="large" font="display" stylingclasses="font-light mb-4"> På sporet af hotellets historie </Heading>
+        <Text teksttype="brødtekst" stylingclasses="font-light mb-4"> Når du træder ind ad døren på Hotel Villa Gulle, træder du ind i et stykke af Nyborgs historie. </Text>
+        <Text teksttype="brødtekst" stylingclasses="font-light mb-6"> Vores fundament blev lagt helt tilbage i 1873, da den fynske skibsmægler Hans Friis opførte en storslået klassicistisk villa til sig selv og sin familie. Siden da har bygningerne levet mange liv – fra samlingspunkt for byens borgere i 1920’ernes nybyggede festsal til det lokale missionshotel. </Text>
+        <a href="/omhotelvillagulle">
+          <Button variant="secondary" size="small"> Læs mere </Button>
+        </a>
+      </div>
+
+      <div class="-mt-16 ml-auto w-[50%] relative z-20 md:order-1">
+        <img src="/forside_historie.png" alt="Aktiviteter" class="w-full h-auto object-cover" />
+      </div>
     </div>
   </section>
 
