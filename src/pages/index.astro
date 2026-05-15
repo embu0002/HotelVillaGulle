@@ -235,9 +235,9 @@ const reviews = [
 
   <!-- HISTORIE SECTION -->
   <section class="relative py-10 mb-20">
-    <div class="relative md:flex md:items-start">
-      <div class="bg-secondary-blue-100 px-15 md:px-60 md:py-20 py-8 w-[80%] relative z-10 md:order-2">
-        <Heading htmlheading="h2" size="large" font="display" stylingclasses="font-light mb-4"> På sporet af hotellets historie </Heading>
+    <div class="relative md:flex md:items-center">
+      <div class="bg-secondary-blue-100 px-15 md:px-60 md:pt-20 pt-16 md:w-[110%] w-[80%] md:h-160 relative z-10 md:order-2">
+        <Heading htmlheading="h2" size="large" font="display" stylingclasses="font-light mb-4 md:pt-20"> På sporet af hotellets historie </Heading>
         <Text teksttype="brødtekst" stylingclasses="font-light mb-4"> Når du træder ind ad døren på Hotel Villa Gulle, træder du ind i et stykke af Nyborgs historie. </Text>
         <Text teksttype="brødtekst" stylingclasses="font-light mb-6"> Vores fundament blev lagt helt tilbage i 1873, da den fynske skibsmægler Hans Friis opførte en storslået klassicistisk villa til sig selv og sin familie. Siden da har bygningerne levet mange liv – fra samlingspunkt for byens borgere i 1920’ernes nybyggede festsal til det lokale missionshotel. </Text>
         <a href="/omhotelvillagulle">
@@ -245,8 +245,8 @@ const reviews = [
         </a>
       </div>
 
-      <div class="-mt-16 ml-auto w-[50%] relative z-20 md:order-1">
-        <img src="/forside_historie.png" alt="Aktiviteter" class="w-full h-auto object-cover" />
+      <div class="relative z-20 md:order-1 -mt-15 ml-auto w-80 md:w-230">
+        <img src="/forside_historie.png" alt="Aktiviteter" class="w-full h-auto" />
       </div>
     </div>
   </section>
@@ -287,84 +287,84 @@ const reviews = [
     <div id="dots" class="flex gap-2 mt-4 justify-center"></div>
   </section>
   <a href="/bekraeftelse">Bekræftelsesiden her</a>
-</MainLayout>
 
-<script>
-  const viewport = document.getElementById("viewport");
-  const track = document.getElementById("track");
-  const slides = track.children;
+  <script>
+    const viewport = document.getElementById("viewport");
+    const track = document.getElementById("track");
+    const slides = track.children;
 
-  const prevBtn = document.getElementById("prev");
-  const nextBtn = document.getElementById("next");
-  const dotsContainer = document.getElementById("dots");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+    const dotsContainer = document.getElementById("dots");
 
-  let index = 0;
+    let index = 0;
 
-  const getSlidesPerView = () => {
-    if (window.innerWidth >= 1024) return 3;
-    if (window.innerWidth >= 768) return 2;
-    return 1;
-  };
+    const getSlidesPerView = () => {
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 768) return 2;
+      return 1;
+    };
 
-  const maxIndex = () => slides.length - getSlidesPerView();
+    const maxIndex = () => slides.length - getSlidesPerView();
 
-  function update() {
-    const slideWidth = slides[0].offsetWidth;
-    viewport.scrollTo({
-      left: slideWidth * index,
-      behavior: "smooth",
-    });
-
-    updateDots();
-  }
-
-  function createDots() {
-    dotsContainer.innerHTML = "";
-
-    for (let i = 0; i <= maxIndex(); i++) {
-      const dot = document.createElement("button");
-      dot.className = "w-2.5 h-2.5 rounded-full transition-all";
-
-      dot.addEventListener("click", () => {
-        index = i;
-        update();
+    function update() {
+      const slideWidth = slides[0].offsetWidth;
+      viewport.scrollTo({
+        left: slideWidth * index,
+        behavior: "smooth",
       });
 
-      dotsContainer.appendChild(dot);
+      updateDots();
     }
 
-    updateDots();
-  }
+    function createDots() {
+      dotsContainer.innerHTML = "";
 
-  function updateDots() {
-    const dots = dotsContainer.children;
+      for (let i = 0; i <= maxIndex(); i++) {
+        const dot = document.createElement("button");
+        dot.className = "w-2.5 h-2.5 rounded-full transition-all";
 
-    for (let i = 0; i < dots.length; i++) {
-      dots[i].className = i === index ? "w-6 h-2.5 rounded-full bg-black transition-all" : "w-2.5 h-2.5 rounded-full bg-gray-300 transition-all";
+        dot.addEventListener("click", () => {
+          index = i;
+          update();
+        });
+
+        dotsContainer.appendChild(dot);
+      }
+
+      updateDots();
     }
-  }
 
-  prevBtn.addEventListener("click", () => {
-    index = Math.max(index - 1, 0);
-    update();
-  });
+    function updateDots() {
+      const dots = dotsContainer.children;
 
-  nextBtn.addEventListener("click", () => {
-    index = Math.min(index + 1, maxIndex());
-    update();
-  });
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].className = i === index ? "w-6 h-2.5 rounded-full bg-black transition-all" : "w-2.5 h-2.5 rounded-full bg-gray-300 transition-all";
+      }
+    }
 
-  viewport.addEventListener("scroll", () => {
-    const slideWidth = slides[0].offsetWidth;
-    index = Math.round(viewport.scrollLeft / slideWidth);
-    updateDots();
-  });
+    prevBtn.addEventListener("click", () => {
+      index = Math.max(index - 1, 0);
+      update();
+    });
 
-  window.addEventListener("resize", () => {
-    index = 0;
+    nextBtn.addEventListener("click", () => {
+      index = Math.min(index + 1, maxIndex());
+      update();
+    });
+
+    viewport.addEventListener("scroll", () => {
+      const slideWidth = slides[0].offsetWidth;
+      index = Math.round(viewport.scrollLeft / slideWidth);
+      updateDots();
+    });
+
+    window.addEventListener("resize", () => {
+      index = 0;
+      createDots();
+      update();
+    });
+
     createDots();
-    update();
-  });
-
-  createDots();
-</script>
+  </script>
+</MainLayout>
