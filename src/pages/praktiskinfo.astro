@@ -82,7 +82,7 @@ const aktiviteterdropdown = [
 ---
 
 <MainLayout title="Titel">
-  <HeroPages title="Praktisk info" leftImage="/public/praktisk_info_reception.png" leftImageAlt="Petanque" rightImage="/public/praktisk_illu.svg" rightImageAlt="Villa Gulle tegning" content="For at du kan fokusere på at slappe af og nyde dit ophold, har vi samlet alt det praktiske ét sted. Her finder du svar på de mest stillede spørgsmål så du kan bruge din tid på det, der virkelig betyder noget." subtitle="Villa Gulle" />
+  <HeroPages title="Praktisk info" leftImage="/praktisk_info_reception.png" leftImageAlt="Petanque" rightImage="/praktisk_illu.svg" rightImageAlt="Villa Gulle tegning" content="For at du kan fokusere på at slappe af og nyde dit ophold, har vi samlet alt det praktiske ét sted. Her finder du svar på de mest stillede spørgsmål så du kan bruge din tid på det, der virkelig betyder noget." subtitle="Villa Gulle" />
   <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10">
     <div class="text-center">
       <Heading htmlheading="h2" size="large" font="display" stylingclasses="font-light"> Godt at vide før dit ophold </Heading>
@@ -101,28 +101,28 @@ const aktiviteterdropdown = [
       {infoCards.map((_, i) => <button class="dot w-2.5 h-2.5 rounded-full bg-gray-300  transition" data-index={i} aria-label={`Gå til kort ${i + 1}`} />)}
     </div>
     <div>
-      <DropdownSection heading="Vi svarer på det vigtigste" image="/public/praktisk_info_stue.png" imageAlt="Af daglistuen" items={aktiviteterdropdown} showButton={false} />
+      <DropdownSection heading="Vi svarer på det vigtigste" image="/praktisk_info_stue.png" imageAlt="Af daglistuen" items={aktiviteterdropdown} showButton={false} />
     </div>
     <section class="grid md:grid-cols-2 p-20">
       <div class="order-1 md:order-2 md:pt-30">
         <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-8"> Kontaktoplysninger </Heading>
         <div>
           <div class="flex gap-5">
-            <img src="/public/ikon_adresse.png" class="w-9 h-9" alt="Adresse" />
+            <img src="/ikon_adresse.png" class="w-9 h-9" alt="Adresse" />
             <Text teksttype="brødtekst" stylingclasses="font-light line-clamp-4"> Østervoldgade 44, 5800 Nyborg, Denmark </Text>
           </div>
           <div class="flex gap-5">
-            <img src="/public/ikon_mail.png" class="w-8 h-8" alt="Mail" />
+            <img src="/ikon_mail.png" class="w-8 h-8" alt="Mail" />
             <Text teksttype="brødtekst" stylingclasses="font-light line-clamp-4"> Kontakt@hotelvillagulle.dk</Text>
           </div>
           <div class="flex gap-5">
-            <img src="/public/ikon_nummer.png" class="w-4 h-11" alt="Nummer" />
+            <img src="/ikon_nummer.png" class="w-4 h-11" alt="Nummer" />
             <Text teksttype="brødtekst" stylingclasses="font-light line-clamp-4"> + 45 23 23 02 19</Text>
           </div>
         </div>
       </div>
       <div class="order-2 md:order-1">
-        <img src="/public/hotellets_grund.png" class="w-120 h-auto" alt="Tegning af hotellets grund" />
+        <img src="/hotellets_grund.png" class="w-120 h-auto" alt="Tegning af hotellets grund" />
       </div>
     </section>
   </main>

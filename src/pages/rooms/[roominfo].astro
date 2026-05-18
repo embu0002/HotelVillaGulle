@@ -2,15 +2,15 @@
 import MainLayout from "../../layouts/MainLayout.astro";
 import Heading from "../../components/Heading.astro";
 import Text from "../../components/Text.astro";
+import Button from "../../components/Button.astro";
 
-// Definer typen for et værelse
 interface Room {
   slug: string;
   size_sqm: number;
+  name: string;
   capacity: number;
   description: string;
-  Images?: string[];
-  // Tilføj evt. flere felter her efterhånden
+  Images?: string;
 }
 
 export async function getStaticPaths() {
@@ -26,75 +26,119 @@ export async function getStaticPaths() {
   }));
 }
 
-// Nu kender TypeScript typen på room
 const { room } = Astro.props as { room: Room };
+
+// Split komma-separeret streng til array
+const images = room.Images?.split(",").map((url) => url.trim()) ?? [];
 ---
 
 <MainLayout>
-  <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10">
-    <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-6 text-center"> Mere info </Heading>
-
-    <!-- Tilbage-knap til /book -->
-    <div class="mb-6">
-      <a href="/book" class="flex items-center gap-2 text-sm">
-        <img src="/tilbage.svg" alt="Tilbage" width="20" height="20" />
-        Tilbage
+  <main class="px-4 py-6 md:px-[var(--gutter)] md:py-20">
+    <div class="relative mx-auto max-w-[520px] rounded-[10px] bg-primary-green-900 px-4 py-6 md:max-w-[1340px] md:rounded-[6px] md:px-12 md:py-12">
+      <a href="/book" class="absolute left-4 top-4 z-20 inline-flex items-center justify-center md:left-8 md:top-8" aria-label="Tilbage">
+        <img src="/icons/back_pil.svg" alt="Tilbage" class="h-6 w-6 md:h-8 md:w-8" />
       </a>
-    </div>
 
-    <!-- 2-kolonners layout som på skærmbilledet -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-primary-green-900">
-      <!-- Billede -->
-      <div>
-        {room.Images?.[0] && <img src={room.Images[0]} alt={room.name} class="rounded-lg w-full object-cover" width="600" height="400" loading="lazy" />}
+      <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-6 text-center text-white pt-4 md:mb-10 md:pt-0"> Mere info </Heading>
+
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,680px)_320px] md:items-start md:justify-center md:gap-30">
+        <!-- Venstre side -->
+        <div>
+          <div class="grid grid-cols-[40px_1fr_40px] items-center gap-2 md:grid-cols-[56px_1fr_56px] md:gap-3">
+            <button id="prev" class="z-10 flex h-10 w-10 items-center justify-center rounded-full md:h-14 md:w-14" aria-label="Forrige billede">
+              <img src="/icons/hvid_venstrepil.svg" class="h-7 w-7 md:h-9 md:w-9" alt="Forrige billede" />
+            </button>
+
+            <div class="relative overflow-hidden">
+              <div id="slider" class="flex transition-transform duration-500 ease-in-out">
+                {images.map((url, i) => <img src={url} alt={`${room.name} - billede ${i + 1}`} class="h-[320px] w-full min-w-full object-cover md:h-[520px]" width="600" height="400" loading={i === 0 ? "eager" : "lazy"} />)}
+              </div>
+
+              <div class="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2 md:hidden">
+                {images.map((_, i) => <button class="dot h-2 w-2 rounded-full bg-white/50 transition-colors hover:bg-white" data-index={i} aria-label={`Gå til billede ${i + 1}`} />)}
+              </div>
+            </div>
+
+            <button id="next" class="z-10 flex h-10 w-10 items-center justify-center rounded-full md:h-14 md:w-14" aria-label="Næste billede">
+              <img src="/icons/hvid_højrepil.svg" class="h-7 w-7 md:h-9 md:w-9" alt="Næste billede" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Højre side -->
+        <div class="pl-13 md:pt-4">
+          <Heading htmlheading="h3" size="medium" font="display" stylingclasses="mb-4 text-white md:mb-6"> Inkluderet </Heading>
+
+          <ul class="space-y-1 md:space-y-1 justify-center">
+            <li class="flex items-center gap-2">
+              <img src="/icons/morgenmadhvid.svg" alt="" class="h-6 w-6 md:h-8 md:w-8 object-contain" aria-hidden="true" />
+              <Text teksttype="brødtekst" stylingclasses="font-light text-white md:text-[16px]">Morgenmad</Text>
+            </li>
+            <li class="flex items-center gap-4">
+              <img src="/icons/parkeringhvid.svg" alt="" class="h-6 w-6 md:h-8 md:w-8 object-contain" aria-hidden="true" />
+              <Text teksttype="brødtekst" stylingclasses="font-light text-white md:text-[16px]">Fri parkering</Text>
+            </li>
+            <li class="flex items-center gap-4">
+              <img src="/icons/badevarelse.svg" alt="" class="h-6 w-6 md:h-8 md:w-8 object-contain" aria-hidden="true" />
+              <Text teksttype="brødtekst" stylingclasses="font-light text-white md:text-[16px]">Eget badeværelse</Text>
+            </li>
+            <li class="flex items-center gap-4">
+              <img src="/icons/udsigt.svg" alt="" class="h-6 w-6 md:h-8 md:w-8 object-contain" aria-hidden="true" />
+              <Text teksttype="brødtekst" stylingclasses="font-light text-white md:text-[16px]">Udsigt til havnen</Text>
+            </li>
+            <li class="flex items-center gap-4">
+              <img src="/icons/kvadratmeter.svg" alt="" class="h-6 w-6 md:h-8 md:w-8 object-contain" aria-hidden="true" />
+              <Text teksttype="brødtekst" stylingclasses="font-light text-white md:text-[16px]">{room.size_sqm} m² værelse</Text>
+            </li>
+            <li class="flex items-center gap-4">
+              <img src="/icons/personer.svg" alt="" class="h-6 w-6 md:h-8 md:w-8 object-contain" aria-hidden="true" />
+              <Text teksttype="brødtekst" stylingclasses="font-light text-white md:text-[16px]">{room.capacity} personer</Text>
+            </li>
+            <li class="flex items-center gap-4">
+              <img src="/icons/selvbetjening.svg" alt="" class="h-6 w-6 md:h-8 md:w-8 object-contain" aria-hidden="true" />
+              <Text teksttype="brødtekst" stylingclasses="font-light text-white md:text-[16px]">Selvbetjening af Trust-bar</Text>
+            </li>
+            <li class="flex items-center gap-4">
+              <img src="/icons/udeareal.svg" alt="" class="h-6 w-6 md:h-8 md:w-8 object-contain" aria-hidden="true" />
+              <Text teksttype="brødtekst" stylingclasses="font-light text-white md:text-[16px]">Ude areal</Text>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <!-- Inkluderede features -->
-      <div>
-        <Heading htmlheading="h3" size="medium" font="display" stylingclasses="mb-4"> Inkluderet </Heading>
-        <ul class="space-y-2">
-          <li>
-            <img src="/public/icons/morgenmad.svg" alt="Morgenmad" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
-            Fri parkering Morgenmad
-          </li>
-          <li>
-            <img src="/public/icons/parkering.svg" alt="Parkering" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
-            Fri parkering
-          </li>
-          <li>
-            <img src="/public/icons/badevarelse.svg" alt="Badeværelse" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
-            Eget badeværelse
-          </li>
-          <li>
-            <img src="/public/icons/udsigt.svg" alt="Udsigt" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
-            Udsigt til havnen
-          </li>
-          <li>
-            <img src="/public/icons/kvadratmeter.svg" alt="Kvadratmeter" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
-            {room.size_sqm} m² værelse
-          </li>
-          <li>
-            <img src="/public/icons/personer.svg" alt="Personer" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
-            {room.capacity} personer
-          </li>
-
-          <li>
-            <img src="/public/icons/selvbetjening.svg" alt="Selvbetjening" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
-            Selvbetjening af Trust-bar
-          </li>
-          <li>
-            <img src="/public/icons/udeareal.svg" alt="Udeareal" class="w-9 h-9 md:w-14 md:h-14 object-contain" aria-hidden="true" />
-            Ude areal
-          </li>
-        </ul>
+      <!-- Beskrivelse under begge kolonner -->
+      <div class="mx-auto mt-6 max-w-[400px] md:mt-8 md:max-w-[1000px]">
+        <Text teksttype="brødtekst" stylingclasses="text-left font-light leading-relaxed text-white md:text-[16px] md:leading-[1.45]">
+          {room.description}
+        </Text>
       </div>
-    </div>
-
-    <!-- Beskrivelse -->
-    <div class="mt-8">
-      <Text teksttype="brødtekst" stylingclasses="text-base">
-        {room.description}
-      </Text>
+      <a class="flex align-center justify-center mt-5 md:mt-8" href="/book_step3">
+        <Button variant="primary-large" size="heromedium">Vælg</Button>
+      </a>
     </div>
   </main>
 </MainLayout>
+<script>
+  const slider = document.getElementById("slider") as HTMLElement;
+  const dots = document.querySelectorAll(".dot") as NodeListOf<HTMLElement>;
+  const total = dots.length;
+  let current = 0;
+
+  function goTo(index: number) {
+    current = (index + total) % total;
+    slider.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("bg-white", i === current);
+      dot.classList.toggle("bg-white/50", i !== current);
+    });
+  }
+
+  document.getElementById("prev")?.addEventListener("click", () => goTo(current - 1));
+  document.getElementById("next")?.addEventListener("click", () => goTo(current + 1));
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => goTo(Number(dot.dataset.index)));
+  });
+
+  // Sæt første prik aktiv
+  goTo(0);
+</script>
