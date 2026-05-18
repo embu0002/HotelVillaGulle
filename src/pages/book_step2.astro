@@ -1,0 +1,101 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import BookingSummary from "../components/BookingSummary.astro";
+import StepIndicator from "../components/StepIndicator.astro";
+import Heading from "../components/Heading.astro";
+import RoomModal from "../components/Booking/RoomModal.astro";
+
+const url = "https://egxoxtzgworkaghvxrbv.supabase.co/rest/v1/rooms?select=*";
+const key = "sb_publishable_dzoaD8ZHxR8hKpgA_C6b0A_lNV1xVMu";
+
+const options = {
+  headers: {
+    apikey: key,
+  },
+};
+
+const res = await fetch(url, options);
+const data = await res.json();
+
+const rooms = data.slice(0, 6);
+---
+
+<MainLayout>
+  <main class="mx-auto max-w-[1340px] px-4 py-6 md:px-[var(--gutter)] md:py-10">
+    <StepIndicator currentStep={2} />
+
+    <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-2 text-center"> Vælg dit værelse </Heading>
+    <p class="search-summary" data-search-summary>
+      Du har søgt på ... <!-- Udfyldes via JS nedenfor -->
+    </p>
+
+    <section class="step2-layout">
+      <!-- Venstre: Dato-oversigt (sticky på desktop) -->
+      <aside class="summary-side">
+        <BookingSummary />
+      </aside>
+
+      <!-- Højre: Rum-liste -->
+      <div class="rooms-scroll">
+        {rooms.map((room) => <RoomModal data={room} variant="select" />)}
+      </div>
+    </section>
+  </main>
+</MainLayout>
+
+<script>
+  // Opdater den lille søgetekst under overskriften
+  const params = new URLSearchParams(window.location.search);
+  const checkin = params.get("checkin");
+  const checkout = params.get("checkout");
+  const guests = params.get("guests") ?? "2";
+
+  if (checkin && checkout) {
+    const [cy, cm, cd] = checkin.split("-").map(Number);
+    const [oy, om, od] = checkout.split("-").map(Number);
+    const nights = Math.round((new Date(oy, om - 1, od) - new Date(cy, cm - 1, cd)) / 86400000);
+    const el = document.querySelector("[data-search-summary]");
+    if (el) {
+      el.textContent = `Du har søgt på ${cd}. maj - ${od}. maj, ${nights} nat, 1 værelse, ${guests} gæster`;
+    }
+  }
+</script>
+
+<style>
+  .search-summary {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--color-text-muted, #7a7974);
+    margin-bottom: 2rem;
+  }
+
+  .step2-layout {
+    display: grid;
+    grid-template-columns: minmax(320px, 380px) 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .summary-side {
+    position: sticky;
+    top: 2rem;
+  }
+
+  .rooms-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .step2-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .summary-side {
+      position: relative;
+      top: 0;
+    }
+  }
+</style>
