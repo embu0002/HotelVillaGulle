@@ -7,16 +7,26 @@
 
 @font-face {
   font-family: "Montserrat";
-  src: url("/public/Montserrat-Light.ttf") format("truetype");
+  src: url("/fonts/Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: "EBGaramond";
-  src: url("/public/EBGaramond-Regular.ttf") format("truetype");
+  font-family: "EB Garamond";
+  src: url("/fonts/EB_Garamond/EBGaramond-VariableFont_wght.ttf") format("truetype");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
 }
+
 @font-face {
   font-family: "Alex Brush";
-  src: url("/public/AlexBrush-Regular.ttf") format("truetype");
+  src: url("/fonts/Alex_Brush/AlexBrush-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @theme {

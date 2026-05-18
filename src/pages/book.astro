@@ -5,6 +5,7 @@ import RoomModal from "../components/Booking/RoomModal.astro";
 import Heading from "../components/Heading.astro";
 import Text from "../components/Text.astro";
 import StepIndicator from "../components/StepIndicator.astro";
+import Calender from "../components/Calender.astro";
 
 const url = "https://egxoxtzgworkaghvxrbv.supabase.co/rest/v1/rooms?select=*";
 const key = "sb_publishable_dzoaD8ZHxR8hKpgA_C6b0A_lNV1xVMu";
@@ -22,7 +23,7 @@ const rooms = data.slice(0, 6);
 ---
 
 <MainLayout>
-  <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10" style="--page-padding: clamp(1rem, 4vw, 2.5rem)">
+  <main class="mx-auto max-w-[1340px] px-4 py-6 md:px-[var(--gutter)] md:py-10">
     <div>
       <StepIndicator currentStep={1} />
     </div>
@@ -30,11 +31,13 @@ const rooms = data.slice(0, 6);
       <Heading htmlheading="h2" size="large" font="display" stylingclasses=" mb-6 text-center"> Vælg dato </Heading>
     </div>
     <div>
-      <img src="/public/stars.svg" alt="Trustpilot 5 stjener" class="w-45" />
-      <Heading htmlheading="h4" size="small" font="display" stylingclasses=" mb-6"> 4,9 stjener på Trustpilot </Heading>
+      <img src="/stars.svg" alt="Trustpilot 5 stjener" class="w-35 md:w-45" />
+      <Heading htmlheading="h4" size="small" font="display" stylingclasses="mb-6"> 4,9 stjener på Trustpilot </Heading>
     </div>
     <section class="booking-layout">
-      <div class="calendar-side">Kalender kommer her</div>
+      <div>
+        <Calender title="Søg & book" guestsLabel="Antal gæster" nextLabel="Næste" />
+      </div>
 
       <div class="rooms-scroll">
         {rooms.map((room) => <RoomModal data={room} />)}

@@ -7,7 +7,7 @@ const stjerner = Array.from({ length: rating });
 
 <div class="h-full flex flex-col bg-primary-Background-50 p-3 border-primary-green-900 border-2">
   <div class="flex mb-3">
-    {stjerner.map(() => <img src="/public/stjerne.png" class="w-7 h-7" alt="stjerne" />)}
+    {stjerner.map(() => <img src="/stjerne.png" class="w-7 h-7" alt="stjerne" />)}
   </div>
   <div>
     <Heading htmlheading="h4" size="small" font="display" stylingclasses="mb-2">
@@ -19,8 +19,7 @@ const stjerner = Array.from({ length: rating });
     </Text>
 
     <Heading htmlheading="h4" size="xsmall" font="display" stylingclasses="mb-2">
-       {name}
+      {name}
     </Heading>
-   
   </div>
 </div>

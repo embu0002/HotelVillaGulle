@@ -1,0 +1,332 @@
+---
+const { title = "Søg & book", guestsLabel = "Antal gæster", nextLabel = "Næste", initialMonth = new Date().getMonth(), initialYear = new Date().getFullYear(), maxGuests = 6 } = Astro.props;
+
+const months = ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"];
+
+const years = Array.from({ length: 4 }, (_, i) => initialYear + i);
+---
+
+<div class="calendar-card" data-calendar data-initial-month={initialMonth} data-initial-year={initialYear}>
+  <div class="calendar-card__header">
+    <h2>{title}</h2>
+  </div>
+
+  <div class="calendar-card__body">
+    <div class="calendar-nav">
+      <button type="button" class="calendar-nav__arrow" data-prev aria-label="Forrige måned"> &#8249; </button>
+
+      <div class="calendar-nav__center">
+        <select class="calendar-nav__select" data-month-select aria-label="Vælg måned">
+          {
+            months.map((month, index) => (
+              <option value={index} selected={index === initialMonth}>
+                {month}
+              </option>
+            ))
+          }
+        </select>
+
+        <select class="calendar-nav__select" data-year-select aria-label="Vælg år">
+          {
+            years.map((year) => (
+              <option value={year} selected={year === initialYear}>
+                {year}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+
+      <button type="button" class="calendar-nav__arrow" data-next aria-label="Næste måned"> &#8250; </button>
+    </div>
+
+    <div class="calendar-weekdays" aria-hidden="true">
+      <span>Ma</span>
+      <span>Ti</span>
+      <span>On</span>
+      <span>To</span>
+      <span>Fr</span>
+      <span>Lø</span>
+      <span>Sø</span>
+    </div>
+
+    <div class="calendar-grid" data-grid></div>
+
+    <div class="calendar-controls">
+      <label class="sr-only" for="calendar-guests">Antal gæster</label>
+      <select id="calendar-guests" class="calendar-guests" name="guests">
+        {
+          Array.from({ length: maxGuests }, (_, i) => i + 1).map((guest) => (
+            <option value={guest}>
+              {guestsLabel}: {guest}
+            </option>
+          ))
+        }
+      </select>
+
+      <button type="button" class="calendar-next">
+        {nextLabel}
+      </button>
+    </div>
+  </div>
+
+  <input type="hidden" name="checkin" data-checkin />
+  <input type="hidden" name="checkout" data-checkout />
+</div>
+
+<script>
+  const calendars = document.querySelectorAll("[data-calendar]");
+
+  calendars.forEach((calendar) => {
+    const monthSelect = calendar.querySelector("[data-month-select]");
+    const yearSelect = calendar.querySelector("[data-year-select]");
+    const prevButton = calendar.querySelector("[data-prev]");
+    const nextButton = calendar.querySelector("[data-next]");
+    const grid = calendar.querySelector("[data-grid]");
+    const checkinInput = calendar.querySelector("[data-checkin]");
+    const checkoutInput = calendar.querySelector("[data-checkout]");
+
+    let currentMonth = Number(calendar.dataset.initialMonth);
+    let currentYear = Number(calendar.dataset.initialYear);
+    let checkin = null;
+    let checkout = null;
+
+    const pad = (value) => String(value).padStart(2, "0");
+    const formatDate = (date) => `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+
+    const sameDate = (a, b) => a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+
+    const isBetween = (date, start, end) => {
+      if (!start || !end) return false;
+      const time = date.setHours(0, 0, 0, 0);
+      const startTime = new Date(start).setHours(0, 0, 0, 0);
+      const endTime = new Date(end).setHours(0, 0, 0, 0);
+      return time > startTime && time < endTime;
+    };
+
+    function renderCalendar() {
+      grid.innerHTML = "";
+
+      monthSelect.value = String(currentMonth);
+      yearSelect.value = String(currentYear);
+
+      const firstDay = new Date(currentYear, currentMonth, 1);
+      const lastDay = new Date(currentYear, currentMonth + 1, 0);
+
+      let startWeekday = firstDay.getDay();
+      startWeekday = startWeekday === 0 ? 6 : startWeekday - 1;
+
+      const daysInMonth = lastDay.getDate();
+      const totalCells = Math.ceil((startWeekday + daysInMonth) / 7) * 7;
+
+      for (let i = 0; i < totalCells; i++) {
+        const dayNumber = i - startWeekday + 1;
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "calendar-day";
+
+        if (dayNumber < 1 || dayNumber > daysInMonth) {
+          button.classList.add("is-outside");
+          button.disabled = true;
+          button.textContent = "";
+        } else {
+          const date = new Date(currentYear, currentMonth, dayNumber);
+          button.textContent = String(dayNumber);
+          button.dataset.date = formatDate(date);
+
+          if (sameDate(date, checkin)) button.classList.add("is-checkin");
+          if (sameDate(date, checkout)) button.classList.add("is-checkout");
+          if (isBetween(new Date(date), checkin, checkout)) button.classList.add("is-in-range");
+
+          button.addEventListener("click", () => {
+            if (!checkin || (checkin && checkout)) {
+              checkin = date;
+              checkout = null;
+            } else if (date < checkin) {
+              checkout = checkin;
+              checkin = date;
+            } else if (sameDate(date, checkin)) {
+              checkout = null;
+            } else {
+              checkout = date;
+            }
+
+            checkinInput.value = checkin ? formatDate(checkin) : "";
+            checkoutInput.value = checkout ? formatDate(checkout) : "";
+            renderCalendar();
+          });
+        }
+
+        grid.appendChild(button);
+      }
+    }
+
+    prevButton?.addEventListener("click", () => {
+      currentMonth -= 1;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear -= 1;
+      }
+      renderCalendar();
+    });
+
+    nextButton?.addEventListener("click", () => {
+      currentMonth += 1;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear += 1;
+      }
+      renderCalendar();
+    });
+
+    monthSelect?.addEventListener("change", (e) => {
+      currentMonth = Number(e.target.value);
+      renderCalendar();
+    });
+
+    yearSelect?.addEventListener("change", (e) => {
+      currentYear = Number(e.target.value);
+      renderCalendar();
+    });
+
+    renderCalendar();
+  });
+</script>
+
+<style>
+  .calendar-card {
+    width: min(100%, 22rem);
+    overflow: hidden;
+    border: 1px solid #d9d2c3;
+    border-radius: 0.5rem;
+    background: #0f4b3f;
+    color: #f6f1e8;
+  }
+
+  .calendar-card__header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(246, 241, 232, 0.5);
+  }
+
+  .calendar-card__header h2 {
+    margin: 0;
+    font-family: serif;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.1;
+  }
+
+  .calendar-card__body {
+    padding: 1.5rem;
+  }
+
+  .calendar-nav {
+    display: grid;
+    grid-template-columns: 2rem 1fr 2rem;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .calendar-nav__center {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .calendar-nav__arrow {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+    border-radius: 9999px;
+    background: transparent;
+    color: #f6f1e8;
+    font-size: 1.75rem;
+    cursor: pointer;
+  }
+
+  .calendar-nav__select {
+    border: 0;
+    background: transparent;
+    color: #f6f1e8;
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .calendar-weekdays,
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .calendar-weekdays {
+    margin-bottom: 0.4rem;
+  }
+
+  .calendar-weekdays span {
+    padding: 0.35rem 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(246, 241, 232, 0.8);
+  }
+
+  .calendar-grid {
+    gap: 0;
+    margin-bottom: 1.5rem;
+    background: #d9d2c3;
+    border: 1px solid #d9d2c3;
+  }
+
+  .calendar-day {
+    aspect-ratio: 1 / 1;
+    border: 1px solid rgba(15, 75, 63, 0.18);
+    background: #f1ede4;
+    color: #1d1d1b;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .calendar-day.is-outside {
+    background: #ece6da;
+    color: rgba(29, 29, 27, 0.35);
+    cursor: default;
+  }
+
+  .calendar-day.is-checkin,
+  .calendar-day.is-checkout {
+    background: #0f4b3f;
+    color: #f6f1e8;
+  }
+
+  .calendar-day.is-in-range {
+    background: #d8e7df;
+  }
+
+  .calendar-controls {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .calendar-guests,
+  .calendar-next {
+    height: 3rem;
+    border-radius: 0.35rem;
+    border: 1px solid #d9d2c3;
+    font: inherit;
+  }
+
+  .calendar-guests {
+    padding: 0 1rem;
+    background: #f1ede4;
+    color: #1d1d1b;
+  }
+
+  .calendar-next {
+    background: #f1ede4;
+    color: #1d1d1b;
+    cursor: pointer;
+  }
+</style>
