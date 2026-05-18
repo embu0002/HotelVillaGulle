@@ -3,38 +3,52 @@ import Heading from "../Heading.astro";
 import Text from "../Text.astro";
 import Button from "../Button.astro";
 
-const { data } = Astro.props;
-console.log("Room data:", data);
+const { data, variant = "browse" } = Astro.props;
 
 const name = data.name;
 const description = data.description;
 const price = data.price_per_night;
 const image = data.image;
 const slug = data.slug;
+
+const isSelect = variant === "select";
 ---
 
-<article class="w-full max-w-[920px] grid gap-6 p-5 rounded-md shadow-md bg-[var(--color-secondary-beige-50)] md:grid-cols-[2fr_3fr]">
+<article class="w-full max-w-[920px] grid gap-6 p-7 rounded-md shadow-md bg-[var(--color-secondary-beige-50)] md:grid-cols-[2fr_3fr]">
   <img src={image} alt={name} class="w-full object-cover h-auto max-h-[320px] rounded-2xl md:rounded-md" />
 
-  <div class="flex flex-col justify-between py-2">
-    <div class="flex flex-col gap-2">
+  <div class="flex flex-col justify-between py-3 gap-6">
+    <!-- Titel + beskrivelse -->
+    <div class="flex flex-col gap-3">
       <Heading htmlheading="h2" size="medium" font="display" stylingclasses="font-light">
         {name}
       </Heading>
-
       <Text teksttype="brødtekst" stylingclasses="font-light text-gray-700 max-w-prose line-clamp-7">
         {description}
       </Text>
     </div>
 
-    <div class="flex justify-between items-center mt-4">
-      <Heading htmlheading="h4" size="small" font="display">
+    <!-- Pris + knapper -->
+    <div class="flex flex-col gap-4">
+      <!-- Pris — altid til højre -->
+      <Heading htmlheading="h4" size="small" font="display" stylingclasses="text-right">
         Fra {price} dkk
       </Heading>
 
-      <a href={`/rooms/${data.slug}`}>
-        <Button variant="secondary" size="small">Mere info</Button>
-      </a>
+      <!-- Knapper — "Mere info" venstre, "Vælg" højre (kun select) -->
+      <div class="flex items-center justify-between gap-3">
+        <a href={`/rooms/${slug}`}>
+          <Button variant="secondary" size="small">Mere info</Button>
+        </a>
+
+        {
+          isSelect && (
+            <Button variant="primary" size="small">
+              Vælg
+            </Button>
+          )
+        }
+      </div>
     </div>
   </div>
 </article>

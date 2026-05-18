@@ -62,7 +62,9 @@ const years = Array.from({ length: 4 }, (_, i) => initialYear + i);
             }
           </select>
         </Heading>
-        <Button variant="primary-large" size="heromedium">{nextLabel}</Button>
+        <a href="#" id="next-btn-desktop" data-next-desktop>
+          <Button variant="primary-large" size="heromedium">{nextLabel}</Button>
+        </a>
       </div>
     </div>
 
@@ -102,597 +104,639 @@ const years = Array.from({ length: 4 }, (_, i) => initialYear + i);
         }
       </select>
     </div>
-    <Button variant="primary-large" size="heromedium">{nextLabel}</Button>
+    <a href="#" id="next-btn-mobile" data-next-mobile>
+      <Button variant="primary-large" size="heromedium">{nextLabel}</Button>
+    </a>
   </div>
-</div>
 
-<script>
-  const calendars = document.querySelectorAll("[data-calendar]");
+  <script>
+    const calendars = document.querySelectorAll("[data-calendar]");
 
-  calendars.forEach((calendar) => {
-    const monthSelect = calendar.querySelector("[data-month-select]");
-    const yearSelect = calendar.querySelector("[data-year-select]");
-    const prevButton = calendar.querySelector("[data-prev]");
-    const nextButton = calendar.querySelector("[data-next]");
-    const grid = calendar.querySelector("[data-grid]");
-    const checkinInput = calendar.querySelector("[data-checkin]");
-    const checkoutInput = calendar.querySelector("[data-checkout]");
+    calendars.forEach((calendar) => {
+      const monthSelect = calendar.querySelector("[data-month-select]");
+      const yearSelect = calendar.querySelector("[data-year-select]");
+      const prevButton = calendar.querySelector("[data-prev]");
+      const nextButton = calendar.querySelector("[data-next]");
+      const grid = calendar.querySelector("[data-grid]");
+      const checkinInput = calendar.querySelector("[data-checkin]");
+      const checkoutInput = calendar.querySelector("[data-checkout]");
 
-    let currentMonth = Number(calendar.dataset.initialMonth);
-    let currentYear = Number(calendar.dataset.initialYear);
-    let checkin = null;
-    let checkout = null;
+      let currentMonth = Number(calendar.dataset.initialMonth);
+      let currentYear = Number(calendar.dataset.initialYear);
+      let checkin = null;
+      let checkout = null;
 
-    const pad = (value) => String(value).padStart(2, "0");
-    const formatDate = (date) => `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+      const pad = (value) => String(value).padStart(2, "0");
+      const formatDate = (date) => `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 
-    const sameDate = (a, b) => a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+      const sameDate = (a, b) => a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 
-    const isBetween = (date, start, end) => {
-      if (!start || !end) return false;
-      const time = date.setHours(0, 0, 0, 0);
-      const startTime = new Date(start).setHours(0, 0, 0, 0);
-      const endTime = new Date(end).setHours(0, 0, 0, 0);
-      return time > startTime && time < endTime;
-    };
+      const isBetween = (date, start, end) => {
+        if (!start || !end) return false;
+        const time = date.setHours(0, 0, 0, 0);
+        const startTime = new Date(start).setHours(0, 0, 0, 0);
+        const endTime = new Date(end).setHours(0, 0, 0, 0);
+        return time > startTime && time < endTime;
+      };
 
-    function renderCalendar() {
-      grid.innerHTML = "";
+      function renderCalendar() {
+        grid.innerHTML = "";
 
-      monthSelect.value = String(currentMonth);
-      yearSelect.value = String(currentYear);
+        monthSelect.value = String(currentMonth);
+        yearSelect.value = String(currentYear);
 
-      const firstDay = new Date(currentYear, currentMonth, 1);
-      const lastDay = new Date(currentYear, currentMonth + 1, 0);
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        const lastDay = new Date(currentYear, currentMonth + 1, 0);
 
-      let startWeekday = firstDay.getDay();
-      startWeekday = startWeekday === 0 ? 6 : startWeekday - 1;
+        let startWeekday = firstDay.getDay();
+        startWeekday = startWeekday === 0 ? 6 : startWeekday - 1;
 
-      const daysInMonth = lastDay.getDate();
-      const totalCells = Math.ceil((startWeekday + daysInMonth) / 7) * 7;
+        const daysInMonth = lastDay.getDate();
+        const totalCells = Math.ceil((startWeekday + daysInMonth) / 7) * 7;
 
-      for (let i = 0; i < totalCells; i++) {
-        const dayNumber = i - startWeekday + 1;
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "calendar-day";
+        for (let i = 0; i < totalCells; i++) {
+          const dayNumber = i - startWeekday + 1;
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "calendar-day";
 
-        if (dayNumber < 1 || dayNumber > daysInMonth) {
-          button.classList.add("is-outside");
-          button.disabled = true;
-          button.textContent = "";
-        } else {
-          const date = new Date(currentYear, currentMonth, dayNumber);
-          button.textContent = String(dayNumber);
-          button.dataset.date = formatDate(date);
+          if (dayNumber < 1 || dayNumber > daysInMonth) {
+            button.classList.add("is-outside");
+            button.disabled = true;
+            button.textContent = "";
+          } else {
+            const date = new Date(currentYear, currentMonth, dayNumber);
+            button.textContent = String(dayNumber);
+            button.dataset.date = formatDate(date);
 
-          if (sameDate(date, checkin)) button.classList.add("is-checkin");
-          if (sameDate(date, checkout)) button.classList.add("is-checkout");
-          if (isBetween(new Date(date), checkin, checkout)) button.classList.add("is-in-range");
+            if (sameDate(date, checkin)) button.classList.add("is-checkin");
+            if (sameDate(date, checkout)) button.classList.add("is-checkout");
+            if (isBetween(new Date(date), checkin, checkout)) button.classList.add("is-in-range");
 
-          button.addEventListener("click", () => {
-            if (!checkin || (checkin && checkout)) {
-              checkin = date;
-              checkout = null;
-            } else if (date < checkin) {
-              checkout = checkin;
-              checkin = date;
-            } else if (sameDate(date, checkin)) {
-              checkout = null;
-            } else {
-              checkout = date;
-            }
+            button.addEventListener("click", () => {
+              if (!checkin || (checkin && checkout)) {
+                checkin = date;
+                checkout = null;
+              } else if (date < checkin) {
+                checkout = checkin;
+                checkin = date;
+              } else if (sameDate(date, checkin)) {
+                checkout = null;
+              } else {
+                checkout = date;
+              }
 
-            checkinInput.value = checkin ? formatDate(checkin) : "";
-            checkoutInput.value = checkout ? formatDate(checkout) : "";
-            renderCalendar();
-          });
+              checkinInput.value = checkin ? formatDate(checkin) : "";
+              checkoutInput.value = checkout ? formatDate(checkout) : "";
+              renderCalendar();
+            });
+          }
+
+          grid.appendChild(button);
         }
+        // Desktop "Næste" knap — naviger med query params
+        const nextDesktopBtn = document.querySelector("[data-next-desktop]");
+        nextDesktopBtn?.addEventListener("click", (e) => {
+          e.preventDefault(); // ← vigtigt!
+          const checkinVal = checkinInput.value;
+          const checkoutVal = checkoutInput.value;
+          const guestsVal = guestsSelect?.value ?? "2";
 
-        grid.appendChild(button);
-      }
-    }
+          if (!checkinVal || !checkoutVal) {
+            alert("Vælg venligst både check-in og check-out dato.");
+            return;
+          }
 
-    prevButton?.addEventListener("click", () => {
-      currentMonth -= 1;
-      if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear -= 1;
-      }
-      renderCalendar();
-    });
+          const params = new URLSearchParams({
+            checkin: checkinVal,
+            checkout: checkoutVal,
+            guests: guestsVal,
+          });
+          window.location.href = `/book_step2?${params.toString()}`;
+        });
 
-    nextButton?.addEventListener("click", () => {
-      currentMonth += 1;
-      if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear += 1;
-      }
-      renderCalendar();
-    });
-
-    monthSelect?.addEventListener("change", (e) => {
-      currentMonth = Number(e.target.value);
-      renderCalendar();
-    });
-
-    yearSelect?.addEventListener("change", (e) => {
-      currentYear = Number(e.target.value);
-      renderCalendar();
-    });
-
-    renderCalendar();
-    // Mobil mini-kalender
-    const guestsSelect = calendar.querySelector("#calendar-guests");
-
-    // Mobil mini-kalender
-    const mobileTrigger = document.querySelector("[data-mobile-trigger]");
-    const mobileOverlay = document.querySelector("[data-mobile-cal]");
-    const mobileDateDisplay = document.querySelector("[data-mobile-date-display]");
-    const mobileGrid = document.querySelector("[data-mobile-grid]");
-    const mobileMonthLabel = document.querySelector("[data-mobile-month-label]");
-    const mobilePrev = document.querySelector("[data-mobile-prev]");
-    const mobileNextMonth = document.querySelector("[data-mobile-next-month]");
-    const mobileGuests = document.querySelector("[data-mobile-guests]");
-    const mobileNext = document.querySelector("[data-mobile-next]");
-
-    let mobileMonth = new Date().getMonth();
-    let mobileYear = new Date().getFullYear();
-    let mobileCheckin = null;
-    let mobileCheckout = null;
-
-    const mobileMonths = ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"];
-
-    function renderMobileCal() {
-      mobileGrid.innerHTML = "";
-      mobileMonthLabel.textContent = `${mobileMonths[mobileMonth]} ${mobileYear}`;
-
-      const firstDay = new Date(mobileYear, mobileMonth, 1);
-      const lastDay = new Date(mobileYear, mobileMonth + 1, 0);
-      let startWeekday = firstDay.getDay();
-      startWeekday = startWeekday === 0 ? 6 : startWeekday - 1;
-      const daysInMonth = lastDay.getDate();
-      const totalCells = Math.ceil((startWeekday + daysInMonth) / 7) * 7;
-
-      for (let i = 0; i < totalCells; i++) {
-        const dayNumber = i - startWeekday + 1;
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "mobile-cal-day";
-
-        if (dayNumber < 1 || dayNumber > daysInMonth) {
-          btn.classList.add("is-outside");
-          btn.disabled = true;
-        } else {
-          const date = new Date(mobileYear, mobileMonth, dayNumber);
-          btn.textContent = String(dayNumber);
-
+        // Mobil "Næste" knap — naviger med query params
+        const nextMobileBtn = document.querySelector("[data-next-mobile]");
+        nextMobileBtn?.addEventListener("click", () => {
           const pad = (v) => String(v).padStart(2, "0");
           const fmt = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-          const same = (a, b) => a && b && fmt(a) === fmt(b);
-          const between = (d, s, e) => {
-            if (!s || !e) return false;
-            return d > s && d < e;
-          };
+          const guestsVal = mobileGuests?.value ?? "2";
 
-          if (same(date, mobileCheckin)) btn.classList.add("is-checkin");
-          if (same(date, mobileCheckout)) btn.classList.add("is-checkout");
-          if (between(date, mobileCheckin, mobileCheckout)) btn.classList.add("is-in-range");
+          if (!mobileCheckin || !mobileCheckout) {
+            alert("Vælg venligst både check-in og check-out dato.");
+            return;
+          }
 
-          btn.addEventListener("click", () => {
+          const params = new URLSearchParams({
+            checkin: fmt(mobileCheckin),
+            checkout: fmt(mobileCheckout),
+            guests: guestsVal,
+          });
+          window.location.href = `/book_step2?${params.toString()}`;
+        });
+      }
+
+      prevButton?.addEventListener("click", () => {
+        currentMonth -= 1;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear -= 1;
+        }
+        renderCalendar();
+      });
+
+      nextButton?.addEventListener("click", () => {
+        currentMonth += 1;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear += 1;
+        }
+        renderCalendar();
+      });
+
+      monthSelect?.addEventListener("change", (e) => {
+        currentMonth = Number(e.target.value);
+        renderCalendar();
+      });
+
+      yearSelect?.addEventListener("change", (e) => {
+        currentYear = Number(e.target.value);
+        renderCalendar();
+      });
+
+      renderCalendar();
+      // Mobil mini-kalender
+      const guestsSelect = calendar.querySelector("#calendar-guests");
+
+      // Mobil mini-kalender
+      const mobileTrigger = document.querySelector("[data-mobile-trigger]");
+      const mobileOverlay = document.querySelector("[data-mobile-cal]");
+      const mobileDateDisplay = document.querySelector("[data-mobile-date-display]");
+      const mobileGrid = document.querySelector("[data-mobile-grid]");
+      const mobileMonthLabel = document.querySelector("[data-mobile-month-label]");
+      const mobilePrev = document.querySelector("[data-mobile-prev]");
+      const mobileNextMonth = document.querySelector("[data-mobile-next-month]");
+      const mobileGuests = document.querySelector("[data-mobile-guests]");
+      const mobileNext = document.querySelector("[data-mobile-next]");
+
+      let mobileMonth = new Date().getMonth();
+      let mobileYear = new Date().getFullYear();
+      let mobileCheckin = null;
+      let mobileCheckout = null;
+
+      const mobileMonths = ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"];
+
+      function renderMobileCal() {
+        mobileGrid.innerHTML = "";
+        mobileMonthLabel.textContent = `${mobileMonths[mobileMonth]} ${mobileYear}`;
+
+        const firstDay = new Date(mobileYear, mobileMonth, 1);
+        const lastDay = new Date(mobileYear, mobileMonth + 1, 0);
+        let startWeekday = firstDay.getDay();
+        startWeekday = startWeekday === 0 ? 6 : startWeekday - 1;
+        const daysInMonth = lastDay.getDate();
+        const totalCells = Math.ceil((startWeekday + daysInMonth) / 7) * 7;
+
+        for (let i = 0; i < totalCells; i++) {
+          const dayNumber = i - startWeekday + 1;
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "mobile-cal-day";
+
+          if (dayNumber < 1 || dayNumber > daysInMonth) {
+            btn.classList.add("is-outside");
+            btn.disabled = true;
+          } else {
+            const date = new Date(mobileYear, mobileMonth, dayNumber);
+            btn.textContent = String(dayNumber);
+
             const pad = (v) => String(v).padStart(2, "0");
             const fmt = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
             const same = (a, b) => a && b && fmt(a) === fmt(b);
+            const between = (d, s, e) => {
+              if (!s || !e) return false;
+              return d > s && d < e;
+            };
 
-            if (!mobileCheckin || (mobileCheckin && mobileCheckout)) {
-              mobileCheckin = date;
-              mobileCheckout = null;
-            } else if (date < mobileCheckin) {
-              mobileCheckout = mobileCheckin;
-              mobileCheckin = date;
-            } else if (same(date, mobileCheckin)) {
-              mobileCheckout = null;
-            } else {
-              mobileCheckout = date;
-            }
+            if (same(date, mobileCheckin)) btn.classList.add("is-checkin");
+            if (same(date, mobileCheckout)) btn.classList.add("is-checkout");
+            if (between(date, mobileCheckin, mobileCheckout)) btn.classList.add("is-in-range");
 
-            // Opdater display-tekst
-            if (mobileCheckin && mobileCheckout) {
-              mobileDateDisplay.textContent = `${fmt(mobileCheckin)} → ${fmt(mobileCheckout)}`;
-              mobileOverlay.setAttribute("aria-hidden", "true");
-              mobileOverlay.classList.remove("is-open");
-            } else if (mobileCheckin) {
-              mobileDateDisplay.textContent = `${fmt(mobileCheckin)} → ?`;
-            }
+            btn.addEventListener("click", () => {
+              const pad = (v) => String(v).padStart(2, "0");
+              const fmt = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+              const same = (a, b) => a && b && fmt(a) === fmt(b);
 
-            renderMobileCal();
-          });
+              if (!mobileCheckin || (mobileCheckin && mobileCheckout)) {
+                mobileCheckin = date;
+                mobileCheckout = null;
+              } else if (date < mobileCheckin) {
+                mobileCheckout = mobileCheckin;
+                mobileCheckin = date;
+              } else if (same(date, mobileCheckin)) {
+                mobileCheckout = null;
+              } else {
+                mobileCheckout = date;
+              }
+
+              // Opdater display-tekst
+              if (mobileCheckin && mobileCheckout) {
+                mobileDateDisplay.textContent = `${fmt(mobileCheckin)} → ${fmt(mobileCheckout)}`;
+                mobileOverlay.setAttribute("aria-hidden", "true");
+                mobileOverlay.classList.remove("is-open");
+              } else if (mobileCheckin) {
+                mobileDateDisplay.textContent = `${fmt(mobileCheckin)} → ?`;
+              }
+
+              renderMobileCal();
+            });
+          }
+          mobileGrid.appendChild(btn);
         }
-        mobileGrid.appendChild(btn);
       }
-    }
 
-    mobileTrigger?.addEventListener("click", () => {
-      const isOpen = mobileOverlay.classList.contains("is-open");
-      mobileOverlay.classList.toggle("is-open", !isOpen);
-      mobileOverlay.setAttribute("aria-hidden", String(isOpen));
-      if (!isOpen) renderMobileCal();
+      mobileTrigger?.addEventListener("click", () => {
+        const isOpen = mobileOverlay.classList.contains("is-open");
+        mobileOverlay.classList.toggle("is-open", !isOpen);
+        mobileOverlay.setAttribute("aria-hidden", String(isOpen));
+        if (!isOpen) renderMobileCal();
+      });
+
+      mobilePrev?.addEventListener("click", () => {
+        mobileMonth--;
+        if (mobileMonth < 0) {
+          mobileMonth = 11;
+          mobileYear--;
+        }
+        renderMobileCal();
+      });
+
+      mobileNextMonth?.addEventListener("click", () => {
+        mobileMonth++;
+        if (mobileMonth > 11) {
+          mobileMonth = 0;
+          mobileYear++;
+        }
+        renderMobileCal();
+      });
+
+      mobileNext?.addEventListener("click", () => {
+        calendar.querySelector(".calendar-next")?.click();
+      });
     });
+  </script>
 
-    mobilePrev?.addEventListener("click", () => {
-      mobileMonth--;
-      if (mobileMonth < 0) {
-        mobileMonth = 11;
-        mobileYear--;
-      }
-      renderMobileCal();
-    });
-
-    mobileNextMonth?.addEventListener("click", () => {
-      mobileMonth++;
-      if (mobileMonth > 11) {
-        mobileMonth = 0;
-        mobileYear++;
-      }
-      renderMobileCal();
-    });
-
-    mobileNext?.addEventListener("click", () => {
-      calendar.querySelector(".calendar-next")?.click();
-    });
-  });
-</script>
-
-<style>
-  .calendar-card {
-    width: 100%;
-    overflow: hidden;
-    border-radius: 0.35rem;
-    background: var(--color-primary-green-900);
-    color: #fff;
-    box-shadow: none;
-  }
-
-  .calendar-card__header {
-    padding: 1.1rem 1.5rem 1rem;
-    border-bottom: 1px solid rgba(255, 253, 245, 0.65);
-  }
-
-  .calendar-card__body {
-    padding: 1.4rem 2.5rem 1.8rem;
-  }
-
-  .calendar-nav {
-    display: grid;
-    grid-template-columns: 1rem 1fr 1rem;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .calendar-nav__center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .calendar-nav__month-group {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding-right: 1.1rem;
-  }
-
-  .calendar-nav__month-group::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 48%;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-right: 1.5px solid rgba(255, 253, 245, 0.9);
-    border-bottom: 1.5px solid rgba(255, 253, 245, 0.9);
-    transform: translateY(-50%) rotate(45deg);
-    pointer-events: none;
-  }
-
-  .calendar-nav__arrow {
-    display: grid;
-    place-items: center;
-    width: 2rem;
-    height: 2rem;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: #fffdf5;
-    font-size: 2rem;
-    font-weight: 300;
-    line-height: 1;
-    cursor: pointer;
-  }
-
-  .calendar-nav__arrow:hover {
-    opacity: 0.8;
-  }
-
-  .calendar-nav__select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    border: 0;
-    background: transparent;
-    color: #fffdf5;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.05rem;
-    font-weight: 600;
-    line-height: 1;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-  }
-
-  .calendar-nav__select--month {
-    min-width: 4.7rem;
-  }
-
-  .calendar-nav__select--year {
-    min-width: 4.2rem;
-  }
-
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0;
-    margin-bottom: 2rem;
-    background: var(--color-primary-Background-50);
-    border: 1px solid rgba(17, 17, 17, 0.28);
-  }
-
-  .calendar-controls {
-    display: grid;
-    gap: 0.95rem;
-  }
-
-  .calendar-guests,
-  .calendar-next {
-    width: 100%;
-    height: 2.95rem;
-    border-radius: 0.25rem;
-    border: 1px solid rgba(17, 17, 17, 0.2);
-    background: var(--color-primary-Background-50);
-    color: #1f1c18;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1rem;
-    box-shadow: none;
-  }
-
-  .calendar-guests {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    padding: 0 2.9rem 0 1rem;
-    background-image: linear-gradient(45deg, transparent 50%, #1f1c18 50%), linear-gradient(135deg, #1f1c18 50%, transparent 50%);
-    background-position:
-      calc(100% - 1.45rem) calc(50% - 0.12rem),
-      calc(100% - 1rem) calc(50% - 0.12rem);
-    background-size:
-      0.5rem 0.5rem,
-      0.5rem 0.5rem;
-    background-repeat: no-repeat;
-  }
-
-  .calendar-next {
-    cursor: pointer;
-    font-weight: 600;
-  }
-
-  .calendar-next:hover,
-  .calendar-guests:hover {
-    background-color: var(--color-secondary-beige-100);
-  }
-
-  /* ─── Dynamisk genererede celler via JS ─── */
-  :global(.calendar-day) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 3.35rem;
-    border-left: 1px solid rgba(17, 17, 17, 0.28);
-    border-top: 1px solid rgba(17, 17, 17, 0.28);
-    background: var(--color-primary-Background-50);
-    color: #1f1c18;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.05rem;
-    font-weight: 400;
-    line-height: 1;
-    cursor: pointer;
-  }
-
-  .calendar-nav__center :global(*) {
-    margin-bottom: 0 !important;
-  }
-
-  :global(.calendar-day:nth-child(7n + 1)) {
-    border-left: 0;
-  }
-
-  :global(.calendar-day:nth-child(-n + 7)) {
-    border-top: 0;
-  }
-
-  :global(.calendar-day.is-outside) {
-    opacity: 0;
-    pointer-events: none;
-  }
-  :global(.calendar-day:hover) {
-    background: #f5f1e6;
-    color: #1f1c18;
-  }
-
-  :global(.calendar-day.is-checkin),
-  :global(.calendar-day.is-checkout) {
-    background: var(--color-primary-green-900);
-    color: #fffdf5;
-    font-weight: 700;
-  }
-
-  :global(.calendar-day.is-in-range) {
-    background: #d8e8e0;
-    color: #1f1c18;
-  }
-  /* Skjul mobil-layout på desktop */
-  .mobile-booking {
-    display: none;
-  }
-
-  @media (max-width: 768px) {
-    /* Skjul den fulde kalender på mobil */
+  <style>
     .calendar-card {
-      display: none;
-    }
-
-    /* Vis mobilversionen */
-    .mobile-booking {
-      display: grid;
-      gap: 0.75rem;
       width: 100%;
-    }
-
-    .mobile-field {
-      display: grid;
-      gap: 0.35rem;
-    }
-
-    .mobile-label {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 0.9rem;
-      color: #1f1c18;
-    }
-
-    .mobile-date-input,
-    .mobile-select {
-      width: 100%;
-      height: 3rem;
-      padding: 0 1rem;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      border-radius: 0.25rem;
-      background: var(--color-primary-Background-50);
-      color: #1f1c18;
-      appearance: none;
-      -webkit-appearance: none;
-    }
-
-    .mobile-next {
-      width: 100%;
-      height: 3rem;
-      border-radius: 0.25rem;
-      border: 1px solid rgba(17, 17, 17, 0.2);
-      background: var(--color-primary-Background-50);
-      color: #1f1c18;
-
-      cursor: pointer;
-      margin-top: 0.5rem;
-    }
-
-    .mobile-date-trigger {
-      width: 100%;
-      height: 3rem;
-      padding: 0 1rem;
-      border: 1px solid rgba(17, 17, 17, 0.2);
-      border-radius: 0.25rem;
-      background: var(--color-primary-Background-50);
-      color: #1f1c18;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      text-align: left;
-    }
-
-    .mobile-cal-overlay {
-      display: none;
-      background: var(--color-primary-Background-50);
-      border: 1px solid rgba(17, 17, 17, 0.2);
-      border-radius: 0.25rem;
-      padding: 0.75rem;
-    }
-
-    .mobile-cal-overlay.is-open {
-      display: block;
-    }
-
-    .mobile-cal-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.75rem;
-      font-family: Georgia, serif;
-      font-size: 0.95rem;
-      color: #1f1c18;
-    }
-
-    .mobile-cal-nav button {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #1f1c18;
-      padding: 0 0.5rem;
-    }
-
-    .mobile-cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      border: 1px solid rgba(17, 17, 17, 0.2);
-    }
-
-    :global(.mobile-cal-day) {
-      aspect-ratio: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Georgia, serif;
-      font-size: 0.85rem;
-      color: #1f1c18;
-      border-left: 1px solid rgba(17, 17, 17, 0.15);
-      border-top: 1px solid rgba(17, 17, 17, 0.15);
-      background: var(--color-primary-Background-50);
-      cursor: pointer;
-    }
-
-    :global(.mobile-cal-day:nth-child(7n + 1)) {
-      border-left: 0;
-    }
-    :global(.mobile-cal-day:nth-child(-n + 7)) {
-      border-top: 0;
-    }
-    :global(.mobile-cal-day.is-outside) {
-      opacity: 0;
-      pointer-events: none;
-    }
-    :global(.mobile-cal-day.is-checkin),
-    :global(.mobile-cal-day.is-checkout) {
+      overflow: hidden;
+      border-radius: 0.35rem;
       background: var(--color-primary-green-900);
       color: #fff;
-      font-weight: 700;
+      box-shadow: none;
     }
-    :global(.mobile-cal-day.is-in-range) {
-      background: #d8e8e0;
-    }
-  }
-  @media (max-width: 768px) {
-    .calendar-card {
-      width: 100%;
+
+    .calendar-card__header {
+      padding: 1.1rem 1.5rem 1rem;
+      border-bottom: 1px solid rgba(255, 253, 245, 0.65);
     }
 
     .calendar-card__body {
-      padding: 1.25rem;
+      padding: 1.4rem 2.5rem 1.8rem;
     }
 
-    :global(.calendar-day) {
-      min-height: 3rem;
-      font-size: 1rem;
+    .calendar-nav {
+      display: grid;
+      grid-template-columns: 1rem 1fr 1rem;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
     }
-  }
-</style>
+
+    .calendar-nav__center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .calendar-nav__month-group {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding-right: 1.1rem;
+    }
+
+    .calendar-nav__month-group::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 48%;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-right: 1.5px solid rgba(255, 253, 245, 0.9);
+      border-bottom: 1.5px solid rgba(255, 253, 245, 0.9);
+      transform: translateY(-50%) rotate(45deg);
+      pointer-events: none;
+    }
+
+    .calendar-nav__arrow {
+      display: grid;
+      place-items: center;
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #fffdf5;
+      font-size: 2rem;
+      font-weight: 300;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .calendar-nav__arrow:hover {
+      opacity: 0.8;
+    }
+
+    .calendar-nav__select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      border: 0;
+      background: transparent;
+      color: #fffdf5;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1;
+      text-align: center;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .calendar-nav__select--month {
+      min-width: 4.7rem;
+    }
+
+    .calendar-nav__select--year {
+      min-width: 4.2rem;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0;
+      margin-bottom: 2rem;
+      background: var(--color-primary-Background-50);
+      border: 1px solid rgba(17, 17, 17, 0.28);
+    }
+
+    .calendar-controls {
+      display: grid;
+      gap: 0.95rem;
+    }
+
+    .calendar-guests,
+    .calendar-next {
+      width: 100%;
+      height: 2.95rem;
+      border-radius: 0.25rem;
+      border: 1px solid rgba(17, 17, 17, 0.2);
+      background: var(--color-primary-Background-50);
+      color: #1f1c18;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1rem;
+      box-shadow: none;
+    }
+
+    .calendar-guests {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      padding: 0 2.9rem 0 1rem;
+      background-image: linear-gradient(45deg, transparent 50%, #1f1c18 50%), linear-gradient(135deg, #1f1c18 50%, transparent 50%);
+      background-position:
+        calc(100% - 1.45rem) calc(50% - 0.12rem),
+        calc(100% - 1rem) calc(50% - 0.12rem);
+      background-size:
+        0.5rem 0.5rem,
+        0.5rem 0.5rem;
+      background-repeat: no-repeat;
+    }
+
+    .calendar-next {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .calendar-next:hover,
+    .calendar-guests:hover {
+      background-color: var(--color-secondary-beige-100);
+    }
+
+    /* ─── Dynamisk genererede celler via JS ─── */
+    :global(.calendar-day) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 3.35rem;
+      border-left: 1px solid rgba(17, 17, 17, 0.28);
+      border-top: 1px solid rgba(17, 17, 17, 0.28);
+      background: var(--color-primary-Background-50);
+      color: #1f1c18;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .calendar-nav__center :global(*) {
+      margin-bottom: 0 !important;
+    }
+
+    :global(.calendar-day:nth-child(7n + 1)) {
+      border-left: 0;
+    }
+
+    :global(.calendar-day:nth-child(-n + 7)) {
+      border-top: 0;
+    }
+
+    :global(.calendar-day.is-outside) {
+      opacity: 0;
+      pointer-events: none;
+    }
+    :global(.calendar-day:hover) {
+      background: #f5f1e6;
+      color: #1f1c18;
+    }
+
+    :global(.calendar-day.is-checkin),
+    :global(.calendar-day.is-checkout) {
+      background: var(--color-primary-green-900);
+      color: #fffdf5;
+      font-weight: 700;
+    }
+
+    :global(.calendar-day.is-in-range) {
+      background: #d8e8e0;
+      color: #1f1c18;
+    }
+    /* Skjul mobil-layout på desktop */
+    .mobile-booking {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      /* Skjul den fulde kalender på mobil */
+      .calendar-card {
+        display: none;
+      }
+
+      /* Vis mobilversionen */
+      .mobile-booking {
+        display: grid;
+        gap: 0.75rem;
+        width: 100%;
+      }
+
+      .mobile-field {
+        display: grid;
+        gap: 0.35rem;
+      }
+
+      .mobile-label {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.9rem;
+        color: #1f1c18;
+      }
+
+      .mobile-date-input,
+      .mobile-select {
+        width: 100%;
+        height: 3rem;
+        padding: 0 1rem;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 0.25rem;
+        background: var(--color-primary-Background-50);
+        color: #1f1c18;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .mobile-next {
+        width: 100%;
+        height: 3rem;
+        border-radius: 0.25rem;
+        border: 1px solid rgba(17, 17, 17, 0.2);
+        background: var(--color-primary-Background-50);
+        color: #1f1c18;
+
+        cursor: pointer;
+        margin-top: 0.5rem;
+      }
+
+      .mobile-date-trigger {
+        width: 100%;
+        height: 3rem;
+        padding: 0 1rem;
+        border: 1px solid rgba(17, 17, 17, 0.2);
+        border-radius: 0.25rem;
+        background: var(--color-primary-Background-50);
+        color: #1f1c18;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .mobile-cal-overlay {
+        display: none;
+        background: var(--color-primary-Background-50);
+        border: 1px solid rgba(17, 17, 17, 0.2);
+        border-radius: 0.25rem;
+        padding: 0.75rem;
+      }
+
+      .mobile-cal-overlay.is-open {
+        display: block;
+      }
+
+      .mobile-cal-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        font-family: Georgia, serif;
+        font-size: 0.95rem;
+        color: #1f1c18;
+      }
+
+      .mobile-cal-nav button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #1f1c18;
+        padding: 0 0.5rem;
+      }
+
+      .mobile-cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        border: 1px solid rgba(17, 17, 17, 0.2);
+      }
+
+      :global(.mobile-cal-day) {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Georgia, serif;
+        font-size: 0.85rem;
+        color: #1f1c18;
+        border-left: 1px solid rgba(17, 17, 17, 0.15);
+        border-top: 1px solid rgba(17, 17, 17, 0.15);
+        background: var(--color-primary-Background-50);
+        cursor: pointer;
+      }
+
+      :global(.mobile-cal-day:nth-child(7n + 1)) {
+        border-left: 0;
+      }
+      :global(.mobile-cal-day:nth-child(-n + 7)) {
+        border-top: 0;
+      }
+      :global(.mobile-cal-day.is-outside) {
+        opacity: 0;
+        pointer-events: none;
+      }
+      :global(.mobile-cal-day.is-checkin),
+      :global(.mobile-cal-day.is-checkout) {
+        background: var(--color-primary-green-900);
+        color: #fff;
+        font-weight: 700;
+      }
+      :global(.mobile-cal-day.is-in-range) {
+        background: #d8e8e0;
+      }
+    }
+    @media (max-width: 768px) {
+      .calendar-card {
+        width: 100%;
+      }
+
+      .calendar-card__body {
+        padding: 1.25rem;
+      }
+
+      :global(.calendar-day) {
+        min-height: 3rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</div>

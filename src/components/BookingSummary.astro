@@ -1,0 +1,102 @@
+---
+// BookingSummary.astro
+import Heading from "./Heading.astro";
+import Button from "./Button.astro";
+---
+
+<div class="w-full overflow-hidden rounded-[0.35rem] bg-[var(--color-primary-green-900)] text-white" data-booking-summary>
+  <div class="border-b border-[rgba(255,253,245,0.25)] px-6 py-4">
+    <Heading htmlheading="h2" size="large" font="display" stylingclasses="text-white font-light"> Valgte datoer </Heading>
+  </div>
+
+  <!-- Body -->
+  <div class="flex flex-col gap-5 px-6 pb-6 pt-5">
+    <!-- Check-in / Check-ud bokse -->
+    <div class="flex items-center gap-3">
+      <!-- Check-in boks -->
+      <div class="flex flex-1 flex-col items-center overflow-hidden shadow-sm">
+        <!-- Header -->
+        <div class="w-full bg-[#e8e4d8] px-4 py-2 text-center">
+          <Heading htmlheading="h4" size="small" font="display" stylingclasses="text-primary-neutral-950">Check-in</Heading>
+        </div>
+        <!-- Indhold -->
+        <div class="w-full flex flex-col items-center gap-0.5 bg-primary-Background-50 px-4 py-10">
+          <span class="font-display text-[1.4rem] font-bold leading-[1.2] text-primary-neutral-950" data-checkin-day>–</span>
+          <span class="font-display text-[0.85rem] font-bold text-primary-neutral-950" data-checkin-weekday></span>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="h-px w-6 shrink-0 bg-[rgba(255,253,245,0.4)]"></div>
+
+      <!-- Check-ud boks -->
+      <div class="flex flex-1 flex-col items-center overflow-hidden shadow-sm">
+        <!-- Header -->
+        <div class="w-full bg-[#e8e4d8] px-4 py-2 text-center">
+          <Heading htmlheading="h4" size="small" font="display" stylingclasses="text-primary-neutral-950">Check-ud</Heading>
+        </div>
+        <!-- Indhold -->
+        <div class="w-full flex flex-col items-center gap-0.5 bg-primary-Background-50 px-4 py-10">
+          <span class="font-display text-[1.4rem] font-bold leading-[1.2] text-primary-neutral-950" data-checkout-day>–</span>
+          <span class="font-display text-[0.85rem] font-bold text-primary-neutral-950" data-checkout-weekday></span>
+        </div>
+      </div>
+    </div>
+    <!-- nætter + gæster -->
+    <div class="flex flex-col gap-[0.35rem]">
+      <div class="flex items-baseline justify-between gap-[0.4rem]">
+        <span class="font-display text-[0.85rem] text-inverce-neutral-50">Antal nætter:</span>
+        <span class="font-display text-[0.85rem] text-inverce-neutral-50" data-nights>–</span>
+      </div>
+      <div class="flex items-baseline justify-between gap-[0.4rem]">
+        <span class="font-display text-[0.85rem] text-inverce-neutral-50">Antal værelser:</span>
+        <div class="flex gap-1">
+          <span class="font-display text-[0.85rem] text-inverce-neutral-50">1 værelse,</span>
+          <span class="font-display text-[0.85rem] text-inverce-neutral-50" data-guests-label>–</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ændring af søgning -->
+    <a class="flex justify-center" href="/book">
+      <Button variant="primary-large" size="heromedium">Ændring af søgning</Button>
+    </a>
+  </div>
+</div>
+
+<script>
+  const months = ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"];
+  const weekdays = ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"];
+
+  const params = new URLSearchParams(window.location.search);
+  const checkinStr = params.get("checkin");
+  const checkoutStr = params.get("checkout");
+  const guests = params.get("guests") ?? "2";
+
+  function parseDate(str) {
+    if (!str) return null;
+    const [y, m, d] = str.split("-").map(Number);
+    return new Date(y, m - 1, d);
+  }
+
+  const checkin = parseDate(checkinStr);
+  const checkout = parseDate(checkoutStr);
+
+  if (checkin) {
+    document.querySelector("[data-checkin-day]").textContent = `${checkin.getDate()}. ${months[checkin.getMonth()]}`;
+    document.querySelector("[data-checkin-weekday]").textContent = weekdays[checkin.getDay()];
+  }
+
+  if (checkout) {
+    document.querySelector("[data-checkout-day]").textContent = `${checkout.getDate()}. ${months[checkout.getMonth()]}`;
+    document.querySelector("[data-checkout-weekday]").textContent = weekdays[checkout.getDay()];
+  }
+
+  if (checkin && checkout) {
+    const nights = Math.round((checkout - checkin) / (1000 * 60 * 60 * 24));
+    document.querySelector("[data-nights]").textContent = `${nights} nat`;
+  }
+
+  const guestNum = parseInt(guests, 10);
+  document.querySelector("[data-guests-label]").textContent = `${guestNum} gæst${guestNum !== 1 ? "er" : ""}`;
+</script>
