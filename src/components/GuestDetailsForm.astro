@@ -1,0 +1,144 @@
+---
+import Heading from "./Heading.astro";
+import Button from "./Button.astro";
+
+const { rooms = [] } = Astro.props; // ← tilføj denne
+const roomsJson = JSON.stringify(rooms); // ← og denne
+---
+
+<div class="w-full rounded-[0.35rem] bg-[var(--color-secondary-beige-50,#f9f7f0)] p-8">
+  <form id="guest-details-form" class="flex flex-col gap-5">
+    <Heading htmlheading="h3" size="medium" font="display" stylingclasses="font-light mb-2"> Dine oplysninger </Heading>
+
+    <!-- Fornavn + Efternavn -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="flex flex-col gap-1.5">
+        <label for="first-name" class="font-display text-[0.85rem] text-[#1f1c18]"> Fornavn* </label>
+        <input type="text" id="first-name" name="first_name" placeholder="Hanne" required class="h-11 w-full rounded-[0.25rem] border border-[rgba(17,17,17,0.2)] bg-white px-4 font-display text-[0.95rem] text-[#1f1c18] placeholder:text-[#c0bdb7] focus:border-[var(--color-primary-green-900)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary-green-900)]" />
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label for="last-name" class="font-display text-[0.85rem] text-[#1f1c18]"> Efternavn* </label>
+        <input type="text" id="last-name" name="last_name" placeholder="Larsen" required class="h-11 w-full rounded-[0.25rem] border border-[rgba(17,17,17,0.2)] bg-white px-4 font-display text-[0.95rem] text-[#1f1c18] placeholder:text-[#c0bdb7] focus:border-[var(--color-primary-green-900)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary-green-900)]" />
+      </div>
+    </div>
+
+    <!-- E-mailadresse -->
+    <div class="flex flex-col gap-1.5">
+      <label for="email" class="font-display text-[0.85rem] text-[#1f1c18]">E-mailadresse*</label>
+      <input type="email" id="email" name="email" placeholder="Hannelarsen@gmail.com" required class="h-11 w-full rounded-[0.25rem] border border-[rgba(17,17,17,0.2)] bg-white px-4 font-display text-[0.95rem] text-[#1f1c18] placeholder:text-[#c0bdb7] focus:border-[var(--color-primary-green-900)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary-green-900)]" />
+    </div>
+
+    <!-- Mobilnummer -->
+    <div class="flex flex-col gap-1.5">
+      <label for="phone" class="font-display text-[0.85rem] text-[#1f1c18]">Mobilnummer</label>
+      <input type="tel" id="phone" name="phone" placeholder="+45 65728890" class="h-11 w-full rounded-[0.25rem] border border-[rgba(17,17,17,0.2)] bg-white px-4 font-display text-[0.95rem] text-[#1f1c18] placeholder:text-[#c0bdb7] focus:border-[var(--color-primary-green-900)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary-green-900)]" />
+    </div>
+
+    <!-- Adresse -->
+    <div class="flex flex-col gap-1.5">
+      <label for="address" class="font-display text-[0.85rem] text-[#1f1c18]">Adresse*</label>
+      <input type="text" id="address" name="address" placeholder="Finsensgade 42" required class="h-11 w-full rounded-[0.25rem] border border-[rgba(17,17,17,0.2)] bg-white px-4 font-display text-[0.95rem] text-[#1f1c18] placeholder:text-[#c0bdb7] focus:border-[var(--color-primary-green-900)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary-green-900)]" />
+    </div>
+
+    <!-- By -->
+    <div class="flex flex-col gap-1.5">
+      <label for="city" class="font-display text-[0.85rem] text-[#1f1c18]">By</label>
+      <input type="text" id="city" name="city" placeholder="København" class="h-11 w-full rounded-[0.25rem] border border-[rgba(17,17,17,0.2)] bg-white px-4 font-display text-[0.95rem] text-[#1f1c18] placeholder:text-[#c0bdb7] focus:border-[var(--color-primary-green-900)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary-green-900)]" />
+    </div>
+
+    <!-- Postnummer -->
+    <div class="flex flex-col gap-1.5">
+      <label for="zip" class="font-display text-[0.85rem] text-[#1f1c18]">Postnummer</label>
+      <input type="text" id="zip" name="zip" placeholder="2200" class="h-11 w-full rounded-[0.25rem] border border-[rgba(17,17,17,0.2)] bg-white px-4 font-display text-[0.95rem] text-[#1f1c18] placeholder:text-[#c0bdb7] focus:border-[var(--color-primary-green-900)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary-green-900)]" />
+    </div>
+
+    <!-- Land/Region -->
+    <div class="flex flex-col gap-1.5">
+      <label for="country" class="font-display text-[0.85rem] text-[#1f1c18]">Land/Region</label>
+      <input type="text" id="country" name="country" placeholder="Danmark" class="h-11 w-full rounded-[0.25rem] border border-[rgba(17,17,17,0.2)] bg-white px-4 font-display text-[0.95rem] text-[#1f1c18] placeholder:text-[#c0bdb7] focus:border-[var(--color-primary-green-900)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary-green-900)]" />
+    </div>
+
+    <!-- C/O -->
+    <div class="flex flex-col gap-1.5">
+      <label for="co" class="font-display text-[0.85rem] text-[#1f1c18]">C/O</label>
+      <input type="text" id="co" name="co" placeholder="C/O" class="h-11 w-full rounded-[0.25rem] border border-[rgba(17,17,17,0.2)] bg-white px-4 font-display text-[0.95rem] text-[#1f1c18] placeholder:text-[#c0bdb7] focus:border-[var(--color-primary-green-900)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary-green-900)]" />
+    </div>
+
+    <!-- Lille info-tekst -->
+    <p class="font-display text-[0.78rem] text-[#7a7974]">Kustoms brugsbetingelser gælder · Administrer autofyldningsindstillinger</p>
+
+    <!-- I alt + pris (højrestillet) -->
+    <div class="flex justify-end">
+      <span class="font-display text-[1rem] font-bold text-[#1f1c18]"> I alt &nbsp; </span>
+      <span class="font-display text-[1rem] font-bold underline text-[#1f1c18]" id="form-total-price"> – kr. </span>
+    </div>
+
+    <!-- Tilbage + Betal -->
+    <div class="flex justify-between gap-3">
+      <Button id="back-btn" type="button" variant="secondary" size="medium" stylingclasses="w-full justify-center">Tilbage</Button>
+      <Button id="pay-btn" type="submit" variant="primary" size="medium" stylingclasses="w-full justify-center">Betal</Button>
+    </div>
+
+    <!-- Juridisk tekst -->
+    <p class="font-display text-[0.75rem] text-[#7a7974]">Ved at klikke på "Betal" accepterer jeg Kustoms brugsbetingelser, anerkender fortrolighedsmeddelelsen og accepterer Hotel Villa Gulle's vilkår og betingelser.</p>
+
+    <!-- Betalingskort ikoner -->
+    <div class="flex items-center justify-center gap-3">
+      <img src="/icons/visa.svg" alt="Visa" width="38" height="24" loading="lazy" />
+      <img src="/icons/mastercard.png" alt="Mastercard" width="38" height="24" loading="lazy" />
+      <img src="/icons/mobilepay.svg" alt="Mobile Pay" width="38" height="24" loading="lazy" />
+      <img src="/icons/applepay.svg" alt="Google Pay" width="38" height="24" loading="lazy" />
+    </div>
+  </form>
+</div>
+
+<script define:vars={{ roomsJson }}>
+  const params = new URLSearchParams(window.location.search);
+  const form = document.getElementById("guest-details-form");
+
+  // Tilbage
+  document.getElementById("back-btn")?.addEventListener("click", () => {
+    const step2Params = new URLSearchParams(params);
+    step2Params.delete("room");
+    window.location.href = `/book_step2?${step2Params.toString()}`;
+  });
+
+  // Betal — KUN via submit (så required-validering kører)
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const newParams = new URLSearchParams(params);
+    for (const [key, value] of formData.entries()) {
+      newParams.set(key, value);
+    }
+    window.location.href = `/bekraeftelse?${newParams.toString()}`;
+  });
+
+  // Pris
+  const roomsData = JSON.parse(roomsJson);
+  const roomId = params.get("room");
+  const checkinStr = params.get("checkin");
+  const checkoutStr = params.get("checkout");
+
+  function parseDate(str) {
+    if (!str) return null;
+    const [y, m, d] = str.split("-").map(Number);
+    return new Date(y, m - 1, d);
+  }
+
+  const checkin = parseDate(checkinStr);
+  const checkout = parseDate(checkoutStr);
+  const room = roomsData.find((r) => String(r.id) === String(roomId));
+
+  if (room && checkin && checkout && room.price_per_night) {
+    const nights = Math.round((checkout - checkin) / (1000 * 60 * 60 * 24));
+    const total = room.price_per_night * nights;
+    document.getElementById("form-total-price").textContent = `${total.toLocaleString("da-DK")} kr.`;
+  }
+</script>
+
+<style>
+  input:invalid:not(:placeholder-shown) {
+    border-color: #ef4444;
+  }
+</style>

@@ -1,0 +1,117 @@
+---
+import Heading from "./Heading.astro";
+
+const { rooms = [] } = Astro.props;
+const roomsJson = JSON.stringify(rooms);
+---
+
+<div class="w-full overflow-hidden rounded-[0.35rem] bg-[var(--color-primary-green-900)] text-white">
+  <div class="px-6 pb-6 pt-5">
+    <Heading htmlheading="h2" size="large" font="display" stylingclasses="text-white">Bookingoversigt</Heading>
+  </div>
+  <!-- Rumbillede -->
+  <div class="aspect-[3/2] w-full overflow-hidden bg-[rgba(255,253,245,0.05)]">
+    <img id="summary-room-image" src="" alt="" class="h-full w-full object-cover" style="display:none;" />
+  </div>
+
+  <!-- Rum navn -->
+  <div class="border-b border-[rgba(255,253,245,0.25)] px-6 py-4">
+    <span class="font-display text-[1.1rem] font-light text-white" id="summary-room-name">–</span>
+  </div>
+
+  <!-- Body -->
+  <div class="flex flex-col gap-5 px-6 pb-6 pt-5">
+    <!-- Check-in / Check-ud / Gæster -->
+    <div class="flex flex-col gap-2">
+      <div class="flex items-baseline justify-between">
+        <Heading htmlheading="h5" size="xsmall" font="display" stylingclasses="text-white font-semibold">Check-in</Heading>
+        <span class="font-display text-[0.9rem] font-semibold text-[#fffdf5]" data-checkin-display>–</span>
+      </div>
+      <div class="flex items-baseline justify-between">
+        <Heading htmlheading="h5" size="xsmall" font="display" stylingclasses="text-white font-semibold">Check-ud</Heading>
+        <span class="font-display text-[0.9rem] font-semibold text-[#fffdf5]" data-checkout-display>–</span>
+      </div>
+      <div class="flex items-baseline justify-between">
+        <Heading htmlheading="h5" size="xsmall" font="display" stylingclasses="text-white font-semibold">Gæster</Heading>
+        <span class="font-display text-[0.9rem] font-semibold text-[#fffdf5]" data-guests-display>–</span>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-[rgba(255,253,245,0.2)]"></div>
+
+    <!-- Inkluderet -->
+    <div class="flex flex-col gap-2">
+      <Heading htmlheading="h4" size="small" font="display" stylingclasses="text-white font-semibold">Inkluderer:</Heading>
+      <div class="flex flex-col gap-1.5">
+        {
+          ["Morgenmad på hotellet", "Gratis parkering", "Tv på værelset", "Gratis Wifi"].map((item) => (
+            <div class="flex items-center gap-2">
+              <span class="font-display text-[0.85rem] text-[#fffdf5]">{item}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-[rgba(255,253,245,0.2)]"></div>
+
+    <!-- Pris i alt -->
+    <div class="flex items-baseline justify-between">
+      <Heading htmlheading="h4" size="small" font="display" stylingclasses="text-white font-semibold">Pris i alt:</Heading>
+      <span class="font-display text-[1.2rem] font-bold underline text-[#fffdf5]" id="summary-total-price">– dkk</span>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ roomsJson }}>
+  const rooms = JSON.parse(roomsJson);
+  const months = ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"];
+  const weekdays = ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"];
+
+  const params = new URLSearchParams(window.location.search);
+  const checkinStr = params.get("checkin");
+  const checkoutStr = params.get("checkout");
+  const guests = params.get("guests") ?? "2";
+  const roomId = params.get("room");
+
+  function parseDate(str) {
+    if (!str) return null;
+    const [y, m, d] = str.split("-").map(Number);
+    return new Date(y, m - 1, d);
+  }
+
+  const checkin = parseDate(checkinStr);
+  const checkout = parseDate(checkoutStr);
+
+  if (checkin) {
+    document.querySelector("[data-checkin-display]").textContent = `${weekdays[checkin.getDay()]} ${checkin.getDate()}. ${months[checkin.getMonth()]}`;
+  }
+  if (checkout) {
+    document.querySelector("[data-checkout-display]").textContent = `${weekdays[checkout.getDay()]} ${checkout.getDate()}. ${months[checkout.getMonth()]}`;
+  }
+
+  const guestNum = parseInt(guests, 10);
+  document.querySelector("[data-guests-display]").textContent = `${guestNum} voksne`;
+
+  const room = rooms.find((r) => String(r.id) === String(roomId));
+  if (room) {
+    const nameEl = document.getElementById("summary-room-name");
+    if (nameEl) nameEl.textContent = room.name ?? "–";
+
+    const img = document.getElementById("summary-room-image");
+    const imgSrc = room.image_url ?? room.image ?? "";
+    if (imgSrc) {
+      img.src = imgSrc;
+      img.alt = room.name ?? "";
+      img.style.display = "block";
+    }
+
+    if (checkin && checkout && room.price_per_night) {
+      const nights = Math.round((checkout - checkin) / (1000 * 60 * 60 * 24));
+      const total = room.price_per_night * nights;
+      document.getElementById("summary-total-price").textContent = `${total.toLocaleString("da-DK")} kr.`;
+    }
+  }
+</script>
