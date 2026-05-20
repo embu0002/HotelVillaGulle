@@ -43,12 +43,25 @@ const isSelect = variant === "select";
 
         {
           isSelect && (
-            <Button variant="primary" size="small">
-              Vælg
-            </Button>
+            <a href="#" class="choose-room" data-room-id={data.id}>
+              <Button variant="primary" size="small">
+                Vælg
+              </Button>
+            </a>
           )
         }
       </div>
     </div>
   </div>
 </article>
+
+<script>
+  document.querySelectorAll(".choose-room").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const params = new URLSearchParams(window.location.search);
+      params.set("room", btn.dataset.roomId);
+      window.location.href = `/book_step3?${params.toString()}`;
+    });
+  });
+</script>

@@ -1,0 +1,73 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import StepIndicator from "../components/StepIndicator.astro";
+import Heading from "../components/Heading.astro";
+import BookingSummaryStep3 from "../components/BookingSummaryStep3.astro";
+import GuestDetailsForm from "../components/GuestDetailsForm.astro";
+
+const url = "https://egxoxtzgworkaghvxrbv.supabase.co/rest/v1/rooms?select=*";
+const key = "sb_publishable_dzoaD8ZHxR8hKpgA_C6b0A_lNV1xVMu";
+
+const res = await fetch(url, { headers: { apikey: key } });
+const rooms = await res.json();
+---
+
+<MainLayout>
+  <main class="mx-auto max-w-[1340px] px-4 py-6 md:px-[var(--gutter)] md:py-10">
+    <StepIndicator currentStep={3} />
+
+    <Heading htmlheading="h2" size="large" font="display" stylingclasses="mb-8 text-center"> Dine detaljer & betaling </Heading>
+
+    <section class="step3-layout">
+      <aside class="summary-side">
+        <BookingSummaryStep3 rooms={rooms} />
+      </aside>
+      <div>
+        <GuestDetailsForm rooms={rooms} />
+      </div>
+    </section>
+  </main>
+</MainLayout>
+
+<style>
+  .step3-layout {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 10rem;
+    align-items: start;
+  }
+
+  .summary-side {
+    position: sticky;
+    top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .step3-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .summary-side {
+      position: relative;
+      top: 0;
+    }
+  }
+
+  .summary-side {
+    position: sticky;
+    top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .step3-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .summary-side {
+      position: relative;
+      top: 0;
+    }
+  }
+</style>
