@@ -18,7 +18,7 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-{/* MOBIL — horizontal slider */}
+<!-- MOBIL AKTIVITETER SECTION -->
 <div class="lg:hidden relative">
   {/* Pile */}
   <button id="prev" aria-label="Forrige" class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full w-9 h-9 flex items-center justify-center shadow transition">
@@ -32,7 +32,7 @@ const { items } = Astro.props;
     </svg>
   </button>
 
-  {/* Scroll container */}
+  <!-- SCROLL CONTAINER -->
   <div id="slider" class="flex overflow-x-auto gap-4 px-8 py-4 snap-x snap-mandatory scroll-smooth scrollbar-hide" style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
     {
       items.map((item) => (
@@ -55,7 +55,7 @@ const { items } = Astro.props;
   </div>
 </div>
 
-{/* DESKTOP — grid */}
+<!-- DESKTOP AKTIVITETER SECTION -->
 <div class="hidden lg:grid grid-cols-3 gap-14">
   {
     items.map((item) => (
