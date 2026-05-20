@@ -4,7 +4,7 @@ import Button from "./Button.astro";
 import Heading from "./Heading.astro";
 ---
 
-<header class="w-full bg-primary-green-900">
+<header class="w-full sticky top-0 z-50 bg-primary-green-900">
   <!-- DESKTOP -->
   <div class="hidden lg:flex items-center justify-between px-10 py-6">
     <!-- Nav links venstre -->
@@ -81,7 +81,7 @@ hover:after:w-full"> Aktiviteter </a>
   </div>
 
   <!-- MOBIL MENU OVERLAY -->
-  <div id="mobile-menu" class="lg:hidden hidden flex-col items-center justify-center gap-3 py-8 bg-[var(--color-primary-green-900)]">
+  <div id="mobile-menu" class="lg:hidden hidden flex-col items-end text-right pr-10 gap-3 py-8 bg-[var(--color-primary-green-900)]">
     <a href="/praktiskinfo" class="text-white font-display text-medium font-light tracking-wide hover:opacity-70 transition-opacity"> Praktisk info </a>
     <a href="/omhotelvillagulle" class="text-white font-display text-medium font-light tracking-wide hover:opacity-70 transition-opacity"> Vores historie </a>
     <a href="/aktiviteter" class="text-white font-display text-medium font-light tracking-wide hover:opacity-70 transition-opacity"> Aktiviteter </a>

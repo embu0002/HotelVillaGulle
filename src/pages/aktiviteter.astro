@@ -52,19 +52,21 @@ const aktivitetercard = [
 ];
 ---
 
-<MainLayout title="Titel">
+<MainLayout title="Aktiviteter">
   <HeroPages title="Aktiviteter" leftImage="/hero_aktiviteter.png" leftImageAlt="Villa Gulle facade" rightImage="/Petanque2.svg" rightImageAlt="Villa Gulle tegning" content="På Hotel Villa Gulle ønsker vi at være med til at skabe aktiv, hyggelig og begivenhedsrig ferie for vores gæster. Derfor tilbyder vi et bredt udvalgt af faciliteter, som er inkluderet i prisen, så du kan få det maksimale ud af dine feriedage." subtitle="Villa Gulle" />
-  <main class="px-[var(--gutter)] mx-auto max-w-[1340px] p-10">
-    <div class="text-center">
+  <main class="px-[var(--gutter)] mx-auto max-w-[1340px]">
+    <div class="text-center pt-15 md:pt-20">
       <Heading htmlheading="h2" size="large" font="display" stylingclasses="font-light"> Hvad du kan opleve</Heading>
     </div>
-    <div class="pt-6 md:pt-15">
+    <div class="pt-3 md:pt-7">
       <AktiviteterCard items={aktivitetercard} />
     </div>
+
+    <!-- HOTELLETS OMGIVELSER SECTION -->
     <section class="p-20">
       <Heading htmlheading="h2" size="large" font="display" stylingclasses="text-center pb-5"> Hotellets omgivelser </Heading>
       <div class="grid md:grid-cols-3 gap-10 items-center">
-        <!-- Byen -->
+        <!-- BYEN -->
         <div class="flex flex-col gap-8 md:col-span-1">
           <div class="flex flex-col">
             <Heading htmlheading="h3" size="medium" font="display"> Hvad tilbyder byen? </Heading>
@@ -73,7 +75,7 @@ const aktivitetercard = [
               <Button variant="secondary" size="small">Læs mere</Button>
             </a>
           </div>
-          <!-- Fyn -->
+          <!-- FYN -->
           <div class="flex flex-col">
             <Heading htmlheading="h3" size="medium" font="display"> Hvad tilbyder Fyn? </Heading>
             <Text teksttype="brødtekst"> Fyn byder på en uforglemmelig blanding af kultur, natur og historie. Herregårde, maleriske landsbyer, frodig natur og fantastiske badestrande med rent og klart vand. </Text>
