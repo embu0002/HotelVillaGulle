@@ -62,7 +62,7 @@ const years = Array.from({ length: 4 }, (_, i) => initialYear + i);
             }
           </select>
         </Heading>
-        <a href="#" id="next-btn-desktop" data-next-desktop>
+        <a href="#" id="next-btn-desktop" data-next-desktop class="calendar-next-link">
           <Button variant="primary-large" size="heromedium">{nextLabel}</Button>
         </a>
       </div>
@@ -104,7 +104,7 @@ const years = Array.from({ length: 4 }, (_, i) => initialYear + i);
         }
       </select>
     </div>
-    <a href="#" id="next-btn-mobile" data-next-mobile>
+    <a href="#" id="next-btn-mobile" data-next-mobile class="justify-self-center">
       <Button variant="primary-large" size="heromedium">{nextLabel}</Button>
     </a>
   </div>
@@ -587,6 +587,18 @@ const years = Array.from({ length: 4 }, (_, i) => initialYear + i);
     /* Skjul mobil-layout på desktop */
     .mobile-booking {
       display: none;
+    }
+
+    .calendar-next-link {
+      display: block;
+      width: 100%;
+    }
+
+    :global(.calendar-next-link > *),
+    :global(.calendar-next-link a),
+    :global(.calendar-next-link button) {
+      width: 100% !important;
+      display: block !important;
     }
 
     @media (max-width: 768px) {

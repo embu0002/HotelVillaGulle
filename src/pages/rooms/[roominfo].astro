@@ -5,6 +5,7 @@ import Text from "../../components/Text.astro";
 import Button from "../../components/Button.astro";
 
 interface Room {
+  id: number;
   slug: string;
   size_sqm: number;
   name: string;
@@ -112,12 +113,20 @@ const images = room.Images?.split(",").map((url) => url.trim()) ?? [];
           {room.description}
         </Text>
       </div>
-      <a class="flex align-center justify-center mt-5 md:mt-8" href="/book_step3">
-        <Button variant="primary-large" size="heromedium">Vælg</Button>
-      </a>
+      <div class="flex justify-center mt-5 md:mt-8">
+        <Button id="select-room-btn" type="button" variant="primary-large" size="heromedium"> Vælg </Button>
+      </div>
     </div>
   </main>
 </MainLayout>
+<script define:vars={{ roomId: room.id }}>
+  document.getElementById("select-room-btn")?.addEventListener("click", () => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("room", String(roomId));
+    window.location.href = `/book_step3?${params.toString()}`;
+  });
+</script>
+
 <script>
   const slider = document.getElementById("slider") as HTMLElement;
   const dots = document.querySelectorAll(".dot") as NodeListOf<HTMLElement>;

@@ -28,33 +28,44 @@ const isSelect = variant === "select";
       </Text>
     </div>
 
-    <!-- Pris + knapper -->
-    <div class="flex flex-col gap-4">
-      <!-- Pris — altid til højre -->
-      <Heading htmlheading="h4" size="small" font="display" stylingclasses="text-right">
-        Fra {price} dkk
-      </Heading>
-
-      <!-- Knapper — "Mere info" venstre, "Vælg" højre (kun select) -->
-      <div class="flex items-center justify-between gap-3">
-        <a href={`/rooms/${slug}`}>
-          <Button variant="secondary" size="small">Mere info</Button>
-        </a>
-
-        {
-          isSelect && (
-            <a href="#" class="choose-room" data-room-id={data.id}>
-              <Button variant="primary" size="small">
-                Vælg
-              </Button>
-            </a>
-          )
-        }
-      </div>
+  <!-- Pris + knapper -->
+{isSelect ? (
+  <!-- SELECT: pris over, begge knapper nedenunder -->
+  <div class="flex flex-col gap-3">
+    <Heading htmlheading="h4" size="small" font="display">
+      Fra {price} dkk
+    </Heading>
+    <div class="flex items-center justify-between gap-3">
+      <a href={`/rooms/${slug}`}>
+        <Button variant="secondary" size="small">Mere info</Button>
+      </a>
+      <a href="#" class="choose-room" data-room-id={data.id}>
+        <Button variant="primary" size="small">Vælg</Button>
+      </a>
     </div>
   </div>
+) : (
+  <div class="flex items-center justify-between gap-3">
+  <Heading htmlheading="h4" size="small" font="display">
+    Fra {price} dkk
+  </Heading>
+  <a id={`more-info-${data.id}`} href={`/rooms/${slug}`}>
+  <Button variant="secondary" size="small">Mere info</Button>
+</a>
+</div>
+)}
+  </div>
 </article>
-
+<script define:vars={{ roomSlug: slug, roomId: data.id }}>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById(`more-info-${roomId}`);
+    if (btn) {
+      const params = new URLSearchParams(window.location.search);
+      btn.href = `/rooms/${roomSlug}?${params.toString()}`;
+    }
+  });
+  console.log("roomId:", roomId, "slug:", roomSlug);
+</script>
 <script>
   document.querySelectorAll(".choose-room").forEach((btn) => {
     btn.addEventListener("click", (e) => {
@@ -65,3 +76,4 @@ const isSelect = variant === "select";
     });
   });
 </script>
+
