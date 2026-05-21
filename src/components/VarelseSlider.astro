@@ -51,38 +51,34 @@ const { slides } = Astro.props;
                w-10 h-10 rounded-full bg-white/90 shadow-md
                flex items-center justify-center
                hover:bg-white active:scale-95 transition-all duration-200">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
+        <img src="/icons/knap_review_venstre.png" alt="" />
       </button>
+    </div>
 
-      <button data-next aria-label="Næste værelse" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20
+    <button data-next aria-label="Næste værelse" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20
                w-10 h-10 rounded-full bg-white/90 shadow-md
                flex items-center justify-center
                hover:bg-white active:scale-95 transition-all duration-200" style="right: calc(-1 * var(--page-padding, 2rem))">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
+      <img src="/icons/knap_review_hoejre.png" alt="Næste" />
+    </button>
 
-      {/* Karussel — bryder ud til højre */}
-      <div data-overflow class="vaerrelse-slider__overflow overflow-hidden cursor-grab active:cursor-grabbing" style="margin-right: calc(-1 * var(--page-padding, 2rem));">
-        <div data-rail class="flex items-center transition-transform duration-500 ease-in-out" style="gap: 2rem;">
-          {
-            slides.map((slide, i) => (
-              <div data-card data-index={i} class="shrink-0 overflow-hidden transition-all duration-500">
-                <img src={slide.image.src} alt={slide.image.alt} class="w-full h-full object-cover block pointer-events-none" loading="lazy" />
-              </div>
-            ))
-          }
-        </div>
+    {/* Karussel — bryder ud til højre */}
+    <div data-overflow class="vaerrelse-slider__overflow overflow-hidden cursor-grab active:cursor-grabbing" style="margin-right: calc(-1 * var(--page-padding, 2rem));">
+      <div data-rail class="flex items-center transition-transform duration-500 ease-in-out" style="gap: 2rem;">
+        {
+          slides.map((slide, i) => (
+            <div data-card data-index={i} class="shrink-0 overflow-hidden transition-all duration-500">
+              <img src={slide.image.src} alt={slide.image.alt} class="w-full h-full object-cover block pointer-events-none" loading="lazy" />
+            </div>
+          ))
+        }
       </div>
     </div>
+  </div>
 
-    {/* Dots */}
-    <div class="flex justify-center gap-3 mt-6">
-      {slides.map((_, i) => <button data-dot data-index={i} aria-label={`Gå til slide ${i + 1}`} class={`w-2.5 h-2.5 rounded-full border transition-all duration-300 ${i === 0 ? "bg-[#2d4a3e] border-[#2d4a3e] scale-110" : "bg-transparent border-[#2d4a3e]"}`} />)}
-    </div>
+  {/* Dots */}
+  <div class="flex justify-center gap-3 mt-6">
+    {slides.map((_, i) => <button data-dot data-index={i} aria-label={`Gå til slide ${i + 1}`} class={`w-2.5 h-2.5 rounded-full border transition-all duration-300 ${i === 0 ? "bg-[#2d4a3e] border-[#2d4a3e] scale-110" : "bg-transparent border-[#2d4a3e]"}`} />)}
   </div>
 </section>
 
