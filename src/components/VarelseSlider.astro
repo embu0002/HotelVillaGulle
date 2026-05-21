@@ -18,7 +18,7 @@ const { slides } = Astro.props;
 
 <section style="--page-padding: clamp(1rem, 5vw, 2.5rem); padding: var(--page-padding)">
   <div class="vaerrelse-slider select-none">
-    {/* Tekst-sektion — ingen overflow-hidden her */}
+    {/* Tekst-sektion */}
     <div class="mb-6 overflow-hidden">
       <div data-text-track class="flex transition-transform duration-500 ease-in-out">
         {
@@ -30,11 +30,10 @@ const { slides } = Astro.props;
               <Text teksttype="brødtekst" stylingclasses="font-light text-gray-700 max-w-prose mb-1">
                 {slide.description}
               </Text>
-              <Heading htmlheading="h4" size="small" font="display" stylingclasses=" mb-3">
+              <Heading htmlheading="h4" size="small" font="display" stylingclasses="mb-3">
                 Fra {slide.price}
               </Heading>
-
-              <a href={slide.bookingHref} class="w-fit">
+              <a href={slide.bookingHref} class="w-fit overflow-hidden">
                 <Button variant="primary" size="small">
                   Book nu
                 </Button>
@@ -45,40 +44,39 @@ const { slides } = Astro.props;
       </div>
     </div>
 
-    {/* Karussel + pile-knapper */}
+    {/* Karussel + pile */}
     <div class="relative">
+      {/* Venstre pil */}
       <button data-prev aria-label="Forrige værelse" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-20
                w-10 h-10 rounded-full bg-white/90 shadow-md
                flex items-center justify-center
                hover:bg-white active:scale-95 transition-all duration-200">
-        <img src="/icons/knap_review_venstre.png" alt="" />
+        <img src="/icons/knap_review_venstre.png" alt="" class="w-5 h-5 object-contain" />
       </button>
-    </div>
 
-    <button data-next aria-label="Næste værelse" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20
+      {/* Højre pil */}
+      <button data-next aria-label="Næste værelse" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20
                w-10 h-10 rounded-full bg-white/90 shadow-md
                flex items-center justify-center
-               hover:bg-white active:scale-95 transition-all duration-200" style="right: calc(-1 * var(--page-padding, 2rem))">
-      <img src="/icons/knap_review_hoejre.png" alt="Næste" />
-    </button>
+               hover:bg-white active:scale-95 transition-all duration-200">
+        <img src="/icons/knap_review_hoejre.png" alt="" class="w-5 h-5 object-contain" />
+      </button>
 
-    {/* Karussel — bryder ud til højre */}
-    <div data-overflow class="vaerrelse-slider__overflow overflow-hidden cursor-grab active:cursor-grabbing" style="margin-right: calc(-1 * var(--page-padding, 2rem));">
-      <div data-rail class="flex items-center transition-transform duration-500 ease-in-out" style="gap: 2rem;">
-        {
-          slides.map((slide, i) => (
-            <div data-card data-index={i} class="shrink-0 overflow-hidden transition-all duration-500">
-              <img src={slide.image.src} alt={slide.image.alt} class="w-full h-full object-cover block pointer-events-none" loading="lazy" />
-            </div>
-          ))
-        }
+      {/* Karussel */}
+      <div data-overflow class="vaerrelse-slider__overflow overflow-hidden cursor-grab active:cursor-grabbing">
+        <div data-rail class="flex items-center transition-transform duration-500 ease-in-out" style="gap: 2rem;">
+          {
+            slides.map((slide, i) => (
+              <div data-card data-index={i} class="shrink-0 overflow-hidden transition-all duration-500">
+                <img src={slide.image.src} alt={slide.image.alt} class="w-full h-full object-cover block pointer-events-none" loading="lazy" />
+              </div>
+            ))
+          }
+        </div>
       </div>
     </div>
-  </div>
-
-  {/* Dots */}
-  <div class="flex justify-center gap-3 mt-6">
-    {slides.map((_, i) => <button data-dot data-index={i} aria-label={`Gå til slide ${i + 1}`} class={`w-2.5 h-2.5 rounded-full border transition-all duration-300 ${i === 0 ? "bg-[#2d4a3e] border-[#2d4a3e] scale-110" : "bg-transparent border-[#2d4a3e]"}`} />)}
+    {/* Dots */}
+    <div data-dots class="flex gap-2 mt-4 justify-center"></div>
   </div>
 </section>
 
@@ -87,22 +85,29 @@ const { slides } = Astro.props;
     const textTrack = slider.querySelector("[data-text-track]") as HTMLElement;
     const rail = slider.querySelector("[data-rail]") as HTMLElement;
     const overflow = slider.querySelector("[data-overflow]") as HTMLElement;
-    const dots = slider.querySelectorAll("[data-dot]") as NodeListOf<HTMLButtonElement>;
+    const dotsContainer = slider.querySelector("[data-dots]") as HTMLElement;
     const cards = slider.querySelectorAll("[data-card]") as NodeListOf<HTMLElement>;
     const prevBtn = slider.querySelector("[data-prev]") as HTMLButtonElement;
     const nextBtn = slider.querySelector("[data-next]") as HTMLButtonElement;
     const total = cards.length;
-    const GAP = 8;
+    const GAP = 32;
     let current = 0;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let isDragging = false;
+    let didDrag = false;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchDir: "h" | "v" | null = null;
 
     // ── Dimensioner ──────────────────────────────────────────────────────────
     function getSizes() {
       const wrapperW = overflow.offsetWidth;
       const isMobile = window.innerWidth < 768;
-      const largeW = Math.round(wrapperW * (isMobile ? 0.65 : 0.3));
-      const smallW = Math.round(wrapperW * (isMobile ? 0.22 : 0.16));
-      const largeH = Math.round(largeW * (3 / 2)); // 2:3 lodret — passer til portræt-billeder
-      const smallH = Math.round(smallW * (3 / 2)); // SAMME ratio på små kort
+      const largeW = Math.round(wrapperW * (isMobile ? 0.45 : 0.22));
+      const smallW = Math.round(wrapperW * (isMobile ? 0.2 : 0.15));
+      const largeH = Math.round(largeW * (3 / 2));
+      const smallH = Math.round(smallW * (3 / 2));
       return { largeW, smallW, largeH, smallH };
     }
 
@@ -128,23 +133,50 @@ const { slides } = Astro.props;
       return offset;
     }
 
+    // ── Dots ──────────────────────────────────────────────────────────────────
+    function createDots() {
+      dotsContainer.innerHTML = "";
+      for (let i = 0; i < total; i++) {
+        const dot = document.createElement("button");
+        dot.dataset.index = String(i);
+        dot.setAttribute("aria-label", `Gå til slide ${i + 1}`);
+        dot.style.borderRadius = "9999px";
+        dot.style.transition = "all 300ms";
+        dot.addEventListener("click", () => goTo(i));
+        dotsContainer.appendChild(dot);
+      }
+      updateDots();
+    }
+
+    function updateDots() {
+      Array.from(dotsContainer.children).forEach((dot, i) => {
+        const el = dot as HTMLElement;
+        if (i === current) {
+          el.style.width = "1.5rem";
+          el.style.height = "0.625rem";
+          el.style.backgroundColor = "#2d4a3e";
+        } else {
+          el.style.width = "0.625rem";
+          el.style.height = "0.625rem";
+          el.style.backgroundColor = "#d1d5db";
+        }
+      });
+    }
+
     // ── goTo ──────────────────────────────────────────────────────────────────
     function goTo(index: number) {
       current = ((index % total) + total) % total;
       textTrack.style.transform = `translateX(${-current * 100}%)`;
       applyLayout(true);
       rail.style.transform = `translateX(${-getRailOffset()}px)`;
-      dots.forEach((dot, i) => {
-        dot.classList.toggle("bg-[#2d4a3e]", i === current);
-        dot.classList.toggle("bg-transparent", i !== current);
-        dot.classList.toggle("scale-110", i === current);
-      });
+      updateDots();
     }
 
     // ── Init ──────────────────────────────────────────────────────────────────
     requestAnimationFrame(() => {
       applyLayout(false);
       rail.style.transform = "translateX(0)";
+      createDots();
     });
 
     window.addEventListener("resize", () => {
@@ -156,11 +188,6 @@ const { slides } = Astro.props;
     prevBtn.addEventListener("click", () => goTo(current - 1));
     nextBtn.addEventListener("click", () => goTo(current + 1));
 
-    // ── Dots ──────────────────────────────────────────────────────────────────
-    dots.forEach((dot) => {
-      dot.addEventListener("click", () => goTo(Number(dot.dataset.index)));
-    });
-
     // ── Klik på kort ──────────────────────────────────────────────────────────
     cards.forEach((card) => {
       card.addEventListener("click", () => {
@@ -171,11 +198,6 @@ const { slides } = Astro.props;
     });
 
     // ── Mus-drag ──────────────────────────────────────────────────────────────
-    let dragStartX = 0;
-    let dragStartY = 0;
-    let isDragging = false;
-    let didDrag = false;
-
     overflow.addEventListener("mousedown", (e: MouseEvent) => {
       if ((e.target as HTMLElement).closest("button")) return;
       isDragging = true;
@@ -204,10 +226,6 @@ const { slides } = Astro.props;
     });
 
     // ── Touch ─────────────────────────────────────────────────────────────────
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchDir: "h" | "v" | null = null;
-
     overflow.addEventListener(
       "touchstart",
       (e: TouchEvent) => {
